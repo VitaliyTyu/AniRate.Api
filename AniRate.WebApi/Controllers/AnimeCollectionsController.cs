@@ -49,7 +49,7 @@ namespace AniRate.WebApi.Controllers
         //public async Task<ActionResult<Guid>> Create([FromBody] CreateAnimeCollectionDto createAnimeCollectionDto)
         //{
         //    var command = _mapper.Map<CreateAnimeCollectionCommand>(createAnimeCollectionDto);
-        //    command.UserId = UserId;
+        //    //command.UserId = UserId;
         //    var collectionId = await Mediator.Send(command);
         //    return Ok(collectionId);
         //}
@@ -58,7 +58,7 @@ namespace AniRate.WebApi.Controllers
         //public async Task<ActionResult> Update([FromBody] UpdateAnimeCollectionDto updateAnimeCollectionDto)
         //{
         //    var command = _mapper.Map<UpdateAnimeCollectionCommand>(updateAnimeCollectionDto);
-        //    command.UserId = UserId;
+        //    //command.UserId = UserId;
         //    await Mediator.Send(command);
         //    return NoContent();
         //}
@@ -69,7 +69,7 @@ namespace AniRate.WebApi.Controllers
         //    var command = new DeleteAnimeCollectionCommand
         //    {
         //        Id = id,
-        //        UserId = UserId
+        //        //UserId = UserId
         //    };
         //    await Mediator.Send(command);
         //    return NoContent();
