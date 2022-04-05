@@ -16,6 +16,7 @@ namespace AniRate.Domain.Entities
         public double Rating { get; set; }
         //public double? UserRating { get; set; }
         //public string? UserComment { get; set; }
+        //public Guid UserId { get; set; }
         public AnimeCollection Collection { get; set; } = null!;
     }
 }

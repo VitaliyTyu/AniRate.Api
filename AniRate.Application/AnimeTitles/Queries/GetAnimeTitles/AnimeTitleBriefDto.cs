@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AniRate.Application.AnimeTitles.Queries.GetAnimeTitles
 {
-    public class AnimeTitleBriefDto : IMapFrom<AnimeTitle>
+    public class AnimeTitleBriefDto : IMapWith<AnimeTitle>
     {
         public Guid Id { get; set; }
         public Guid CollectionId { get; set; }

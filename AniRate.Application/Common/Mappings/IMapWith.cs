@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AniRate.Application.Common.Mappings
 {
-    public interface IMapFrom<T>
+    public interface IMapWith<T>
     {
         void Mapping(Profile profile) =>
             profile.CreateMap(typeof(T), GetType());

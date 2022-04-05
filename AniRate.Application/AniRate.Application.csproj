@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="AnimeCollections\Commands\" />
     <Folder Include="AnimeTitles\Commands\" />
   </ItemGroup>
 
