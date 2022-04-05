@@ -36,11 +36,11 @@ namespace AniRate.WebApi.Controllers
         //}
 
         [HttpGet]
-        public async Task<ActionResult<AnimeTitlesListVM>> Get()
+        public async Task<ActionResult<AnimeTitlesListVM>> Get([FromQuery] string id)
         {
             var query = new GetAnimeTitlesQuery()
             {
-                CollectionId = Guid.Parse("936da01f-9abd-4d9d-80c7-02af85c822a2")
+                CollectionId = Guid.Parse(id)
             };
             var animeTitlesVM = await Mediator.Send(query);
 

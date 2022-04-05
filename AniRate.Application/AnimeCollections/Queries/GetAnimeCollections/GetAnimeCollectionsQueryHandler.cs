@@ -27,7 +27,7 @@ namespace AniRate.Application.AnimeCollections.Queries.GetAnimeCollections
             var collections = await _dbContext.AnimeCollections
                 .Where(c => c.UserId == request.UserId)
                 .ProjectTo<AnimeCollectionBriefDto>(_mapper.ConfigurationProvider)
-                .ToListAsync();
+                .ToListAsync(cancellationToken);
 
             return new AnimeCollectionsListVM { Collections = collections };
         }

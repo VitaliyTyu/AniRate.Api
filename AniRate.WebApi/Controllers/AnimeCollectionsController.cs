@@ -1,4 +1,5 @@
-﻿using AniRate.Application.AnimeCollections.Queries.GetAnimeCollections;
+﻿using AniRate.Application.AnimeCollections.Queries.GetAnimeCollectionById;
+using AniRate.Application.AnimeCollections.Queries.GetAnimeCollections;
 using AniRate.Application.Interfaces;
 using AniRate.Domain.Entities;
 using AutoMapper;
@@ -29,5 +30,20 @@ namespace AniRate.WebApi.Controllers
             var collectionsVM = await Mediator.Send(query);
             return Ok(collectionsVM);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<AnimeCollectionDetailsVM>> Get(string id)
+        {
+            var query = new GetAnimeCollectionByIdQuery()
+            {
+                UserId = UserId,
+                Id = Guid.Parse(id)
+            };
+
+            var collectionDetailsVM = await Mediator.Send(query);
+            return Ok(collectionDetailsVM);
+        }
+
+
     }
 }
