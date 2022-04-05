@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniRate.Application.AnimeCollections.Commands.UpdateAnimeTitle
+namespace AniRate.Application.AnimeTitles.Commands.UpdateAnimeTitle
 {
     public class UpdateAnimeTitleCommandHandler : IRequestHandler<UpdateAnimeTitleCommand>
     {

@@ -14,7 +14,10 @@ namespace AniRate.WebApi
                 var serviceProviser = scope.ServiceProvider;
                 //try
                 //{
-                    var dbContext = serviceProviser.GetRequiredService<ApplicationDbContext>();
+                var dbContext = serviceProviser.GetRequiredService<ApplicationDbContext>();
+                //await dbContext.Database.EnsureDeletedAsync();
+                //await dbContext.Database.EnsureCreatedAsync();
+
                 //DbInitializer.Initialize(dbContext);
 
                 //if (dbContext.Database.IsSqlServer())

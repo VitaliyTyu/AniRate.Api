@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniRate.Application.AnimeCollections.Commands.DeleteAnimeTitle
+namespace AniRate.Application.AnimeTitles.Commands.DeleteAnimeTitle
 {
     public class DeleteAnimeTitleCommandHandler : IRequestHandler<DeleteAnimeTitleCommand>
     {
@@ -21,8 +21,9 @@ namespace AniRate.Application.AnimeCollections.Commands.DeleteAnimeTitle
 
         public async Task<Unit> Handle(DeleteAnimeTitleCommand request, CancellationToken cancellationToken)
         {
+            //исправить
             var anime = await _dbContext.AnimeTitles
-                .FirstOrDefaultAsync(anime => anime.Id == request.Id && anime.CollectionId == request.CollectionId, cancellationToken);
+                .FirstOrDefaultAsync(anime => anime.Id == request.Id, cancellationToken);
 
             //if (anime == null || anime.UserId != request.UserId)
             //{

@@ -1,4 +1,4 @@
-﻿using AniRate.Application.AnimeCollections.Commands.DeleteAnimeTitle;
+﻿using AniRate.Application.AnimeTitles.Commands.DeleteAnimeTitle;
 using AniRate.Application.Common.Mappings;
 using AutoMapper;
 using System;

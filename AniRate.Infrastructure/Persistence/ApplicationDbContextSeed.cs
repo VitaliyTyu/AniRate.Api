@@ -13,54 +13,72 @@ namespace AniRate.Infrastructure.Persistence
         {
             if (!context.AnimeCollections.Any())
             {
-                context.AnimeCollections.Add(new AnimeCollection
+                var collection1 = new AnimeCollection
                 {
                     UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
                     Id = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A2"),
-                    Name = "Main collection",
-                    AnimeTitles =
-                    {
-                        new AnimeTitle 
-                        {
-                            CollectionId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A2"),
-                            Name = "Anime Title1",
-                            Description = "jiehgffwe",
-                            Rating = 1,
-                        },
+                    Name = "First collection",
+                };
 
-                        new AnimeTitle
-                        {
-                            CollectionId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A2"),
-                            Name = "Anime Title2",
-                            Description = "jiehgqwdffwe",
-                            Rating = 1,
-                        },
+                var collection2 = new AnimeCollection
+                {
+                    UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    Id = Guid.Parse("936DA01F-9ABD-4d9d-80C7-12AF85C822B1"),
+                    Name = "Second collection",
+                };
 
-                        new AnimeTitle
-                        {
-                            CollectionId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A2"),
-                            Name = "Anime Title3",
-                            Description = "jiehgffwe",
-                            Rating = 1,
-                        },
+                await context.AnimeCollections.AddRangeAsync(collection1, collection2);
 
-                        new AnimeTitle
-                        {
-                            CollectionId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A2"),
-                            Name = "Anime Title4",
-                            Description = "jiehgffwe",
-                            Rating = 1,
-                        },
+                var title1 = new AnimeTitle
+                {
+                    UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    Name = "Anime Title1",
+                    Description = "This is title1",
+                    Rating = 1,
+                };
 
-                        new AnimeTitle
-                        {
-                            CollectionId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A2"),
-                            Name = "Anime Title5",
-                            Description = "jiehgffwe",
-                            Rating = 1,
-                        },
-                    }
-                });
+                var title2 = new AnimeTitle
+                {
+                    UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    Name = "Anime Title2",
+                    Description = "This is title2",
+                    Rating = 2,
+                };
+
+                var title3 = new AnimeTitle
+                {
+                    UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    Name = "Anime Title3",
+                    Description = "This is title3",
+                    Rating = 3,
+                };
+
+                var title4 = new AnimeTitle
+                {
+                    UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    Name = "Anime Title4",
+                    Description = "This is title4",
+                    Rating = 4,
+                };
+
+                var title5 = new AnimeTitle
+                {
+                    UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    Name = "Anime Title5",
+                    Description = "This is title5",
+                    Rating = 5,
+                };
+
+                await context.AnimeTitles.AddRangeAsync(title1, title2, title3, title4, title5);
+
+                collection1.AnimeTitles.Add(title1);
+                collection1.AnimeTitles.Add(title2);
+                collection1.AnimeTitles.Add(title3);
+
+                collection2.AnimeTitles.Add(title1);
+                collection2.AnimeTitles.Add(title2);
+                collection2.AnimeTitles.Add(title4);
+                collection2.AnimeTitles.Add(title5);
 
                 await context.SaveChangesAsync();
             }

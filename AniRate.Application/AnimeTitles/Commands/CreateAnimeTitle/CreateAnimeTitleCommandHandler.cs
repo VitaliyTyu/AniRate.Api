@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniRate.Application.AnimeCollections.Commands.CreateAnimeTitle
+namespace AniRate.Application.AnimeTitles.Commands.CreateAnimeTitle
 {
     public class CreateAnimeTitleCommandHandler : IRequestHandler<CreateAnimeTitleCommand, Guid>
     {
@@ -22,7 +22,7 @@ namespace AniRate.Application.AnimeCollections.Commands.CreateAnimeTitle
             //нужно будет добавить UserId
             var animeTitle = new AnimeTitle
             {
-                CollectionId = request.CollectionId,
+                //CollectionId = request.CollectionId,
                 Id = Guid.NewGuid(),
                 Description = request.Description,
                 Name = request.Name,

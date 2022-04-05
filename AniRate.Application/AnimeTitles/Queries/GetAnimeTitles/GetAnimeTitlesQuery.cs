@@ -10,5 +10,6 @@ namespace AniRate.Application.AnimeTitles.Queries.GetAnimeTitles
     public class GetAnimeTitlesQuery : IRequest<AnimeTitlesListVM>
     {
         public Guid CollectionId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

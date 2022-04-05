@@ -16,6 +16,9 @@ namespace AniRate.Infrastructure.Persistence.Configurations
             builder.HasKey(collection => collection.Id);
             builder.HasIndex(collection => collection.Id).IsUnique();
             builder.Property(collection => collection.Name).HasMaxLength(200).IsRequired();
+            builder
+                .HasMany(collection => collection.AnimeTitles)
+                .WithMany(anime => anime.AnimeCollections);
         }
     }
 }

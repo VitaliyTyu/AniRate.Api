@@ -21,6 +21,7 @@ namespace AniRate.WebApi.Controllers
             _dbContext = dbContext;
         }
 
+        //получить все коллекции
         [HttpGet]
         public async Task<ActionResult<AnimeCollectionsListVM>> GetAll()
         {
@@ -32,18 +33,18 @@ namespace AniRate.WebApi.Controllers
             return Ok(collectionsVM);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AnimeCollectionDetailsVM>> Get(string id)
-        {
-            var query = new GetAnimeCollectionByIdQuery()
-            {
-                UserId = UserId,
-                Id = Guid.Parse(id)
-            };
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<AnimeCollectionDetailsVM>> Get(string id)
+        //{
+        //    var query = new GetAnimeCollectionByIdQuery()
+        //    {
+        //        UserId = UserId,
+        //        Id = Guid.Parse(id)
+        //    };
 
-            var collectionDetailsVM = await Mediator.Send(query);
-            return Ok(collectionDetailsVM);
-        }
+        //    var collectionDetailsVM = await Mediator.Send(query);
+        //    return Ok(collectionDetailsVM);
+        //}
 
         //[HttpPost]
         //public async Task<ActionResult<Guid>> Create([FromBody] CreateAnimeCollectionDto createAnimeCollectionDto)

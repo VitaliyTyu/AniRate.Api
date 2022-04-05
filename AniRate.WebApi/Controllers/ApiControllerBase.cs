@@ -21,6 +21,6 @@ namespace AniRate.WebApi.Controllers
         //    ? Guid.Empty
         //    : Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-        internal Guid UserId => Guid.Parse("936da01f-9abd-4d9d-80c7-02af85c822a8");
+        internal Guid UserId => Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8");
     }
 }

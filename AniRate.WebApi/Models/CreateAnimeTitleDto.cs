@@ -1,4 +1,4 @@
-﻿using AniRate.Application.AnimeCollections.Commands.CreateAnimeTitle;
+﻿using AniRate.Application.AnimeTitles.Commands.CreateAnimeTitle;
 using AniRate.Application.Common.Mappings;
 using AutoMapper;
 using System;
