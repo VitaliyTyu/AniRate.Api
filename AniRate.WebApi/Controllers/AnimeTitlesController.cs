@@ -1,4 +1,9 @@
-﻿using AniRate.Application.AnimeTitles.Queries.GetAnimeTitles;
+﻿using AniRate.Application.AnimeTitles.Commands.AddCollectionsInTitle;
+using AniRate.Application.AnimeTitles.Commands.CreateAnimeTitle;
+using AniRate.Application.AnimeTitles.Commands.DeleteCollectionsFromTitle;
+using AniRate.Application.AnimeTitles.Commands.DeleteTitles;
+using AniRate.Application.AnimeTitles.Commands.UpdateAnimeTitleDetails;
+using AniRate.Application.AnimeTitles.Queries.GetAnimeTitles;
 using AniRate.WebApi.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -45,52 +50,53 @@ namespace AniRate.WebApi.Controllers
             return Ok(animeTitlesVM);
         }
 
-        //создать аниме
+        ////создать аниме
         //[HttpPost]
         //public async Task<ActionResult<Guid>> Post([FromBody] CreateAnimeTitleDto createAnimeTitleDto)
         //{
         //    var command = _mapper.Map<CreateAnimeTitleCommand>(createAnimeTitleDto);
-        //    //command.UserId = UserId;
+        //    command.UserId = UserId;
         //    var animeId = await Mediator.Send(command);
         //    return Ok(animeId);
         //}
 
         ////изменить детали аниме
         //[HttpPut]
-        //public async Task<ActionResult> Update([FromBody] UpdateAnimeTitleDto updateAnimeTitleDto)
+        //public async Task<ActionResult> Update([FromBody] UpdateAnimeTitleDetailsDto updateAnimeTitleDetailsDto)
         //{
-        //    var command = _mapper.Map<UpdateAnimeTitleCommand>(updateAnimeTitleDto);
-        //    //command.UserId = UserId;
+        //    var command = _mapper.Map<UpdateAnimeTitleDetailsCommand>(updateAnimeTitleDetailsDto);
+        //    command.UserId = UserId;
         //    await Mediator.Send(command);
         //    return NoContent();
         //}
 
         ////добавить коллекции к аниме
         //[HttpPut]
-        //public async Task<ActionResult> Update([FromBody] UpdateAnimeTitleDto updateAnimeTitleDto)
+        //public async Task<ActionResult> Update([FromBody] AddCollectionsInTitleDto addCollectionsInTitleDto)
         //{
-        //    var command = _mapper.Map<UpdateAnimeTitleCommand>(updateAnimeTitleDto);
-        //    //command.UserId = UserId;
+        //    var command = _mapper.Map<AddCollectionsInTitleCommand>(addCollectionsInTitleDto);
+        //    command.UserId = UserId;
         //    await Mediator.Send(command);
         //    return NoContent();
         //}
 
-        //удалить аниме
+        ////удалить аниме тайтлы
         //[HttpDelete]
-        //public async Task<ActionResult> Delete([FromBody] DeleteAnimeTitleDto deleteAnimeTitleDto)
+        //public async Task<ActionResult> Delete([FromBody] DeleteTitlesDto deleteTitlesDto)
         //{
-        //    var command = _mapper.Map<DeleteAnimeTitleCommand>(deleteAnimeTitleDto);
-        //    //command.UserId = UserId;
+        //    var command = _mapper.Map<DeleteTitlesCommand>(deleteTitlesDto);
+        //    command.UserId = UserId;
         //    await Mediator.Send(command);
         //    return NoContent();
         //}
 
-        //удалить коллекции из аниме
+        ////удалить коллекции из аниме
         //[HttpDelete]
-        //public async Task<ActionResult> Delete([FromBody] DeleteAnimeTitleDto deleteAnimeTitleDto)
+        //public async Task<ActionResult> Delete([FromBody] DeleteCollectionsFromTitleDto
+        //    deleteCollectionsFromTitleDto)
         //{
-        //    var command = _mapper.Map<DeleteAnimeTitleCommand>(deleteAnimeTitleDto);
-        //    //command.UserId = UserId;
+        //    var command = _mapper.Map<DeleteCollectionsFromTitleCommand>(deleteCollectionsFromTitleDto);
+        //    command.UserId = UserId;
         //    await Mediator.Send(command);
         //    return NoContent();
         //}

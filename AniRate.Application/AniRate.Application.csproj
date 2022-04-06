@@ -20,8 +20,4 @@
     <ProjectReference Include="..\AniRate.Domain\AniRate.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="AnimeTitles\Commands\" />
-  </ItemGroup>
-
 </Project>

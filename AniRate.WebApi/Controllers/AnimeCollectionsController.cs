@@ -1,6 +1,6 @@
 ﻿using AniRate.Application.AnimeCollections.Commands.AddTitlesInCollection;
 using AniRate.Application.AnimeCollections.Commands.CreateCollection;
-using AniRate.Application.AnimeCollections.Commands.DeleteCollection;
+using AniRate.Application.AnimeCollections.Commands.DeleteCollections;
 using AniRate.Application.AnimeCollections.Commands.DeleteTitlesFromCollection;
 using AniRate.Application.AnimeCollections.Commands.UpdateCollectionDetails;
 using AniRate.Application.AnimeCollections.Queries.GetCollectionById;
@@ -53,7 +53,7 @@ namespace AniRate.WebApi.Controllers
         }
 
         //создать коллекцию со списком аниме
-        [HttpPost]
+        [HttpPost("CreatingCollection")]
         public async Task<ActionResult<Guid>> Create([FromBody] CreateCollectionDto createCollectionDto)
         {
             var command = _mapper.Map<CreateCollectionCommand>(createCollectionDto);
@@ -63,7 +63,7 @@ namespace AniRate.WebApi.Controllers
         }
 
         //добавить аниме в коллекцию
-        [HttpPut("titles")]
+        [HttpPut("AddingTitles")]
         public async Task<ActionResult> Add([FromBody] AddTitlesInCollectionDto addTitlesInCollectionDto)
         {
             var command = _mapper.Map<AddTitlesInCollectionCommand>(addTitlesInCollectionDto);
@@ -73,7 +73,7 @@ namespace AniRate.WebApi.Controllers
         }
 
         //изменить описание/имя коллекции
-        [HttpPut("details")]
+        [HttpPut("ChangingDetails")]
         public async Task<ActionResult> Update([FromBody] UpdateCollectionDetailsDto updateCollectionDetailsDto)
         {
             var command = _mapper.Map<UpdateCollectionDetailsCommand>(updateCollectionDetailsDto);
@@ -82,21 +82,18 @@ namespace AniRate.WebApi.Controllers
             return NoContent();
         }
 
-        //удалить коллекцию
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(Guid id)
+        //удалить коллекции
+        [HttpDelete("DeletingCollections")]
+        public async Task<ActionResult> Delete([FromBody] DeleteCollectionsDto deleteCollectionsDto)
         {
-            var command = new DeleteCollectionCommand
-            {
-                Id = id,
-                UserId = UserId
-            };
+            var command = _mapper.Map<DeleteCollectionsCommand>(deleteCollectionsDto);
+            command.UserId = UserId;
             await Mediator.Send(command);
             return NoContent();
         }
 
         //удалить аниме из коллекции
-        [HttpDelete]
+        [HttpDelete("DeletingAnime")]
         public async Task<ActionResult> DeleteFromCollection([FromBody] DeleteTitlesFromCollectionDto deleteTitlesFromCollectionDto)
         {
             var command = _mapper.Map<DeleteTitlesFromCollectionCommand>(deleteTitlesFromCollectionDto);
