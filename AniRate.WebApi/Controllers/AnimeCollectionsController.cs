@@ -1,5 +1,8 @@
 ﻿using AniRate.Application.AnimeCollections.Commands.AddTitlesInCollection;
 using AniRate.Application.AnimeCollections.Commands.CreateCollection;
+using AniRate.Application.AnimeCollections.Commands.DeleteCollection;
+using AniRate.Application.AnimeCollections.Commands.DeleteTitlesFromCollection;
+using AniRate.Application.AnimeCollections.Commands.UpdateCollectionDetails;
 using AniRate.Application.AnimeCollections.Queries.GetCollectionById;
 using AniRate.Application.AnimeCollections.Queries.GetCollections;
 using AniRate.Application.Interfaces;
@@ -60,8 +63,8 @@ namespace AniRate.WebApi.Controllers
         }
 
         //добавить аниме в коллекцию
-        [HttpPut]
-        public async Task<ActionResult> Update([FromBody] AddTitlesInCollectionDto addTitlesInCollectionDto)
+        [HttpPut("titles")]
+        public async Task<ActionResult> Add([FromBody] AddTitlesInCollectionDto addTitlesInCollectionDto)
         {
             var command = _mapper.Map<AddTitlesInCollectionCommand>(addTitlesInCollectionDto);
             command.UserId = UserId;
@@ -69,27 +72,37 @@ namespace AniRate.WebApi.Controllers
             return NoContent();
         }
 
-        ////изменить описание/имя коллекции
-        //[HttpPut("/details")]
-        //public async Task<ActionResult> Update([FromBody] UpdateCollectionDetailsDto updateCollectionDetailsDto)
-        //{
-        //    var command = _mapper.Map<UpdateCollectionDetailsCommand>(updateCollectionDetailsDto);
-        //    command.UserId = UserId;
-        //    await Mediator.Send(command);
-        //    return NoContent();
-        //}
+        //изменить описание/имя коллекции
+        [HttpPut("details")]
+        public async Task<ActionResult> Update([FromBody] UpdateCollectionDetailsDto updateCollectionDetailsDto)
+        {
+            var command = _mapper.Map<UpdateCollectionDetailsCommand>(updateCollectionDetailsDto);
+            command.UserId = UserId;
+            await Mediator.Send(command);
+            return NoContent();
+        }
 
-        ////удалить коллекцию
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult> Delete(Guid id)
-        //{
-        //    var command = new DeleteCollectionCommand
-        //    {
-        //        Id = id,
-        //        UserId = UserId
-        //    };
-        //    await Mediator.Send(command);
-        //    return NoContent();
-        //}
+        //удалить коллекцию
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            var command = new DeleteCollectionCommand
+            {
+                Id = id,
+                UserId = UserId
+            };
+            await Mediator.Send(command);
+            return NoContent();
+        }
+
+        //удалить аниме из коллекции
+        [HttpDelete]
+        public async Task<ActionResult> DeleteFromCollection([FromBody] DeleteTitlesFromCollectionDto deleteTitlesFromCollectionDto)
+        {
+            var command = _mapper.Map<DeleteTitlesFromCollectionCommand>(deleteTitlesFromCollectionDto);
+            command.UserId = UserId;
+            await Mediator.Send(command);
+            return NoContent();
+        }
     }
 }

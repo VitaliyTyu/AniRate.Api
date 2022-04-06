@@ -9,18 +9,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniRate.Application.AnimeCollections.Commands.AddTitlesInCollection
+namespace AniRate.Application.AnimeCollections.Commands.DeleteTitlesFromCollection
 {
-    public class AddTitlesInCollectionCommandHandler
-        : IRequestHandler<AddTitlesInCollectionCommand>
+    public class DeleteTitlesFromCollectionCommandHandler : IRequestHandler<DeleteTitlesFromCollectionCommand>
     {
         private readonly IApplicationDbContext _dbContext;
-        public AddTitlesInCollectionCommandHandler(IApplicationDbContext dbContext)
+        public DeleteTitlesFromCollectionCommandHandler(IApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
-
-        public async Task<Unit> Handle(AddTitlesInCollectionCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteTitlesFromCollectionCommand request, CancellationToken cancellationToken)
         {
             var animeTitles = new List<AnimeTitle>();
 
@@ -47,8 +45,7 @@ namespace AniRate.Application.AnimeCollections.Commands.AddTitlesInCollection
             }
 
             foreach (var anime in animeTitles)
-                if (collection.AnimeTitles.FirstOrDefault(a => a.Id == anime.Id) == default(AnimeTitle))
-                    collection.AnimeTitles.Add(anime);
+                    collection.AnimeTitles.Remove(anime);
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 

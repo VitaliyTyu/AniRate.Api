@@ -18,7 +18,7 @@ namespace AniRate.WebApi.Controllers
 
 
         //Получение всех аниме в конкретной коллекции
-        [HttpGet("{id}")]
+        [HttpGet("titles/{id}")]
         public async Task<ActionResult<AnimeTitlesListVM>> Get(Guid id)
         {
             var query = new GetAnimeTitlesQuery()
@@ -32,18 +32,18 @@ namespace AniRate.WebApi.Controllers
         }
 
         //Получение деталей определенного аниме
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<AnimeTitlesListVM>> Get(string id)
-        //{
-        //    var query = new GetAnimeTitlesQuery()
-        //    {
-        //        UserId = UserId,
-        //        CollectionId = Guid.Parse(id)
-        //    };
-        //    var animeTitlesVM = await Mediator.Send(query);
+        [HttpGet("details/{id}")]
+        public async Task<ActionResult<AnimeTitlesListVM>> Get(string id)
+        {
+            var query = new GetAnimeTitlesQuery()
+            {
+                UserId = UserId,
+                CollectionId = Guid.Parse(id)
+            };
+            var animeTitlesVM = await Mediator.Send(query);
 
-        //    return Ok(animeTitlesVM);
-        //}
+            return Ok(animeTitlesVM);
+        }
 
         //создать аниме
         //[HttpPost]
@@ -55,7 +55,7 @@ namespace AniRate.WebApi.Controllers
         //    return Ok(animeId);
         //}
 
-        //изменить детали аниме
+        ////изменить детали аниме
         //[HttpPut]
         //public async Task<ActionResult> Update([FromBody] UpdateAnimeTitleDto updateAnimeTitleDto)
         //{
@@ -65,7 +65,7 @@ namespace AniRate.WebApi.Controllers
         //    return NoContent();
         //}
 
-        //изменить саисок коллекций у аниме(т.е. добавить коллекцию)
+        ////добавить коллекции к аниме
         //[HttpPut]
         //public async Task<ActionResult> Update([FromBody] UpdateAnimeTitleDto updateAnimeTitleDto)
         //{
@@ -76,6 +76,16 @@ namespace AniRate.WebApi.Controllers
         //}
 
         //удалить аниме
+        //[HttpDelete]
+        //public async Task<ActionResult> Delete([FromBody] DeleteAnimeTitleDto deleteAnimeTitleDto)
+        //{
+        //    var command = _mapper.Map<DeleteAnimeTitleCommand>(deleteAnimeTitleDto);
+        //    //command.UserId = UserId;
+        //    await Mediator.Send(command);
+        //    return NoContent();
+        //}
+
+        //удалить коллекции из аниме
         //[HttpDelete]
         //public async Task<ActionResult> Delete([FromBody] DeleteAnimeTitleDto deleteAnimeTitleDto)
         //{
