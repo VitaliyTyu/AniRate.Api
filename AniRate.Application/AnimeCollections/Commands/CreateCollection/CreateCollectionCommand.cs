@@ -1,18 +1,19 @@
-﻿using System;
+﻿using AutoMapper;
+using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniRate.Domain.Entities
+namespace AniRate.Application.AnimeCollections.Commands.CreateCollection
 {
-    public class AnimeCollection
+    public class CreateCollectionCommand : IRequest<Guid>
     {
         public Guid UserId { get; set; }
-        public Guid Id { get; set; }
         public string Name { get; set; }
         public string? Comment { get; set; }
         public double? AverageRating { get; set; }
-        public IList<AnimeTitle> AnimeTitles { get; set; } = new List<AnimeTitle>();
+        public List<Guid> AnimeTitlesId { get; set; } = new List<Guid>();
     }
 }

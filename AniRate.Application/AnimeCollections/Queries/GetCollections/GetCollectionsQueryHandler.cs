@@ -9,27 +9,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniRate.Application.AnimeCollections.Queries.GetAnimeCollections
+namespace AniRate.Application.AnimeCollections.Queries.GetCollections
 {
-    public class GetAnimeCollectionsQueryHandler : IRequestHandler<GetAnimeCollectionsQuery, AnimeCollectionsListVM>
+    public class GetCollectionsQueryHandler : IRequestHandler<GetCollectionsQuery, CollectionsListVM>
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public GetAnimeCollectionsQueryHandler(IApplicationDbContext dbContext, IMapper mapper)
+        public GetCollectionsQueryHandler(IApplicationDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
         }
 
-        public async Task<AnimeCollectionsListVM> Handle(GetAnimeCollectionsQuery request, CancellationToken cancellationToken)
+        public async Task<CollectionsListVM> Handle(GetCollectionsQuery request, CancellationToken cancellationToken)
         {
             var collections = await _dbContext.AnimeCollections
                 .Where(c => c.UserId == request.UserId)
-                .ProjectTo<AnimeCollectionBriefDto>(_mapper.ConfigurationProvider)
+                .ProjectTo<CollectionBriefDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
-            return new AnimeCollectionsListVM { Collections = collections };
+            return new CollectionsListVM { Collections = collections };
         }
     }
 }

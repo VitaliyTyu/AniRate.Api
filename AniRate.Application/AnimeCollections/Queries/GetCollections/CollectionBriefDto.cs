@@ -7,25 +7,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniRate.Application.AnimeCollections.Queries.GetAnimeCollectionById
+namespace AniRate.Application.AnimeCollections.Queries.GetCollections
 {
-    public class AnimeCollectionDetailsVM : IMapWith<AnimeCollection>
+    public class CollectionBriefDto : IMapWith<AnimeCollection>
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        //public IList<AnimeTitle> AnimeTitles { get; private set; } = new List<AnimeTitle>();
-
+        public string? Comment { get; set; }
+        public double? AverageRating { get; set; }
         public IList<AnimeTitle> AnimeTitles { get; internal set; } = new List<AnimeTitle>();
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<AnimeCollection, AnimeCollectionDetailsVM>()
+            profile.CreateMap<AnimeCollection, CollectionBriefDto>()
                 .ForMember(collectionDto => collectionDto.Id, opt =>
                     opt.MapFrom(collection => collection.Id))
                 .ForMember(collectionDto => collectionDto.Name, opt =>
                     opt.MapFrom(collection => collection.Name))
                 .ForMember(collectionDto => collectionDto.AnimeTitles, opt =>
-                    opt.MapFrom(collection => collection.AnimeTitles));
+                    opt.MapFrom(collection => collection.AnimeTitles))
+                .ForMember(collectionDto => collectionDto.Comment, opt =>
+                    opt.MapFrom(collection => collection.Comment))
+                .ForMember(collectionDto => collectionDto.AverageRating, opt =>
+                    opt.MapFrom(collection => collection.AverageRating));
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using AniRate.Application.AnimeCollections.Queries.GetAnimeCollectionById;
-using AniRate.Application.AnimeCollections.Queries.GetAnimeCollections;
+﻿using AniRate.Application.AnimeCollections.Commands.AddTitlesInCollection;
+using AniRate.Application.AnimeCollections.Commands.CreateCollection;
+using AniRate.Application.AnimeCollections.Queries.GetCollectionById;
+using AniRate.Application.AnimeCollections.Queries.GetCollections;
 using AniRate.Application.Interfaces;
 using AniRate.Domain.Entities;
 using AniRate.WebApi.Models;
@@ -23,9 +25,9 @@ namespace AniRate.WebApi.Controllers
 
         //получить все коллекции
         [HttpGet]
-        public async Task<ActionResult<AnimeCollectionsListVM>> GetAll()
+        public async Task<ActionResult<CollectionsListVM>> GetAll()
         {
-            var query = new GetAnimeCollectionsQuery()
+            var query = new GetCollectionsQuery()
             {
                 UserId = UserId
             };
@@ -33,44 +35,58 @@ namespace AniRate.WebApi.Controllers
             return Ok(collectionsVM);
         }
 
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<AnimeCollectionDetailsVM>> Get(string id)
-        //{
-        //    var query = new GetAnimeCollectionByIdQuery()
-        //    {
-        //        UserId = UserId,
-        //        Id = Guid.Parse(id)
-        //    };
+        //получить коллекцию по id
+        [HttpGet("{id}")]
+        public async Task<ActionResult<CollectionDetailsVM>> Get(Guid id)
+        {
+            var query = new GetCollectionByIdQuery()
+            {
+                UserId = UserId,
+                Id = id
+            };
 
-        //    var collectionDetailsVM = await Mediator.Send(query);
-        //    return Ok(collectionDetailsVM);
-        //}
+            var collectionDetailsVM = await Mediator.Send(query);
+            return Ok(collectionDetailsVM);
+        }
 
-        //[HttpPost]
-        //public async Task<ActionResult<Guid>> Create([FromBody] CreateAnimeCollectionDto createAnimeCollectionDto)
-        //{
-        //    var command = _mapper.Map<CreateAnimeCollectionCommand>(createAnimeCollectionDto);
-        //    //command.UserId = UserId;
-        //    var collectionId = await Mediator.Send(command);
-        //    return Ok(collectionId);
-        //}
+        //создать коллекцию со списком аниме
+        [HttpPost]
+        public async Task<ActionResult<Guid>> Create([FromBody] CreateCollectionDto createCollectionDto)
+        {
+            var command = _mapper.Map<CreateCollectionCommand>(createCollectionDto);
+            command.UserId = UserId;
+            var collectionId = await Mediator.Send(command);
+            return Ok(collectionId);
+        }
 
-        //[HttpPut]
-        //public async Task<ActionResult> Update([FromBody] UpdateAnimeCollectionDto updateAnimeCollectionDto)
+        //добавить аниме в коллекцию
+        [HttpPut]
+        public async Task<ActionResult> Update([FromBody] AddTitlesInCollectionDto addTitlesInCollectionDto)
+        {
+            var command = _mapper.Map<AddTitlesInCollectionCommand>(addTitlesInCollectionDto);
+            command.UserId = UserId;
+            await Mediator.Send(command);
+            return NoContent();
+        }
+
+        ////изменить описание/имя коллекции
+        //[HttpPut("/details")]
+        //public async Task<ActionResult> Update([FromBody] UpdateCollectionDetailsDto updateCollectionDetailsDto)
         //{
-        //    var command = _mapper.Map<UpdateAnimeCollectionCommand>(updateAnimeCollectionDto);
-        //    //command.UserId = UserId;
+        //    var command = _mapper.Map<UpdateCollectionDetailsCommand>(updateCollectionDetailsDto);
+        //    command.UserId = UserId;
         //    await Mediator.Send(command);
         //    return NoContent();
         //}
 
+        ////удалить коллекцию
         //[HttpDelete("{id}")]
-        //public async Task<ActionResult> Delete(string id)
+        //public async Task<ActionResult> Delete(Guid id)
         //{
-        //    var command = new DeleteAnimeCollectionCommand
+        //    var command = new DeleteCollectionCommand
         //    {
         //        Id = id,
-        //        //UserId = UserId
+        //        UserId = UserId
         //    };
         //    await Mediator.Send(command);
         //    return NoContent();

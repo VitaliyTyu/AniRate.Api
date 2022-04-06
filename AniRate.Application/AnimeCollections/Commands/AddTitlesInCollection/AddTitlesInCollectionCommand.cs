@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniRate.Application.AnimeCollections.Queries.GetAnimeCollectionById
+namespace AniRate.Application.AnimeCollections.Commands.AddTitlesInCollection
 {
-    public class GetAnimeCollectionByIdQuery : IRequest<AnimeCollectionDetailsVM>
+    public class AddTitlesInCollectionCommand : IRequest
     {
         public Guid UserId { get; set; }
         public Guid Id { get; set; }
+        public List<Guid> AnimeTitlesId { get; set; } = new List<Guid>();
     }
 }
