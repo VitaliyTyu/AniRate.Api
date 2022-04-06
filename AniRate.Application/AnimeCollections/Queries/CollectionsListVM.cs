@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniRate.Application.AnimeCollections.Queries.GetCollections
+namespace AniRate.Application.AnimeCollections.Queries
 {
     public class CollectionsListVM
     {
-        public IList<CollectionBriefDto> Collections { get; set; }
+        public IList<CollectionDetailsVM> Collections { get; set; }
     }
 }

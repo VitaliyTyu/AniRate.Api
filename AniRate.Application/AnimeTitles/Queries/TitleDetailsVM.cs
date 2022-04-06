@@ -7,21 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniRate.Application.AnimeTitles.Queries.GetAnimeTitles
+namespace AniRate.Application.AnimeTitles.Queries
 {
-    public class AnimeTitleBriefDto : IMapWith<AnimeTitle>
+    public class TitleDetailsVM : IMapWith<AnimeTitle>
     {
-        public Guid UserId { get; set; }
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string? Description { get; set; }
         public double? Rating { get; set; }
         public double? UserRating { get; set; }
         public string? UserComment { get; set; }
+        public IList<AnimeCollection> AnimeCollections { get; set; } = new List<AnimeCollection>();
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<AnimeTitle, AnimeTitleBriefDto>()
+            profile.CreateMap<AnimeTitle, TitleDetailsVM>()
                 .ForMember(animeDto => animeDto.Id, opt =>
                     opt.MapFrom(anime => anime.Id))
                 .ForMember(animeDto => animeDto.Name, opt =>
@@ -33,7 +33,9 @@ namespace AniRate.Application.AnimeTitles.Queries.GetAnimeTitles
                 .ForMember(animeDto => animeDto.UserRating, opt =>
                     opt.MapFrom(anime => anime.UserRating))
                 .ForMember(animeDto => animeDto.UserComment, opt =>
-                    opt.MapFrom(anime => anime.UserComment));
+                    opt.MapFrom(anime => anime.UserComment))
+                .ForMember(animeDto => animeDto.AnimeCollections, opt =>
+                    opt.MapFrom(anime => anime.AnimeCollections));
         }
     }
 }

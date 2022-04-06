@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniRate.Application.AnimeTitles.Commands.UpdateAnimeTitleDetails
+namespace AniRate.Application.AnimeTitles.Commands.UpdateTitleDetails
 {
-    public class UpdateAnimeTitleDetailsCommand
+    public class UpdateTitleDetailsCommandHandler
     {
 
     }

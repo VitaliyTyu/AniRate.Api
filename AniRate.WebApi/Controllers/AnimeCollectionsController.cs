@@ -3,11 +3,13 @@ using AniRate.Application.AnimeCollections.Commands.CreateCollection;
 using AniRate.Application.AnimeCollections.Commands.DeleteCollections;
 using AniRate.Application.AnimeCollections.Commands.DeleteTitlesFromCollection;
 using AniRate.Application.AnimeCollections.Commands.UpdateCollectionDetails;
+using AniRate.Application.AnimeCollections.Queries;
 using AniRate.Application.AnimeCollections.Queries.GetCollectionById;
 using AniRate.Application.AnimeCollections.Queries.GetCollections;
+using AniRate.Application.AnimeCollections.Queries.GetCollectionsFromTitle;
 using AniRate.Application.Interfaces;
 using AniRate.Domain.Entities;
-using AniRate.WebApi.Models;
+using AniRate.WebApi.Models.AnimeCollectionsDtos;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +51,20 @@ namespace AniRate.WebApi.Controllers
             };
 
             var collectionDetailsVM = await Mediator.Send(query);
+            return Ok(collectionDetailsVM);
+        }
+
+        //получить коллекции определенного тайтла
+        [HttpGet("CollectionsFromTitle/{id}")]
+        public async Task<ActionResult<CollectionDetailsVM>> GetCollectionsFromTitle(Guid id)
+        {
+            var query = new GetCollectionsFromTitleQuery()
+            {
+                Id = id,
+                UserId = UserId,
+            };
+            var collectionDetailsVM = await Mediator.Send(query);
+
             return Ok(collectionDetailsVM);
         }
 

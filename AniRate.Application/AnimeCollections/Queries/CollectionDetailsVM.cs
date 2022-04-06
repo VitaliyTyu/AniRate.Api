@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniRate.Application.AnimeCollections.Queries.GetCollections
+namespace AniRate.Application.AnimeCollections.Queries
 {
-    public class CollectionBriefDto : IMapWith<AnimeCollection>
+    public class CollectionDetailsVM : IMapWith<AnimeCollection>
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -19,7 +19,7 @@ namespace AniRate.Application.AnimeCollections.Queries.GetCollections
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<AnimeCollection, CollectionBriefDto>()
+            profile.CreateMap<AnimeCollection, CollectionDetailsVM>()
                 .ForMember(collectionDto => collectionDto.Id, opt =>
                     opt.MapFrom(collection => collection.Id))
                 .ForMember(collectionDto => collectionDto.Name, opt =>

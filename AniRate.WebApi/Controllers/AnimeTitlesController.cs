@@ -1,10 +1,13 @@
 ﻿using AniRate.Application.AnimeTitles.Commands.AddCollectionsInTitle;
-using AniRate.Application.AnimeTitles.Commands.CreateAnimeTitle;
+using AniRate.Application.AnimeTitles.Commands.CreateTitle;
 using AniRate.Application.AnimeTitles.Commands.DeleteCollectionsFromTitle;
 using AniRate.Application.AnimeTitles.Commands.DeleteTitles;
-using AniRate.Application.AnimeTitles.Commands.UpdateAnimeTitleDetails;
-using AniRate.Application.AnimeTitles.Queries.GetAnimeTitles;
-using AniRate.WebApi.Models;
+using AniRate.Application.AnimeTitles.Commands.UpdateTitleDetails;
+using AniRate.Application.AnimeTitles.Queries;
+using AniRate.Application.AnimeTitles.Queries.GetTitleDetails;
+using AniRate.Application.AnimeTitles.Queries.GetTitles;
+using AniRate.Application.AnimeTitles.Queries.GetTitlesFromCollection;
+using AniRate.WebApi.Models.AnimeTitlesDtos;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -22,14 +25,27 @@ namespace AniRate.WebApi.Controllers
         public AnimeTitlesController(IMapper mapper) => _mapper = mapper;
 
 
-        //Получение всех аниме в конкретной коллекции
-        [HttpGet("titles/{id}")]
-        public async Task<ActionResult<AnimeTitlesListVM>> Get(Guid id)
+        //Получение всех аниме
+        [HttpGet]
+        public async Task<ActionResult<TitlesListVM>> GetAll()
         {
-            var query = new GetAnimeTitlesQuery()
+            var query = new GetTitlesQuery()
             {
                 UserId = UserId,
-                CollectionId = id
+            };
+            var animeTitlesVM = await Mediator.Send(query);
+
+            return Ok(animeTitlesVM);
+        }
+
+        //Получение всех аниме в конкретной коллекции
+        [HttpGet("TitlesFromCollection/{id}")]
+        public async Task<ActionResult<TitlesListVM>> GetTitlesFromCollection(Guid id)
+        {
+            var query = new GetTitlesFromCollectionQuery()
+            {
+                Id = id,
+                UserId = UserId,
             };
             var animeTitlesVM = await Mediator.Send(query);
 
@@ -37,24 +53,24 @@ namespace AniRate.WebApi.Controllers
         }
 
         //Получение деталей определенного аниме
-        [HttpGet("details/{id}")]
-        public async Task<ActionResult<AnimeTitlesListVM>> Get(string id)
+        [HttpGet("Details/{id}")]
+        public async Task<ActionResult<TitleDetailsVM>> GetDetails(Guid id)
         {
-            var query = new GetAnimeTitlesQuery()
+            var query = new GetTitleDetailsQuery()
             {
                 UserId = UserId,
-                CollectionId = Guid.Parse(id)
+                Id = id,
             };
-            var animeTitlesVM = await Mediator.Send(query);
+            var titleDetailsVM = await Mediator.Send(query);
 
-            return Ok(animeTitlesVM);
+            return Ok(titleDetailsVM);
         }
 
         ////создать аниме
-        //[HttpPost]
-        //public async Task<ActionResult<Guid>> Post([FromBody] CreateAnimeTitleDto createAnimeTitleDto)
+        //[HttpPost("CreatingTitle")]
+        //public async Task<ActionResult<Guid>> Post([FromBody] CreateTitleDto createTitleDto)
         //{
-        //    var command = _mapper.Map<CreateAnimeTitleCommand>(createAnimeTitleDto);
+        //    var command = _mapper.Map<CreateTitleCommand>(createTitleDto);
         //    command.UserId = UserId;
         //    var animeId = await Mediator.Send(command);
         //    return Ok(animeId);
@@ -62,9 +78,9 @@ namespace AniRate.WebApi.Controllers
 
         ////изменить детали аниме
         //[HttpPut]
-        //public async Task<ActionResult> Update([FromBody] UpdateAnimeTitleDetailsDto updateAnimeTitleDetailsDto)
+        //public async Task<ActionResult> Update([FromBody] UpdateTitleDetailsDto updateTitleDetailsDto)
         //{
-        //    var command = _mapper.Map<UpdateAnimeTitleDetailsCommand>(updateAnimeTitleDetailsDto);
+        //    var command = _mapper.Map<UpdateTitleDetailsCommand>(updateTitleDetailsDto);
         //    command.UserId = UserId;
         //    await Mediator.Send(command);
         //    return NoContent();

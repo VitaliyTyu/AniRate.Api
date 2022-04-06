@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniRate.Application.AnimeTitles.Commands.CreateAnimeTitle
+namespace AniRate.WebApi.Models.AnimeTitlesDtos
 {
-    public class CreateAnimeTitleCommand
+    public class UpdateTitleDetailsDto
     {
 
     }
