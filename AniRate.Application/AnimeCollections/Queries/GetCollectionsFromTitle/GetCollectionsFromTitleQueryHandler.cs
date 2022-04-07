@@ -2,6 +2,7 @@
 using AniRate.Application.Interfaces;
 using AniRate.Domain.Entities;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,24 +26,17 @@ namespace AniRate.Application.AnimeCollections.Queries.GetCollectionsFromTitle
 
         public async Task<CollectionsListVM> Handle(GetCollectionsFromTitleQuery request, CancellationToken cancellationToken)
         {
-            var title = await _dbContext.AnimeTitles
-                .Include(a => a.AnimeCollections)
-                .FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
+            var collectionsList = await _dbContext.AnimeTitles
+                .Where(a => a.Id == request.Id && a.UserId == request.UserId)
+                .ProjectTo<CollectionsListVM>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
 
-            if (title == null || title.UserId != request.UserId)
+            if (collectionsList[0].Collections == null || collectionsList[0].Collections.Count == 0)
             {
                 throw new NotFoundException(nameof(AnimeTitle), request.Id);
             }
 
-            var collections = title.AnimeCollections;
-            List<CollectionDetailsVM> collectionDetailsVMs = new List<CollectionDetailsVM>();
-
-            foreach (var collection in collections)
-            {
-                collectionDetailsVMs.Add(_mapper.Map<CollectionDetailsVM>(collection));
-            }
-
-            return new CollectionsListVM { Collections = collectionDetailsVMs };
+            return new CollectionsListVM { Collections = collectionsList[0].Collections };
         }
     }
 }

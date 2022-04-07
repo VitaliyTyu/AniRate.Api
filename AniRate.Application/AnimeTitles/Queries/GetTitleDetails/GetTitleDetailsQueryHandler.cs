@@ -26,7 +26,7 @@ namespace AniRate.Application.AnimeTitles.Queries.GetTitleDetails
 
         public async Task<TitleDetailsVM> Handle(GetTitleDetailsQuery request, CancellationToken cancellationToken)
         {
-            var titles = await _dbContext.AnimeCollections
+            var titles = await _dbContext.AnimeTitles
                 .Where(a => a.Id == request.Id && a.UserId == request.UserId)
                 .ProjectTo<TitleDetailsVM>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);

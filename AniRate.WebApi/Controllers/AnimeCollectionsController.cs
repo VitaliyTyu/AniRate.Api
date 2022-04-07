@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AniRate.WebApi.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     public class AnimeCollectionsController : ApiControllerBase
     {
@@ -28,7 +29,12 @@ namespace AniRate.WebApi.Controllers
             _dbContext = dbContext;
         }
 
-        //получить все коллекции
+        /// <summary>
+        /// получить все коллекции
+        /// </summary>
+        /// <returns>Returns CollectionsListVM</returns>
+        /// <response code="200">Success</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
         public async Task<ActionResult<CollectionsListVM>> GetAll()
         {
@@ -40,7 +46,12 @@ namespace AniRate.WebApi.Controllers
             return Ok(collectionsVM);
         }
 
-        //получить коллекцию по id
+        /// <summary>
+        /// получить коллекцию по id
+        /// </summary>
+        /// <returns>Returns CollectionDetailsVM</returns>
+        /// <response code="200">Success</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("{id}")]
         public async Task<ActionResult<CollectionDetailsVM>> Get(Guid id)
         {
@@ -54,7 +65,12 @@ namespace AniRate.WebApi.Controllers
             return Ok(collectionDetailsVM);
         }
 
-        //получить коллекции определенного тайтла
+        /// <summary>
+        /// получить коллекции определенного тайтла
+        /// </summary>
+        /// <returns>Returns CollectionDetailsVM</returns>
+        /// <response code="200">Success</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("CollectionsFromTitle/{id}")]
         public async Task<ActionResult<CollectionDetailsVM>> GetCollectionsFromTitle(Guid id)
         {
@@ -68,8 +84,13 @@ namespace AniRate.WebApi.Controllers
             return Ok(collectionDetailsVM);
         }
 
-        //создать коллекцию со списком аниме
-        [HttpPost("CreatingCollection")]
+        /// <summary>
+        /// создать коллекцию со списком аниме
+        /// </summary>
+        /// <returns>Guid id</returns>
+        /// <response code="201">Success</response>
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [HttpPost("Collection")]
         public async Task<ActionResult<Guid>> Create([FromBody] CreateCollectionDto createCollectionDto)
         {
             var command = _mapper.Map<CreateCollectionCommand>(createCollectionDto);
@@ -78,8 +99,13 @@ namespace AniRate.WebApi.Controllers
             return Ok(collectionId);
         }
 
-        //добавить аниме в коллекцию
-        [HttpPut("AddingTitles")]
+        /// <summary>
+        /// добавить аниме в коллекцию
+        /// </summary>
+        /// <returns>NoContent</returns>
+        /// <response code="204">Success</response>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpPut("Titles")]
         public async Task<ActionResult> Add([FromBody] AddTitlesInCollectionDto addTitlesInCollectionDto)
         {
             var command = _mapper.Map<AddTitlesInCollectionCommand>(addTitlesInCollectionDto);
@@ -88,8 +114,13 @@ namespace AniRate.WebApi.Controllers
             return NoContent();
         }
 
-        //изменить описание/имя коллекции
-        [HttpPut("ChangingDetails")]
+        /// <summary>
+        /// изменить описание/имя коллекции
+        /// </summary>
+        /// <returns>NoContent</returns>
+        /// <response code="204">Success</response>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpPut("Details")]
         public async Task<ActionResult> Update([FromBody] UpdateCollectionDetailsDto updateCollectionDetailsDto)
         {
             var command = _mapper.Map<UpdateCollectionDetailsCommand>(updateCollectionDetailsDto);
@@ -98,8 +129,13 @@ namespace AniRate.WebApi.Controllers
             return NoContent();
         }
 
-        //удалить коллекции
-        [HttpDelete("DeletingCollections")]
+        /// <summary>
+        /// удалить коллекции
+        /// </summary>
+        /// <returns>NoContent</returns>
+        /// <response code="204">Success</response>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpDelete("Collections")]
         public async Task<ActionResult> Delete([FromBody] DeleteCollectionsDto deleteCollectionsDto)
         {
             var command = _mapper.Map<DeleteCollectionsCommand>(deleteCollectionsDto);
@@ -108,8 +144,13 @@ namespace AniRate.WebApi.Controllers
             return NoContent();
         }
 
-        //удалить аниме из коллекции
-        [HttpDelete("DeletingAnime")]
+        /// <summary>
+        /// удалить аниме из коллекции
+        /// </summary>
+        /// <returns>NoContent</returns>
+        /// <response code="204">Success</response>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpDelete("TitlesFromCollection")]
         public async Task<ActionResult> DeleteFromCollection([FromBody] DeleteTitlesFromCollectionDto deleteTitlesFromCollectionDto)
         {
             var command = _mapper.Map<DeleteTitlesFromCollectionCommand>(deleteTitlesFromCollectionDto);

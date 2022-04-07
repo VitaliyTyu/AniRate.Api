@@ -28,7 +28,7 @@ namespace AniRate.Application.AnimeCollections.Commands.DeleteCollections
 
                 if (collection == null || collection.UserId != request.UserId)
                 {
-                    throw new NotFoundException(nameof(AnimeTitle), collectionId);
+                    throw new NotFoundException(nameof(AnimeCollection), collectionId);
                 }
 
                 _dbContext.AnimeCollections.Remove(collection);
