@@ -1,5 +1,8 @@
+using AniRate.Application.Interfaces;
 using AniRate.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using Serilog.Events;
 
 namespace AniRate.WebApi
 {
@@ -7,30 +10,30 @@ namespace AniRate.WebApi
     {
         public async static Task Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+               .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+               .WriteTo.File("AnirateWebAppLog-.txt", rollingInterval:
+                   RollingInterval.Day)
+               .CreateLogger();
+
             var host = CreateHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
             {
-                var serviceProviser = scope.ServiceProvider;
-                //try
-                //{
-                var dbContext = serviceProviser.GetRequiredService<ApplicationDbContext>();
-                //await dbContext.Database.EnsureDeletedAsync();
-                //await dbContext.Database.EnsureCreatedAsync();
-                await ApplicationDbContextSeed.SeedSampleDataAsync(dbContext);
+                var serviceProvider = scope.ServiceProvider;
+                try
+                {
+                    var dbContext =     serviceProvider.GetRequiredService<ApplicationDbContext>();
+                    var currentUserService =    serviceProvider.GetRequiredService<ICurrentUserService>();
 
-                //DbInitializer.Initialize(dbContext);
-
-                //if (dbContext.Database.IsSqlServer())
-                //{
-                //    dbContext.Database.Migrate();
-                //}
-
-                //}
-                //catch (Exception)
-                //{
-
-                //}
+                    await dbContext.Database.EnsureDeletedAsync();
+                    await dbContext.Database.EnsureCreatedAsync();
+                    await ApplicationDbContextSeed.SeedSampleDataAsync(dbContext, currentUserService);
+                }
+                catch (Exception exception)
+                {
+                    Log.Fatal(exception, "An error occurred while app initialization");
+                }
             }
 
             host.Run();
@@ -38,6 +41,7 @@ namespace AniRate.WebApi
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                     webBuilder.UseStartup<Startup>());
     }

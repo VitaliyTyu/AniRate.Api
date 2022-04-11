@@ -1,4 +1,5 @@
-﻿using AniRate.Domain.Entities;
+﻿using AniRate.Application.Interfaces;
+using AniRate.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,22 +8,24 @@ using System.Threading.Tasks;
 
 namespace AniRate.Infrastructure.Persistence
 {
-    public static class ApplicationDbContextSeed
+    public class ApplicationDbContextSeed
     {
-        public static async Task SeedSampleDataAsync(ApplicationDbContext context)
+        public static async Task SeedSampleDataAsync(ApplicationDbContext context, ICurrentUserService currentUserService)
         {
             if (!context.AnimeCollections.Any())
             {
                 var mainCollection = new AnimeCollection
                 {
-                    UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    //UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    UserId = currentUserService.UserId,
                     Name = "Main collection",
                     Comment = "Comment main collection",
                 };
 
                 var collection1 = new AnimeCollection
                 {
-                    UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    //UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    UserId = currentUserService.UserId,
                     Name = "First collection",
                     Comment = "Comment first collection",
                     AverageRating = 8.3,
@@ -30,7 +33,8 @@ namespace AniRate.Infrastructure.Persistence
 
                 var collection2 = new AnimeCollection
                 {
-                    UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    //UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    UserId = currentUserService.UserId,
                     Name = "Second collection",
                 };
 
@@ -38,7 +42,8 @@ namespace AniRate.Infrastructure.Persistence
 
                 var title1 = new AnimeTitle
                 {
-                    UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    //UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    UserId = currentUserService.UserId,
                     Name = "Anime Title1",
                     Description = "This is title1",
                     Rating = 1,
@@ -48,13 +53,15 @@ namespace AniRate.Infrastructure.Persistence
 
                 var title2 = new AnimeTitle
                 {
-                    UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    //UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    UserId = currentUserService.UserId,
                     Name = "Anime Title2",
                 };
 
                 var title3 = new AnimeTitle
                 {
-                    UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    //UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    UserId = currentUserService.UserId,
                     Name = "Anime Title3",
                     Description = "This is title3",
                     Rating = 3,
@@ -63,7 +70,8 @@ namespace AniRate.Infrastructure.Persistence
 
                 var title4 = new AnimeTitle
                 {
-                    UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    //UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    UserId = currentUserService.UserId,
                     Name = "Anime Title4",
                     Description = "This is title4",
                     UserRating = 7.5,
@@ -71,7 +79,8 @@ namespace AniRate.Infrastructure.Persistence
 
                 var title5 = new AnimeTitle
                 {
-                    UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    //UserId = Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8"),
+                    UserId = currentUserService.UserId,
                     Name = "Anime Title5",
                     Description = "This is title5",
                     Rating = 5,

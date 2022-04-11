@@ -11,6 +11,7 @@ using AniRate.Application.Interfaces;
 using AniRate.Domain.Entities;
 using AniRate.WebApi.Models.AnimeCollectionsDtos;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,6 +37,7 @@ namespace AniRate.WebApi.Controllers
         /// <response code="200">Success</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
+        //[Authorize]
         public async Task<ActionResult<CollectionsListVM>> GetAll()
         {
             var query = new GetCollectionsQuery()
@@ -53,6 +55,7 @@ namespace AniRate.WebApi.Controllers
         /// <response code="200">Success</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("{id}")]
+        //[Authorize]
         public async Task<ActionResult<CollectionDetailsVM>> Get(Guid id)
         {
             var query = new GetCollectionByIdQuery()
@@ -72,6 +75,7 @@ namespace AniRate.WebApi.Controllers
         /// <response code="200">Success</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("CollectionsFromTitle/{id}")]
+        //[Authorize]
         public async Task<ActionResult<CollectionDetailsVM>> GetCollectionsFromTitle(Guid id)
         {
             var query = new GetCollectionsFromTitleQuery()
@@ -91,6 +95,7 @@ namespace AniRate.WebApi.Controllers
         /// <response code="201">Success</response>
         [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost("Collection")]
+        //[Authorize]
         public async Task<ActionResult<Guid>> Create([FromBody] CreateCollectionDto createCollectionDto)
         {
             var command = _mapper.Map<CreateCollectionCommand>(createCollectionDto);
@@ -106,6 +111,7 @@ namespace AniRate.WebApi.Controllers
         /// <response code="204">Success</response>
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpPut("Titles")]
+        //[Authorize]
         public async Task<ActionResult> Add([FromBody] AddTitlesInCollectionDto addTitlesInCollectionDto)
         {
             var command = _mapper.Map<AddTitlesInCollectionCommand>(addTitlesInCollectionDto);
@@ -121,6 +127,7 @@ namespace AniRate.WebApi.Controllers
         /// <response code="204">Success</response>
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpPut("Details")]
+        //[Authorize]
         public async Task<ActionResult> Update([FromBody] UpdateCollectionDetailsDto updateCollectionDetailsDto)
         {
             var command = _mapper.Map<UpdateCollectionDetailsCommand>(updateCollectionDetailsDto);
@@ -136,6 +143,7 @@ namespace AniRate.WebApi.Controllers
         /// <response code="204">Success</response>
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpDelete("Collections")]
+        //[Authorize]
         public async Task<ActionResult> Delete([FromBody] DeleteCollectionsDto deleteCollectionsDto)
         {
             var command = _mapper.Map<DeleteCollectionsCommand>(deleteCollectionsDto);
@@ -151,6 +159,7 @@ namespace AniRate.WebApi.Controllers
         /// <response code="204">Success</response>
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpDelete("TitlesFromCollection")]
+        //[Authorize]
         public async Task<ActionResult> DeleteFromCollection([FromBody] DeleteTitlesFromCollectionDto deleteTitlesFromCollectionDto)
         {
             var command = _mapper.Map<DeleteTitlesFromCollectionCommand>(deleteTitlesFromCollectionDto);

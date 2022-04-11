@@ -17,10 +17,10 @@ namespace AniRate.WebApi.Controllers
 
         protected ISender Mediator => _mediator ??= HttpContext.RequestServices.GetRequiredService<ISender>();
 
-        //internal Guid UserId => !User.Identity.IsAuthenticated
-        //    ? Guid.Empty
-        //    : Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+        internal Guid UserId => !User.Identity.IsAuthenticated
+            ? Guid.Empty
+            : Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
-        internal Guid UserId => Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8");
+        //internal Guid UserId => Guid.Parse("936DA01F-9ABD-4d9d-80C7-02AF85C822A8");
     }
 }
