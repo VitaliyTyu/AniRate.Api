@@ -3,6 +3,7 @@ using AniRate.Application;
 using AniRate.Application.Common.Mappings;
 using AniRate.Application.Interfaces;
 using AniRate.Infrastructure;
+using AniRate.WebApi.Models;
 using AniRate.WebApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Reflection;
@@ -25,6 +26,28 @@ namespace AniRate.WebApi
                 config.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
                 config.AddProfile(new AssemblyMappingProfile(typeof(IApplicationDbContext).Assembly));
             });
+
+            var authOptions = Configuration.GetSection("Auth").Get<AuthOptions>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+               .AddJwtBearer(options =>
+               {
+                   options.RequireHttpsMetadata = false;
+                   options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                   {
+                       ValidateIssuer = true,
+                       ValidIssuer = authOptions.Issuer,
+
+                       ValidateAudience = true,
+                       ValidAudience = authOptions.Audience,
+
+                       ValidateLifetime = true,
+
+                       IssuerSigningKey =
+                           authOptions.GetSymmetricSecurityKey(),
+                       ValidateIssuerSigningKey = true,
+                   };
+               });
 
             services.AddApplication();
             services.AddInfrastructure(Configuration);
@@ -85,8 +108,8 @@ namespace AniRate.WebApi
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
-            //app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

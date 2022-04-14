@@ -6,7 +6,7 @@ using Serilog.Events;
 
 namespace AniRate.WebApi
 {
-    public class Program
+    public class Program 
     {
         public async static Task Main(string[] args)
         {
@@ -26,9 +26,9 @@ namespace AniRate.WebApi
                     var dbContext =     serviceProvider.GetRequiredService<ApplicationDbContext>();
                     var currentUserService =    serviceProvider.GetRequiredService<ICurrentUserService>();
 
-                    await dbContext.Database.EnsureDeletedAsync();
-                    await dbContext.Database.EnsureCreatedAsync();
-                    await ApplicationDbContextSeed.SeedSampleDataAsync(dbContext, currentUserService);
+                    //await dbContext.Database.EnsureDeletedAsync();
+                    //await dbContext.Database.EnsureCreatedAsync();
+                    //await ApplicationDbContextSeed.SeedSampleDataAsync(dbContext, currentUserService);
                 }
                 catch (Exception exception)
                 {

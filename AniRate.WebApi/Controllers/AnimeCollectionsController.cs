@@ -37,7 +37,7 @@ namespace AniRate.WebApi.Controllers
         /// <response code="200">Success</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<CollectionsListVM>> GetAll()
         {
             var query = new GetCollectionsQuery()
@@ -95,7 +95,7 @@ namespace AniRate.WebApi.Controllers
         /// <response code="201">Success</response>
         [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost("Collection")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<Guid>> Create([FromBody] CreateCollectionDto createCollectionDto)
         {
             var command = _mapper.Map<CreateCollectionCommand>(createCollectionDto);
