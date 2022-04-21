@@ -105,6 +105,16 @@ namespace AniRate.Infrastructure.Persistence
                 collection2.AnimeTitles.Add(title4);
                 collection2.AnimeTitles.Add(title5);
 
+
+                var user = new Account()
+                {
+                    Id = Guid.Parse("A9168C5E-CEB2-4faa-B6BF-329BF39FA1E4"),
+                    UserName = "user@email.com",
+                    Password = "user",
+                };
+
+                await context.Accounts.AddAsync(user);
+
                 await context.SaveChangesAsync();
             }
         }

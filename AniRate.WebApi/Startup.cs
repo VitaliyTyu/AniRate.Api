@@ -27,6 +27,9 @@ namespace AniRate.WebApi
                 config.AddProfile(new AssemblyMappingProfile(typeof(IApplicationDbContext).Assembly));
             });
 
+            var authOptionsConfiguration = Configuration.GetSection("Auth");
+            services.Configure<AuthOptions>(authOptionsConfiguration);
+
             var authOptions = Configuration.GetSection("Auth").Get<AuthOptions>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -52,6 +55,7 @@ namespace AniRate.WebApi
             services.AddApplication();
             services.AddInfrastructure(Configuration);
             services.AddControllers();
+
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", policy =>
@@ -68,26 +72,6 @@ namespace AniRate.WebApi
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 config.IncludeXmlComments(xmlPath);
             });
-
-            //services.AddAuthentication(config =>
-            //{
-            //    config.DefaultAuthenticateScheme =
-            //        JwtBearerDefaults.AuthenticationScheme;
-            //    config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //})
-            //    .AddJwtBearer("Bearer", options =>
-            //    {
-            //        options.Authority = "https://localhost:7168/";
-            //        options.Audience = "AniRateWebAPI";
-            //        options.RequireHttpsMetadata = false;
-            //    });
-
-            //services.AddVersionedApiExplorer(options =>
-            //    options.GroupNameFormat = "'v'VVV");
-            //services.AddTransient<IConfigureOptions<SwaggerGenOptions>,
-            //        ConfigureSwaggerOptions>();
-            //services.AddSwaggerGen();
-            //services.AddApiVersioning();
 
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
             services.AddHttpContextAccessor();

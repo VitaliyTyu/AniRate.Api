@@ -15,15 +15,11 @@ namespace AniRate.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlite(configuration["DbConnection"]));
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     configuration["DbConnection"], b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
             services.AddScoped<IApplicationDbContext>(provider =>
                 provider.GetService<ApplicationDbContext>());
-
-
 
             return services;
         }

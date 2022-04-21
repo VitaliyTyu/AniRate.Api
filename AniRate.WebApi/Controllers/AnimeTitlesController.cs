@@ -2,6 +2,7 @@
 using AniRate.Application.AnimeTitles.Commands.CreateTitle;
 using AniRate.Application.AnimeTitles.Commands.DeleteCollectionsFromTitle;
 using AniRate.Application.AnimeTitles.Commands.DeleteTitles;
+using AniRate.Application.AnimeTitles.Commands.MakeTitlesUnanonymous;
 using AniRate.Application.AnimeTitles.Commands.UpdateTitleDetails;
 using AniRate.Application.AnimeTitles.Queries;
 using AniRate.Application.AnimeTitles.Queries.GetTitleDetails;
@@ -28,13 +29,50 @@ namespace AniRate.WebApi.Controllers
 
 
         /// <summary>
+        /// Получение всех анонимных аниме
+        /// </summary>
+        /// <returns>Returns TitlesListVM</returns>
+        /// <response code="200">Success</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpGet("anonymous")]
+        public async Task<ActionResult<TitlesListVM>> GetAllAnonymous()
+        {
+            var query = new GetTitlesQuery()
+            {
+                UserId = Guid.Empty,
+            };
+            var animeTitlesVM = await Mediator.Send(query);
+
+            return Ok(animeTitlesVM);
+        }
+
+        /// <summary>
+        /// Получение деталей анонимного аниме
+        /// </summary>
+        /// <returns>Returns TitleDetailsVM</returns>
+        /// <response code="200">Success</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpGet("anonymous/details/{id}")]
+        public async Task<ActionResult<TitleDetailsVM>> GetAnonymousDetails(Guid id)
+        {
+            var query = new GetTitleDetailsQuery()
+            {
+                UserId = Guid.Empty,
+                Id = id,
+            };
+            var titleDetailsVM = await Mediator.Send(query);
+
+            return Ok(titleDetailsVM);
+        }
+
+        /// <summary>
         /// Получение всех аниме
         /// </summary>
         /// <returns>Returns TitlesListVM</returns>
         /// <response code="200">Success</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<TitlesListVM>> GetAll()
         {
             var query = new GetTitlesQuery()
@@ -53,7 +91,7 @@ namespace AniRate.WebApi.Controllers
         /// <response code="200">Success</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("TitlesFromCollection/{id}")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<TitlesListVM>> GetTitlesFromCollection(Guid id)
         {
             var query = new GetTitlesFromCollectionQuery()
@@ -73,7 +111,7 @@ namespace AniRate.WebApi.Controllers
         /// <response code="200">Success</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("Details/{id}")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<TitleDetailsVM>> GetDetails(Guid id)
         {
             var query = new GetTitleDetailsQuery()
@@ -87,19 +125,19 @@ namespace AniRate.WebApi.Controllers
         }
 
         /// <summary>
-        /// создать аниме
+        /// привязать аниме тайтлы к пользователю
         /// </summary>
-        /// <returns>Guid id</returns>
+        /// <returns>Guid ids (новые ids)</returns>
         /// <response code="201">Success</response>
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [HttpPost("Title")]
-        //[Authorize]
-        public async Task<ActionResult<Guid>> Post([FromBody] CreateTitleDto createTitleDto)
+        [HttpPost("unanonymous")]
+        [Authorize]
+        public async Task<ActionResult<List<Guid>>> Post([FromBody] MakeTitlesUnanonymousDto makeTitlesUnanonymousDto)
         {
-            var command = _mapper.Map<CreateTitleCommand>(createTitleDto);
+            var command = _mapper.Map<MakeTitlesUnanonymousCommand>(makeTitlesUnanonymousDto);
             command.UserId = UserId;
-            var animeId = await Mediator.Send(command);
-            return Ok(animeId);
+            var animeIds = await Mediator.Send(command);
+            return Ok(animeIds);
         }
 
         /// <summary>
@@ -109,7 +147,7 @@ namespace AniRate.WebApi.Controllers
         /// <response code="204">Success</response>
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpPut("Details")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult> Update([FromBody] UpdateTitleDetailsDto updateTitleDetailsDto)
         {
             var command = _mapper.Map<UpdateTitleDetailsCommand>(updateTitleDetailsDto);
@@ -125,7 +163,7 @@ namespace AniRate.WebApi.Controllers
         /// <response code="204">Success</response>
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpPut("Collections")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult> Update([FromBody] AddCollectionsInTitleDto addCollectionsInTitleDto)
         {
             var command = _mapper.Map<AddCollectionsInTitleCommand>(addCollectionsInTitleDto);
@@ -141,7 +179,7 @@ namespace AniRate.WebApi.Controllers
         /// <response code="204">Success</response>
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpDelete("Titles")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult> Delete([FromBody] DeleteTitlesDto deleteTitlesDto)
         {
             var command = _mapper.Map<DeleteTitlesCommand>(deleteTitlesDto);
@@ -157,7 +195,7 @@ namespace AniRate.WebApi.Controllers
         /// <response code="204">Success</response>
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpDelete("CollectionsFromTitle")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult> Delete([FromBody] DeleteCollectionsFromTitleDto
             deleteCollectionsFromTitleDto)
         {
@@ -166,5 +204,21 @@ namespace AniRate.WebApi.Controllers
             await Mediator.Send(command);
             return NoContent();
         }
+
+        ///// <summary>
+        ///// создать аниме
+        ///// </summary>
+        ///// <returns>Guid id</returns>
+        ///// <response code="201">Success</response>
+        //[ProducesResponseType(StatusCodes.Status201Created)]
+        //[HttpPost("Title")]
+        ////[Authorize]
+        //public async Task<ActionResult<Guid>> Post([FromBody] CreateTitleDto createTitleDto)
+        //{
+        //    var command = _mapper.Map<CreateTitleCommand>(createTitleDto);
+        //    command.UserId = UserId;
+        //    var animeId = await Mediator.Send(command);
+        //    return Ok(animeId);
+        //}
     }
 }

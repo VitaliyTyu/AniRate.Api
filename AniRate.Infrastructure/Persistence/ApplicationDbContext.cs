@@ -21,10 +21,13 @@ namespace AniRate.Infrastructure.Persistence
 
         public DbSet<AnimeCollection> AnimeCollections => Set<AnimeCollection>();
 
+        public DbSet<Account> Accounts => Set<Account>();
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new AnimeTitleConfiguration());
             builder.ApplyConfiguration(new AnimeCollectionConfiguration());
+            builder.ApplyConfiguration(new AccountConfiguration());
             base.OnModelCreating(builder);
         }
     }
