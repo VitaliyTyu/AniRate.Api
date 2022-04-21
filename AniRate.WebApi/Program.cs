@@ -23,12 +23,12 @@ namespace AniRate.WebApi
                 var serviceProvider = scope.ServiceProvider;
                 try
                 {
-                    var dbContext =     serviceProvider.GetRequiredService<ApplicationDbContext>();
-                    var currentUserService =    serviceProvider.GetRequiredService<ICurrentUserService>();
+                    var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+                    var currentUserService = serviceProvider.GetRequiredService<ICurrentUserService>();
 
-                    await dbContext.Database.EnsureDeletedAsync();
-                    await dbContext.Database.EnsureCreatedAsync();
-                    await ApplicationDbContextSeed.SeedSampleDataAsync(dbContext, currentUserService);
+                    //await dbContext.Database.EnsureDeletedAsync();
+                    //await dbContext.Database.EnsureCreatedAsync();
+                    //await ApplicationDbContextSeed.SeedSampleDataAsync(dbContext, currentUserService);
                 }
                 catch (Exception exception)
                 {

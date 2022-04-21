@@ -475,3 +475,104 @@ WHERE ([a].[UserName] = @__loginViewModel_Username_0) AND ([a].[Password] = @__l
 2022-04-21 17:58:18.041 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AuthController.Login (AniRate.WebApi) in 4.5698ms
 2022-04-21 17:58:18.041 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AuthController.Login (AniRate.WebApi)'
 2022-04-21 17:58:18.041 +05:00 [INF] Request finished HTTP/1.1 POST https://localhost:5001/api/auth/login application/json 67 - 200 - application/json;+charset=utf-8 5.2475ms
+2022-04-21 18:00:27.856 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-04-21 18:00:28.798 +05:00 [INF] Executed DbCommand (278ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [AniRate.db];
+2022-04-21 18:00:28.889 +05:00 [INF] Executed DbCommand (86ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [AniRate.db] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2022-04-21 18:00:28.921 +05:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-04-21 18:00:29.068 +05:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Accounts] (
+    [Id] uniqueidentifier NOT NULL,
+    [UserName] nvarchar(200) NOT NULL,
+    [Password] nvarchar(200) NOT NULL,
+    CONSTRAINT [PK_Accounts] PRIMARY KEY ([Id])
+);
+2022-04-21 18:00:29.071 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AnimeCollections] (
+    [Id] uniqueidentifier NOT NULL,
+    [UserId] uniqueidentifier NOT NULL,
+    [Name] nvarchar(200) NOT NULL,
+    [Comment] nvarchar(max) NULL,
+    [AverageRating] float NULL,
+    CONSTRAINT [PK_AnimeCollections] PRIMARY KEY ([Id])
+);
+2022-04-21 18:00:29.073 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AnimeTitles] (
+    [Id] uniqueidentifier NOT NULL,
+    [UserId] uniqueidentifier NOT NULL,
+    [Name] nvarchar(200) NOT NULL,
+    [Description] nvarchar(max) NULL,
+    [Rating] float NULL,
+    [UserRating] float NULL,
+    [UserComment] nvarchar(max) NULL,
+    CONSTRAINT [PK_AnimeTitles] PRIMARY KEY ([Id])
+);
+2022-04-21 18:00:29.075 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AnimeCollectionAnimeTitle] (
+    [AnimeCollectionsId] uniqueidentifier NOT NULL,
+    [AnimeTitlesId] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_AnimeCollectionAnimeTitle] PRIMARY KEY ([AnimeCollectionsId], [AnimeTitlesId]),
+    CONSTRAINT [FK_AnimeCollectionAnimeTitle_AnimeCollections_AnimeCollectionsId] FOREIGN KEY ([AnimeCollectionsId]) REFERENCES [AnimeCollections] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_AnimeCollectionAnimeTitle_AnimeTitles_AnimeTitlesId] FOREIGN KEY ([AnimeTitlesId]) REFERENCES [AnimeTitles] ([Id]) ON DELETE CASCADE
+);
+2022-04-21 18:00:29.076 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Accounts_Id] ON [Accounts] ([Id]);
+2022-04-21 18:00:29.077 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AnimeCollectionAnimeTitle_AnimeTitlesId] ON [AnimeCollectionAnimeTitle] ([AnimeTitlesId]);
+2022-04-21 18:00:29.078 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_AnimeCollections_Id] ON [AnimeCollections] ([Id]);
+2022-04-21 18:00:29.079 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_AnimeTitles_Id] ON [AnimeTitles] ([Id]);
+2022-04-21 18:00:29.439 +05:00 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AnimeCollections] AS [a]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-04-21 18:00:29.813 +05:00 [INF] Executed DbCommand (45ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 200), @p2='?' (Size = 200), @p3='?' (DbType = Guid), @p4='?' (DbType = Double), @p5='?' (Size = 4000), @p6='?' (Size = 200), @p7='?' (DbType = Guid), @p8='?' (DbType = Guid), @p9='?' (DbType = Double), @p10='?' (Size = 4000), @p11='?' (Size = 200), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (DbType = Double), @p15='?' (Size = 4000), @p16='?' (Size = 200), @p17='?' (DbType = Guid), @p18='?' (DbType = Guid), @p19='?' (Size = 4000), @p20='?' (Size = 200), @p21='?' (DbType = Double), @p22='?' (Size = 4000), @p23='?' (DbType = Guid), @p24='?' (DbType = Double), @p25='?' (DbType = Guid), @p26='?' (Size = 4000), @p27='?' (Size = 200), @p28='?' (DbType = Double), @p29='?' (Size = 4000), @p30='?' (DbType = Guid), @p31='?' (DbType = Double), @p32='?' (DbType = Guid), @p33='?' (Size = 4000), @p34='?' (Size = 200), @p35='?' (DbType = Double), @p36='?' (Size = 4000), @p37='?' (DbType = Guid), @p38='?' (DbType = Double), @p39='?' (DbType = Guid), @p40='?' (Size = 4000), @p41='?' (Size = 200), @p42='?' (DbType = Double), @p43='?' (Size = 4000), @p44='?' (DbType = Guid), @p45='?' (DbType = Double), @p46='?' (DbType = Guid), @p47='?' (Size = 4000), @p48='?' (Size = 200), @p49='?' (DbType = Double), @p50='?' (Size = 4000), @p51='?' (DbType = Guid), @p52='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Accounts] ([Id], [Password], [UserName])
+VALUES (@p0, @p1, @p2);
+INSERT INTO [AnimeCollections] ([Id], [AverageRating], [Comment], [Name], [UserId])
+VALUES (@p3, @p4, @p5, @p6, @p7),
+(@p8, @p9, @p10, @p11, @p12),
+(@p13, @p14, @p15, @p16, @p17);
+INSERT INTO [AnimeTitles] ([Id], [Description], [Name], [Rating], [UserComment], [UserId], [UserRating])
+VALUES (@p18, @p19, @p20, @p21, @p22, @p23, @p24),
+(@p25, @p26, @p27, @p28, @p29, @p30, @p31),
+(@p32, @p33, @p34, @p35, @p36, @p37, @p38),
+(@p39, @p40, @p41, @p42, @p43, @p44, @p45),
+(@p46, @p47, @p48, @p49, @p50, @p51, @p52);
+2022-04-21 18:00:29.824 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@p53='?' (DbType = Guid), @p54='?' (DbType = Guid), @p55='?' (DbType = Guid), @p56='?' (DbType = Guid), @p57='?' (DbType = Guid), @p58='?' (DbType = Guid), @p59='?' (DbType = Guid), @p60='?' (DbType = Guid), @p61='?' (DbType = Guid), @p62='?' (DbType = Guid), @p63='?' (DbType = Guid), @p64='?' (DbType = Guid), @p65='?' (DbType = Guid), @p66='?' (DbType = Guid), @p67='?' (DbType = Guid), @p68='?' (DbType = Guid), @p69='?' (DbType = Guid), @p70='?' (DbType = Guid), @p71='?' (DbType = Guid), @p72='?' (DbType = Guid), @p73='?' (DbType = Guid), @p74='?' (DbType = Guid), @p75='?' (DbType = Guid), @p76='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AnimeCollectionAnimeTitle] ([AnimeCollectionsId], [AnimeTitlesId])
+VALUES (@p53, @p54),
+(@p55, @p56),
+(@p57, @p58),
+(@p59, @p60),
+(@p61, @p62),
+(@p63, @p64),
+(@p65, @p66),
+(@p67, @p68),
+(@p69, @p70),
+(@p71, @p72),
+(@p73, @p74),
+(@p75, @p76);
+2022-04-21 18:00:29.886 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-04-21 18:00:30.324 +05:00 [INF] Now listening on: https://localhost:5001
+2022-04-21 18:00:30.324 +05:00 [INF] Now listening on: http://localhost:5000
+2022-04-21 18:00:30.328 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-04-21 18:00:30.329 +05:00 [INF] Hosting environment: Development
+2022-04-21 18:00:30.329 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\AniRate\AnirateWeb\AniRate\AniRate.Api\AniRate.WebApi
+2022-04-21 18:00:30.881 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/index.html - -
+2022-04-21 18:00:31.157 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2022-04-21 18:00:31.158 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/index.html - - - 200 - text/html;charset=utf-8 282.3935ms
+2022-04-21 18:00:31.174 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 16.5278ms
+2022-04-21 18:00:31.529 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-04-21 18:00:31.740 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 211.3532ms
