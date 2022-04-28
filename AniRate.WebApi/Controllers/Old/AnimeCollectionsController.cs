@@ -22,12 +22,10 @@ namespace AniRate.WebApi.Controllers
     public class AnimeCollectionsController : ApiControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly IApplicationDbContext _dbContext;
 
         public AnimeCollectionsController(IMapper mapper, IApplicationDbContext dbContext)
         {
             _mapper = mapper;
-            _dbContext = dbContext;
         }
 
         /// <summary>

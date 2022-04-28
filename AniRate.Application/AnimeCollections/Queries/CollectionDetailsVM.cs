@@ -19,17 +19,17 @@ namespace AniRate.Application.AnimeCollections.Queries
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<AnimeCollection, CollectionDetailsVM>()
-                .ForMember(collectionDto => collectionDto.Id, opt =>
-                    opt.MapFrom(collection => collection.Id))
-                .ForMember(collectionDto => collectionDto.Name, opt =>
-                    opt.MapFrom(collection => collection.Name))
-                .ForMember(collectionDto => collectionDto.AnimeTitles, opt =>
-                    opt.MapFrom(collection => collection.AnimeTitles))
-                .ForMember(collectionDto => collectionDto.Comment, opt =>
-                    opt.MapFrom(collection => collection.Comment))
-                .ForMember(collectionDto => collectionDto.AverageRating, opt =>
-                    opt.MapFrom(collection => collection.AverageRating));
+            //profile.CreateMap<AnimeCollection, CollectionDetailsVM>()
+            //    .ForMember(collectionDto => collectionDto.Id, opt =>
+            //        opt.MapFrom(collection => collection.Id))
+            //    .ForMember(collectionDto => collectionDto.Name, opt =>
+            //        opt.MapFrom(collection => collection.Name))
+            //    .ForMember(collectionDto => collectionDto.AnimeTitles, opt =>
+            //        opt.MapFrom(collection => collection.AnimeTitles))
+            //    .ForMember(collectionDto => collectionDto.Comment, opt =>
+            //        opt.MapFrom(collection => collection.Comment))
+            //    .ForMember(collectionDto => collectionDto.AverageRating, opt =>
+            //        opt.MapFrom(collection => collection.AverageRating));
         }
     }
 }

@@ -21,21 +21,21 @@ namespace AniRate.Application.AnimeTitles.Queries
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<AnimeTitle, TitleDetailsVM>()
-                .ForMember(animeDto => animeDto.Id, opt =>
-                    opt.MapFrom(anime => anime.Id))
-                .ForMember(animeDto => animeDto.Name, opt =>
-                    opt.MapFrom(anime => anime.Name))
-                .ForMember(animeDto => animeDto.Description, opt =>
-                    opt.MapFrom(anime => anime.Description))
-                .ForMember(animeDto => animeDto.Rating, opt =>
-                    opt.MapFrom(anime => anime.Rating))
-                .ForMember(animeDto => animeDto.UserRating, opt =>
-                    opt.MapFrom(anime => anime.UserRating))
-                .ForMember(animeDto => animeDto.UserComment, opt =>
-                    opt.MapFrom(anime => anime.UserComment))
-                .ForMember(animeDto => animeDto.AnimeCollections, opt =>
-                    opt.MapFrom(anime => anime.AnimeCollections));
+            //profile.CreateMap<AnimeTitle, TitleDetailsVM>()
+            //    .ForMember(animeDto => animeDto.Id, opt =>
+            //        opt.MapFrom(anime => anime.Id))
+            //    .ForMember(animeDto => animeDto.Name, opt =>
+            //        opt.MapFrom(anime => anime.Name))
+            //    .ForMember(animeDto => animeDto.Description, opt =>
+            //        opt.MapFrom(anime => anime.Description))
+            //    .ForMember(animeDto => animeDto.Rating, opt =>
+            //        opt.MapFrom(anime => anime.Rating))
+            //    .ForMember(animeDto => animeDto.UserRating, opt =>
+            //        opt.MapFrom(anime => anime.UserRating))
+            //    .ForMember(animeDto => animeDto.UserComment, opt =>
+            //        opt.MapFrom(anime => anime.UserComment))
+            //    .ForMember(animeDto => animeDto.AnimeCollections, opt =>
+            //        opt.MapFrom(anime => anime.AnimeCollections));
         }
     }
 }

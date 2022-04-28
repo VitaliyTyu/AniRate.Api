@@ -14,11 +14,19 @@ namespace AniRate.Infrastructure.Persistence.Configurations
         public void Configure(EntityTypeBuilder<AnimeCollection> builder)
         {
             builder.HasKey(collection => collection.Id);
+
             builder.HasIndex(collection => collection.Id).IsUnique();
+
             builder.Property(collection => collection.Name).HasMaxLength(200).IsRequired();
+
             builder
                 .HasMany(collection => collection.AnimeTitles)
                 .WithMany(anime => anime.AnimeCollections);
+
+            builder
+                .HasMany(collection => collection.UserRates)
+                .WithOne(rate => rate.AnimeCollection)
+                .HasForeignKey(rate => rate.CollectionId);
         }
     }
 }

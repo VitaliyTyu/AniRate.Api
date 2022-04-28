@@ -41,8 +41,8 @@ namespace AniRate.Application.AnimeCollections.Commands.CreateCollection
                 Id = Guid.NewGuid(),
                 UserId = request.UserId,
                 Name = request.Name,
-                AverageRating = request.AverageRating,
-                Comment = request.Comment,
+                //AverageRating = request.AverageRating,
+                //Comment = request.Comment,
                 AnimeTitles = animeTitles,
             };
 

@@ -29,9 +29,9 @@ namespace AniRate.Application.AnimeTitles.Commands.UpdateTitleDetails
             }
 
             title.Description = request.Description;
-            title.UserRating = request.UserRating;
-            title.UserComment = request.UserComment;
-            title.Rating = request.Rating;
+            //title.UserRating = request.UserRating;
+            //title.UserComment = request.UserComment;
+            //title.Rating = request.Rating;
             title.Name = request.Name;
 
 
