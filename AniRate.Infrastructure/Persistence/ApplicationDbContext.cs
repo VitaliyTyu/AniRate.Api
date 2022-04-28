@@ -2,11 +2,6 @@
 using AniRate.Domain.Entities;
 using AniRate.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AniRate.Infrastructure.Persistence
 {
@@ -23,11 +18,24 @@ namespace AniRate.Infrastructure.Persistence
 
         public DbSet<Account> Accounts => Set<Account>();
 
+        public DbSet<Image> Images => Set<Image>();
+
+        public DbSet<Genre> Genres => Set<Genre>();
+
+        public DbSet<AnimeUserRate> AnimeUserRates => Set<AnimeUserRate>();
+
+        public DbSet<CollectionUserRate> CollectionUserRates => Set<CollectionUserRate>();
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new AnimeTitleConfiguration());
             builder.ApplyConfiguration(new AnimeCollectionConfiguration());
             builder.ApplyConfiguration(new AccountConfiguration());
+            builder.ApplyConfiguration(new ImageConfiguration());
+            builder.ApplyConfiguration(new GenreConfiguration());
+            builder.ApplyConfiguration(new AnimeUserRateConfiguration());
+            builder.ApplyConfiguration(new CollectionUserRateConfiguration());
+
             base.OnModelCreating(builder);
         }
     }

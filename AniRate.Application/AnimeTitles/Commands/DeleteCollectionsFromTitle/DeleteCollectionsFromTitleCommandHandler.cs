@@ -22,34 +22,34 @@ namespace AniRate.Application.AnimeTitles.Commands.DeleteCollectionsFromTitle
 
         public async Task<Unit> Handle(DeleteCollectionsFromTitleCommand request, CancellationToken cancellationToken)
         {
-            var animeCollections = new List<AnimeCollection>();
+            //var animeCollections = new List<AnimeCollection>();
 
-            foreach (var collectionId in request.AnimeCollectionsId)
-            {
-                var entity = await _dbContext.AnimeCollections.FirstOrDefaultAsync(c => c.Id == collectionId, cancellationToken);
+            //foreach (var collectionId in request.AnimeCollectionsId)
+            //{
+            //    var entity = await _dbContext.AnimeCollections.FirstOrDefaultAsync(c => c.Id == collectionId, cancellationToken);
 
-                if (entity == null || entity.UserId != request.UserId)
-                {
-                    throw new NotFoundException(nameof(AnimeCollection), collectionId);
-                }
+            //    if (entity == null || entity.UserId != request.UserId)
+            //    {
+            //        throw new NotFoundException(nameof(AnimeCollection), collectionId);
+            //    }
 
-                animeCollections.Add(entity);
-            }
+            //    animeCollections.Add(entity);
+            //}
 
-            var animeTitle = await _dbContext.AnimeTitles
-                .Include(a => a.AnimeCollections)
-                .FirstOrDefaultAsync(a =>
-                a.Id == request.Id, cancellationToken);
+            //var animeTitle = await _dbContext.AnimeTitles
+            //    .Include(a => a.AnimeCollections)
+            //    .FirstOrDefaultAsync(a =>
+            //    a.Id == request.Id, cancellationToken);
 
-            if (animeTitle == null || animeTitle.UserId != request.UserId)
-            {
-                throw new NotFoundException(nameof(AnimeTitle), request.Id);
-            }
+            //if (animeTitle == null || animeTitle.UserId != request.UserId)
+            //{
+            //    throw new NotFoundException(nameof(AnimeTitle), request.Id);
+            //}
 
-            foreach (var collection in animeCollections)
-                animeTitle.AnimeCollections.Remove(collection);
+            //foreach (var collection in animeCollections)
+            //    animeTitle.AnimeCollections.Remove(collection);
 
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            //await _dbContext.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }

@@ -41,10 +41,10 @@ namespace AniRate.Application.AnimeTitles.Commands.CreateTitle
                 UserId = request.UserId,
                 Name = request.Name,
                 Description = request.Description,
-                UserComment = request.UserComment,
-                AnimeCollections = animeCollections,
-                Rating = request.Rating,
-                UserRating = request.UserRating,
+                //UserComment = request.UserComment,
+                //AnimeCollections = animeCollections,
+                //Rating = request.Rating,
+                //UserRating = request.UserRating,
             };
 
             await _dbContext.AnimeTitles.AddAsync(animeTitle, cancellationToken);

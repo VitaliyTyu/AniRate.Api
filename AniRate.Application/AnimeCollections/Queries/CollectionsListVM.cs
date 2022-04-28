@@ -15,9 +15,9 @@ namespace AniRate.Application.AnimeCollections.Queries
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<AnimeTitle, CollectionsListVM>()
-                .ForMember(list => list.Collections, opt =>
-                    opt.MapFrom(anime => anime.AnimeCollections));
+            //profile.CreateMap<AnimeTitle, CollectionsListVM>()
+            //    .ForMember(list => list.Collections, opt =>
+            //        opt.MapFrom(anime => anime.AnimeCollections));
         }
     }
 }

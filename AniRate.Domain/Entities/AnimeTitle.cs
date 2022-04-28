@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace AniRate.Domain.Entities
@@ -10,12 +11,43 @@ namespace AniRate.Domain.Entities
     public class AnimeTitle
     {
         public Guid UserId { get; set; }
+
         public Guid Id { get; set; }
-        public string Name { get; set; }
+
+        //public Guid CollectionId { get; set; }
+
+        [JsonPropertyName("name")]
+        public string? Name { get; set; }
+
+        [JsonPropertyName("russian")]
+        public string? Russian { get; set; }
+
+        [JsonPropertyName("score")]
+        public string? Score { get; set; }
+
+        [JsonPropertyName("episodes")]
+        public int? Episodes { get; set; }
+
+        [JsonPropertyName("aired_on")]
+        public string? AiredOn { get; set; }
+
+        [JsonPropertyName("released_on")]
+        public string? ReleasedOn { get; set; }
+
+        [JsonPropertyName("description")]
         public string? Description { get; set; }
-        public double? Rating { get; set; }
-        public double? UserRating { get; set; }
-        public string? UserComment { get; set; }
+
+        [JsonPropertyName("description_html")]
+        public string? DescriptionHtml { get; set; }
+
+        [JsonPropertyName("image")]
+        public Image? Image { get; set; } = null!;
+
+        [JsonPropertyName("genres")]
+        public List<Genre> Genres { get; set; } = new List<Genre>();
+
+        public List<AnimeUserRate> UserRates { get; set; } = new List<AnimeUserRate>();
+
         public IList<AnimeCollection> AnimeCollections { get; set; } = new List<AnimeCollection>();
     }
 }

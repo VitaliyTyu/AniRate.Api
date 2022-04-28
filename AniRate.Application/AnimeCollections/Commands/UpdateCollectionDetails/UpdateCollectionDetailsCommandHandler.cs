@@ -28,9 +28,9 @@ namespace AniRate.Application.AnimeCollections.Commands.UpdateCollectionDetails
                 throw new NotFoundException(nameof(AnimeCollection), request.Id);
             }
 
-            collection.AverageRating = request.AverageRating;
+            //collection.AverageRating = request.AverageRating;
             collection.Name = request.Name;
-            collection.Comment = request.Comment;
+           // collection.Comment = request.Comment;
 
 
             await _dbContext.SaveChangesAsync(cancellationToken);
