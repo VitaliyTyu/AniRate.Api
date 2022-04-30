@@ -1,4 +1,4 @@
-﻿using AniRate.Application.AnimeCollections.Commands.AddTitlesInCollection;
+﻿using AniRate.Application.AnimeCollections.Commands.AddTitlesInCollections;
 using AniRate.Application.AnimeCollections.Commands.CreateCollection;
 using AniRate.Application.AnimeCollections.Commands.DeleteCollections;
 using AniRate.Application.AnimeCollections.Commands.DeleteTitlesFromCollection;
@@ -91,21 +91,21 @@ namespace AniRate.WebApi.Controllers
         }
 
 
-        ///// <summary>
-        ///// добавить аниме в коллекцию
-        ///// </summary>
-        ///// <returns>NoContent</returns>
-        ///// <response code="204">Success</response>
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[HttpPut("Titles")]
-        ////[Authorize]
-        //public async Task<ActionResult> Add([FromBody] AddTitlesInCollectionDto addTitlesInCollectionDto)
-        //{
-        //    var command = _mapper.Map<AddTitlesInCollectionCommand>(addTitlesInCollectionDto);
-        //    command.UserId = UserId;
-        //    await Mediator.Send(command);
-        //    return NoContent();
-        //}
+        /// <summary>
+        /// добавить аниме в коллекцию
+        /// </summary>
+        /// <returns>NoContent</returns>
+        /// <response code="204">Success</response>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpPut("Titles")]
+        [Authorize]
+        public async Task<ActionResult> Add([FromBody] AddTitlesInCollectionsDto addTitlesInCollectionsDto)
+        {
+            var command = _mapper.Map<AddTitlesInCollectionsCommand>(addTitlesInCollectionsDto);
+            command.UserId = UserId;
+            await Mediator.Send(command);
+            return NoContent();
+        }
 
 
         ///// <summary>

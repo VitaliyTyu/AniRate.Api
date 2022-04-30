@@ -67,7 +67,7 @@ namespace AniRate.Application.AnimeCollections.Queries.GetCollectionDetails
                 .ToListAsync();
 
 
-            if (titles == null || collections[0] == null)
+            if (titles == null || collections.Count != 0 || collections[0] == null)
             {
                 throw new NotFoundException(nameof(AnimeCollection), request.Id);
             }

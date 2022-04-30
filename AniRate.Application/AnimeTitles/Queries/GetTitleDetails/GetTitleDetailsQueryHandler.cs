@@ -32,7 +32,7 @@ namespace AniRate.Application.AnimeTitles.Queries.GetTitleDetails
                 .ProjectTo<TitleDetailsVM>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
-            if (titles[0] == null || titles.Count == 0)
+            if (titles.Count == 0 || titles[0] == null)
             {
                 throw new NotFoundException(nameof(AnimeTitle), request.Id);
             }
