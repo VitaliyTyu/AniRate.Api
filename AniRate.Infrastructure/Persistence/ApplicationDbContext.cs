@@ -22,10 +22,6 @@ namespace AniRate.Infrastructure.Persistence
 
         public DbSet<Genre> Genres => Set<Genre>();
 
-        public DbSet<AnimeUserRate> AnimeUserRates => Set<AnimeUserRate>();
-
-        public DbSet<CollectionUserRate> CollectionUserRates => Set<CollectionUserRate>();
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new AnimeTitleConfiguration());
@@ -33,8 +29,6 @@ namespace AniRate.Infrastructure.Persistence
             builder.ApplyConfiguration(new AccountConfiguration());
             builder.ApplyConfiguration(new ImageConfiguration());
             builder.ApplyConfiguration(new GenreConfiguration());
-            builder.ApplyConfiguration(new AnimeUserRateConfiguration());
-            builder.ApplyConfiguration(new CollectionUserRateConfiguration());
 
             base.OnModelCreating(builder);
         }

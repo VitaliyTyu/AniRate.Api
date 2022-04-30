@@ -15,9 +15,6 @@ namespace AniRate.Infrastructure.Persistence.Configurations
         {
             builder.HasKey(genre => genre.Id);
             builder.HasIndex(genre => genre.Id).IsUnique();
-            //builder
-            //    .HasOne(g => g.AnimeTitle)
-            //    .WithMany(a => a.Genres);
         }
     }
 }

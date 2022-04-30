@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AniRate.Infrastructure.Migrations
 {
-    public partial class NewArch : Migration
+    public partial class FixEntityFields : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,7 +27,8 @@ namespace AniRate.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserRating = table.Column<double>(type: "float", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Russian = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Score = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -40,26 +41,6 @@ namespace AniRate.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AnimeTitles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AnimeUserRates",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AnimeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Rating = table.Column<double>(type: "float", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AnimeUserRates", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AnimeUserRates_AnimeTitles_AnimeId",
-                        column: x => x.AnimeId,
-                        principalTable: "AnimeTitles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,6 +92,8 @@ namespace AniRate.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    UserComment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserRating = table.Column<double>(type: "float", nullable: true),
                     ImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -147,26 +130,6 @@ namespace AniRate.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "CollectionUserRates",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CollectionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Rating = table.Column<double>(type: "float", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CollectionUserRates", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CollectionUserRates_AnimeCollections_CollectionId",
-                        column: x => x.CollectionId,
-                        principalTable: "AnimeCollections",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_Id",
                 table: "Accounts",
@@ -192,28 +155,6 @@ namespace AniRate.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_AnimeTitles_Id",
                 table: "AnimeTitles",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AnimeUserRates_AnimeId",
-                table: "AnimeUserRates",
-                column: "AnimeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AnimeUserRates_Id",
-                table: "AnimeUserRates",
-                column: "Id",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CollectionUserRates_CollectionId",
-                table: "CollectionUserRates",
-                column: "CollectionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CollectionUserRates_Id",
-                table: "CollectionUserRates",
                 column: "Id",
                 unique: true);
 
@@ -248,12 +189,6 @@ namespace AniRate.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AnimeCollectionAnimeTitle");
-
-            migrationBuilder.DropTable(
-                name: "AnimeUserRates");
-
-            migrationBuilder.DropTable(
-                name: "CollectionUserRates");
 
             migrationBuilder.DropTable(
                 name: "Genres");

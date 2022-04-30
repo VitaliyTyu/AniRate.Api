@@ -11,7 +11,6 @@ namespace AniRate.WebApi.Models.AnimeCollectionsDtos
 {
     public class AddTitlesInCollectionsDto : IMapWith<AddTitlesInCollectionsCommand>
     {
-        //public Guid Id { get; set; }
         public List<Guid> CollectionsIds { get; set; } = new List<Guid>();
         public List<Guid> AnimeTitlesIds { get; set; } = new List<Guid>();
 

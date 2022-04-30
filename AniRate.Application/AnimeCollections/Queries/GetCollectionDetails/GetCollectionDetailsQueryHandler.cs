@@ -29,25 +29,6 @@ namespace AniRate.Application.AnimeCollections.Queries.GetCollectionDetails
 
         public async Task<CollectionDetailsVM> Handle(GetCollectionDetailsQuery request, CancellationToken cancellationToken)
         {
-            //var collections = await _dbContext.AnimeCollections
-            //    .Where(c => c.Id == request.Id && c.UserId == request.UserId)
-            //    .ProjectTo<CollectionDetailsVM>(_mapper.ConfigurationProvider)
-            //    .ToListAsync(cancellationToken);
-
-            //if (collections[0] == null || collections.Count == 0)
-            //{
-            //    throw new NotFoundException(nameof(AnimeCollection), request.Id);
-            //}
-
-            //return new CollectionDetailsVM()
-            //{
-            //    Name = collections[0].Name,
-            //    Id = collections[0].Id,
-            //    AnimeTitles = collections[0].AnimeTitles,
-            //    AverageRating = collections[0].AverageRating,
-            //    Comment = collections[0].Comment,
-            //};
-
             var titles = await _dbContext.AnimeCollections
                 .Where(c => c.Id == request.Id && c.UserId == request.UserId)
                 .SelectMany(c => c.AnimeTitles)
@@ -61,13 +42,14 @@ namespace AniRate.Application.AnimeCollections.Queries.GetCollectionDetails
                     Id = c.Id,
                     Image = c.Image,
                     Name = c.Name,
-                    UserRates = c.UserRates,
+                    UserComment = c.UserComment,
+                    UserRating = c.UserRating,
                     AnimeTitles = titles
                 })
                 .ToListAsync();
 
 
-            if (titles == null || collections.Count != 0 || collections[0] == null)
+            if (titles == null || collections.Count == 0 || collections[0] == null)
             {
                 throw new NotFoundException(nameof(AnimeCollection), request.Id);
             }

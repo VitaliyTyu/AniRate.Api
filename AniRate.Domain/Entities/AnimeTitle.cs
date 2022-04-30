@@ -10,11 +10,9 @@ namespace AniRate.Domain.Entities
 {
     public class AnimeTitle
     {
-        public Guid UserId { get; set; }
-
         public Guid Id { get; set; }
-
-        //public Guid CollectionId { get; set; }
+        public string? UserComment { get; set; }
+        public double? UserRating { get; set; }
 
         [JsonPropertyName("name")]
         public string? Name { get; set; }
@@ -45,8 +43,6 @@ namespace AniRate.Domain.Entities
 
         [JsonPropertyName("genres")]
         public List<Genre> Genres { get; set; } = new List<Genre>();
-
-        public List<AnimeUserRate> UserRates { get; set; } = new List<AnimeUserRate>();
 
         public IList<AnimeCollection> AnimeCollections { get; set; } = new List<AnimeCollection>();
     }

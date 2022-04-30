@@ -47,8 +47,6 @@ namespace AniRate.Infrastructure.Persistence
                             anime.Id = Guid.NewGuid();
                             anime.Image.Id = Guid.NewGuid();
                             anime.Image.AnimeId = anime.Id;
-                            anime.UserId = Guid.Empty;
-                            //anime.CollectionId = Guid.Empty;
 
                             if (anime.Genres != null)
                                 foreach (var genre in anime.Genres)

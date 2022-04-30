@@ -1,5 +1,6 @@
 ﻿using AniRate.Application.AnimeCollections.Commands.UpdateCollectionDetails;
 using AniRate.Application.Common.Mappings;
+using AniRate.Domain.Entities;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -11,22 +12,22 @@ namespace AniRate.WebApi.Models.AnimeCollectionsDtos
 {
     public class UpdateCollectionDetailsDto : IMapWith<UpdateCollectionDetailsCommand>
     {
+
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string? Comment { get; set; }
-        public double? AverageRating { get; set; }
+        public string? UserComment { get; set; }
+        public double? UserRating { get; set; }
+        public Image? Image { get; set; } = null!;
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<UpdateCollectionDetailsDto, UpdateCollectionDetailsCommand>()
                 .ForMember(animeCommand => animeCommand.Name,
                     opt => opt.MapFrom(animeDto => animeDto.Name))
-                .ForMember(animeCommand => animeCommand.Comment,
-                    opt => opt.MapFrom(animeDto => animeDto.Comment))
-                .ForMember(animeCommand => animeCommand.AverageRating,
-                    opt => opt.MapFrom(animeDto => animeDto.AverageRating))
-                .ForMember(animeCommand => animeCommand.AverageRating,
-                    opt => opt.MapFrom(animeDto => animeDto.AverageRating));
+                .ForMember(animeCommand => animeCommand.UserComment,
+                    opt => opt.MapFrom(animeDto => animeDto.UserComment))
+                .ForMember(animeCommand => animeCommand.UserRating,
+                    opt => opt.MapFrom(animeDto => animeDto.UserRating));
         }
     }
 }

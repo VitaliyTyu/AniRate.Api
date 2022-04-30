@@ -6,7 +6,6 @@ using AniRate.Application.AnimeCollections.Commands.UpdateCollectionDetails;
 using AniRate.Application.AnimeCollections.Queries;
 using AniRate.Application.AnimeCollections.Queries.GetCollectionDetails;
 using AniRate.Application.AnimeCollections.Queries.GetCollections;
-using AniRate.Application.AnimeCollections.Queries.GetCollectionsFromTitle;
 using AniRate.Application.Common.Models;
 using AniRate.Application.Interfaces;
 using AniRate.Domain.Entities;
@@ -61,14 +60,7 @@ namespace AniRate.WebApi.Controllers
         [Authorize]
         public async Task<ActionResult<CollectionDetailsVM>> Get([FromQuery] GetCollectionDetailsQuery query)
         {
-            //var query = new GetCollectionDetailsQuery()
-            //{
-            //    UserId = UserId,
-            //    Id = id
-            //};
-
             query.UserId = UserId;
-
             var collectionDetailsVM = await Mediator.Send(query);
             return Ok(collectionDetailsVM);
         }
@@ -92,7 +84,7 @@ namespace AniRate.WebApi.Controllers
 
 
         /// <summary>
-        /// добавить аниме в коллекцию
+        /// добавить тайтлы в коллекции
         /// </summary>
         /// <returns>NoContent</returns>
         /// <response code="204">Success</response>
@@ -108,42 +100,42 @@ namespace AniRate.WebApi.Controllers
         }
 
 
-        ///// <summary>
-        ///// изменить описание/имя коллекции
-        ///// </summary>
-        ///// <returns>NoContent</returns>
-        ///// <response code="204">Success</response>
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[HttpPut("Details")]
-        ////[Authorize]
-        //public async Task<ActionResult> Update([FromBody] UpdateCollectionDetailsDto updateCollectionDetailsDto)
-        //{
-        //    var command = _mapper.Map<UpdateCollectionDetailsCommand>(updateCollectionDetailsDto);
-        //    command.UserId = UserId;
-        //    await Mediator.Send(command);
-        //    return NoContent();
-        //}
+        /// <summary>
+        /// изменить детали коллекции
+        /// </summary>
+        /// <returns>NoContent</returns>
+        /// <response code="204">Success</response>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpPut("Details")]
+        [Authorize]
+        public async Task<ActionResult> Update([FromBody] UpdateCollectionDetailsDto updateCollectionDetailsDto)
+        {
+            var command = _mapper.Map<UpdateCollectionDetailsCommand>(updateCollectionDetailsDto);
+            command.UserId = UserId;
+            await Mediator.Send(command);
+            return NoContent();
+        }
+
+
+        /// <summary>
+        /// удалить коллекции
+        /// </summary>
+        /// <returns>NoContent</returns>
+        /// <response code="204">Success</response>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpDelete("Collections")]
+        [Authorize]
+        public async Task<ActionResult> Delete([FromBody] DeleteCollectionsDto deleteCollectionsDto)
+        {
+            var command = _mapper.Map<DeleteCollectionsCommand>(deleteCollectionsDto);
+            command.UserId = UserId;
+            await Mediator.Send(command);
+            return NoContent();
+        }
 
 
         ///// <summary>
-        ///// удалить коллекции
-        ///// </summary>
-        ///// <returns>NoContent</returns>
-        ///// <response code="204">Success</response>
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[HttpDelete("Collections")]
-        ////[Authorize]
-        //public async Task<ActionResult> Delete([FromBody] DeleteCollectionsDto deleteCollectionsDto)
-        //{
-        //    var command = _mapper.Map<DeleteCollectionsCommand>(deleteCollectionsDto);
-        //    command.UserId = UserId;
-        //    await Mediator.Send(command);
-        //    return NoContent();
-        //}
-
-
-        ///// <summary>
-        ///// удалить аниме из коллекции
+        ///// удалить тайтлы из коллекции
         ///// </summary>
         ///// <returns>NoContent</returns>
         ///// <response code="204">Success</response>
@@ -156,6 +148,20 @@ namespace AniRate.WebApi.Controllers
         //    command.UserId = UserId;
         //    await Mediator.Send(command);
         //    return NoContent();
+        //}
+
+
+
+        ///// <summary>
+        ///// удалить тайтл из коллекций
+        ///// </summary>
+        ///// <returns>NoContent</returns>
+        ///// <response code="204">Success</response>
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        //[HttpDelete("TitlesFromCollection")]
+        ////[Authorize]
+        //public async Task<ActionResult> DeleteFromCollection([FromBody] DeleteTitlesFromCollectionDto deleteTitlesFromCollectionDto)
+        //{
         //}
 
 

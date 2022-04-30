@@ -9,7 +9,6 @@ namespace AniRate.Application.AnimeTitles.Queries.GetTitleDetails
 {
     public class GetTitleDetailsQuery : IRequest<TitleDetailsVM>
     {
-        //public Guid UserId { get; set; }
         public Guid Id { get; set; }
     }
 }

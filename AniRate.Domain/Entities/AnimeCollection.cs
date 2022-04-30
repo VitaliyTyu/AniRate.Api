@@ -14,7 +14,9 @@ namespace AniRate.Domain.Entities
 
         public string Name { get; set; }
 
-        public List<CollectionUserRate> UserRates { get; set; } = new List<CollectionUserRate>();
+        public string? UserComment { get; set; }
+
+        public double? UserRating { get; set; }
 
         public Image? Image { get; set; } = null!;
 

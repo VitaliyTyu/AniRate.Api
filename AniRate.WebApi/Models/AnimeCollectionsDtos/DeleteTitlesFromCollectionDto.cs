@@ -22,6 +22,5 @@ namespace AniRate.WebApi.Models.AnimeCollectionsDtos
                 .ForMember(animeCommand => animeCommand.AnimeTitlesId,
                     opt => opt.MapFrom(animeDto => animeDto.AnimeTitlesId));
         }
-
     }
 }

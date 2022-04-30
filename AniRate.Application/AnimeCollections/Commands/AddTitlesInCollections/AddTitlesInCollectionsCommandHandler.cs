@@ -26,7 +26,6 @@ namespace AniRate.Application.AnimeCollections.Commands.AddTitlesInCollections
 
             foreach (var animeId in request.AnimeTitlesIds)
             {
-                //inclide image
                 var anime = await _dbContext.AnimeTitles
                     .Include(a => a.Image)
                     .FirstOrDefaultAsync(a => a.Id == animeId, cancellationToken);
@@ -39,11 +38,9 @@ namespace AniRate.Application.AnimeCollections.Commands.AddTitlesInCollections
                 animeTitles.Add(anime);
             }
 
-            //var collections = new List<AnimeCollection>();
 
             foreach (var collectioId in request.CollectionsIds)
             {
-                //include anime titles
                 var collection = await _dbContext.AnimeCollections
                     .Include(c => c.Image)
                     .Include(c => c.AnimeTitles)
@@ -54,7 +51,6 @@ namespace AniRate.Application.AnimeCollections.Commands.AddTitlesInCollections
                     throw new NotFoundException(nameof(AnimeCollection), collectioId);
                 }
 
-                //collections.Add(collection);
 
                 foreach (var anime in animeTitles)
                 {
@@ -67,19 +63,6 @@ namespace AniRate.Application.AnimeCollections.Commands.AddTitlesInCollections
                     }
                 }
             }
-
-            //var collection = await _dbContext.AnimeCollections
-            //    .Include(c => c.AnimeTitles)
-            //    .FirstOrDefaultAsync(c =>
-            //    c.Id == request.Id, cancellationToken);
-
-            //if (collection == null || collection.UserId != request.UserId)
-            //{
-            //    throw new NotFoundException(nameof(AnimeCollection), request.Id);
-            //}
-
-
-
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 
