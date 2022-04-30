@@ -29,8 +29,8 @@ namespace AniRate.Application.AnimeCollections.Commands.UpdateCollectionDetails
             }
 
             collection.Name = request.Name;
-           // collection.Comment = request.Comment;
-
+            collection.UserComment = request.UserComment;
+            collection.UserRating = request.UserRating;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 

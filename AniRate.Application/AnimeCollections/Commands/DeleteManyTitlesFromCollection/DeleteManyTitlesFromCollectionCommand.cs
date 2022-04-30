@@ -5,12 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniRate.Application.AnimeCollections.Commands.DeleteTitlesFromCollection
+namespace AniRate.Application.AnimeCollections.Commands.DeleteManyTitlesFromCollection
 {
-    public class DeleteTitlesFromCollectionCommand : IRequest
+    public class DeleteManyTitlesFromCollectionCommand : IRequest
     {
         public Guid UserId { get; set; }
         public Guid Id { get; set; }
-        public List<Guid> AnimeTitlesId { get; set; } = new List<Guid>();
+        public List<Guid> AnimeTitlesIds { get; set; } = new List<Guid>();
     }
 }
