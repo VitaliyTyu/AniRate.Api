@@ -11,7 +11,7 @@ namespace AniRate.Application.AnimeTitles.Queries
 {
     public class TitlesListVM : IMapWith<AnimeCollection>
     {
-        public IList<TitleDetailsVM> AnimeTitles { get; set; }
+        public IList<BriefTitleVM> AnimeTitles { get; set; }
 
         public void Mapping(Profile profile)
         {

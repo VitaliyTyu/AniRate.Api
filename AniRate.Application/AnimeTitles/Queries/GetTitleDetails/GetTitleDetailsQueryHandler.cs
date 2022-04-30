@@ -27,7 +27,8 @@ namespace AniRate.Application.AnimeTitles.Queries.GetTitleDetails
         public async Task<TitleDetailsVM> Handle(GetTitleDetailsQuery request, CancellationToken cancellationToken)
         {
             var titles = await _dbContext.AnimeTitles
-                .Where(a => a.Id == request.Id && a.UserId == request.UserId)
+                //.Where(a => a.Id == request.Id && a.UserId == request.UserId)
+                .Where(a => a.Id == request.Id)
                 .ProjectTo<TitleDetailsVM>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 
@@ -36,16 +37,18 @@ namespace AniRate.Application.AnimeTitles.Queries.GetTitleDetails
                 throw new NotFoundException(nameof(AnimeTitle), request.Id);
             }
 
-            return new TitleDetailsVM()
-            {
-                Name = titles[0].Name,
-                Id = titles[0].Id,
-                Description = titles[0].Description,
-                Rating = titles[0].Rating,
-                UserComment = titles[0].UserComment,
-                UserRating = titles[0].UserRating,
-                AnimeCollections = titles[0].AnimeCollections,
-            };
+            return titles[0];
+
+            //var collection = await _dbContext.AnimeCollections
+            //    .Include(c => c.AnimeTitles)
+            //    .SingleOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
+
+            //if (collection == null || collection.UserId != request.UserId)
+            //{
+            //    throw new NotFoundException(nameof(AnimeCollection), request.Id);
+            //}
+
+            //return _mapper.Map<AnimeCollectionDetailsVM>(collection);
         }
     }
 }

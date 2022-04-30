@@ -1,4 +1,6 @@
-﻿using AniRate.Application.Interfaces;
+﻿using AniRate.Application.Common.Mappings;
+using AniRate.Application.Common.Models;
+using AniRate.Application.Interfaces;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace AniRate.Application.AnimeCollections.Queries.GetCollections
 {
-    public class GetCollectionsQueryHandler : IRequestHandler<GetCollectionsQuery, CollectionsListVM>
+    public class GetCollectionsQueryHandler : IRequestHandler<GetCollectionsQuery, PaginatedList<BriefCollectionVM>>
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -22,14 +24,15 @@ namespace AniRate.Application.AnimeCollections.Queries.GetCollections
             _mapper = mapper;
         }
 
-        public async Task<CollectionsListVM> Handle(GetCollectionsQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedList<BriefCollectionVM>> Handle(GetCollectionsQuery request, CancellationToken cancellationToken)
         {
             var collections = await _dbContext.AnimeCollections
                 .Where(c => c.UserId == request.UserId)
-                .ProjectTo<CollectionDetailsVM>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken);
+                .ProjectTo<BriefCollectionVM>(_mapper.ConfigurationProvider)
+                .PaginatedListAsync(request.PageNumber, request.PageSize);
 
-            return new CollectionsListVM { Collections = collections };
+
+            return collections;
         }
     }
 }

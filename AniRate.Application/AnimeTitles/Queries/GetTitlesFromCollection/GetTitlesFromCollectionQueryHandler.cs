@@ -1,4 +1,6 @@
 ﻿using AniRate.Application.Common.Exceptions;
+using AniRate.Application.Common.Mappings;
+using AniRate.Application.Common.Models;
 using AniRate.Application.Interfaces;
 using AniRate.Domain.Entities;
 using AutoMapper;
@@ -14,7 +16,7 @@ using System.Threading.Tasks;
 namespace AniRate.Application.AnimeTitles.Queries.GetTitlesFromCollection
 {
     public class GetTitlesFromCollectionQueryHandler
-        : IRequestHandler<GetTitlesFromCollectionQuery, TitlesListVM>
+        : IRequestHandler<GetTitlesFromCollectionQuery, PaginatedList<BriefTitleVM>>
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -25,19 +27,20 @@ namespace AniRate.Application.AnimeTitles.Queries.GetTitlesFromCollection
             _mapper = mapper;
         }
 
-        public async Task<TitlesListVM> Handle(GetTitlesFromCollectionQuery request, CancellationToken cancellationToken)
+        public async Task<PaginatedList<BriefTitleVM>> Handle(GetTitlesFromCollectionQuery request, CancellationToken cancellationToken)
         {
-            var titlesList = await _dbContext.AnimeCollections
-                .Where(c => c.Id == request.Id && c.UserId == request.UserId)
-                .ProjectTo<TitlesListVM>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken);
+            var titles = await _dbContext.AnimeCollections
+                .Where(c => c.Id == request.CollectionId && c.UserId == request.UserId)
+                .SelectMany(c => c.AnimeTitles)
+                .ProjectTo<BriefTitleVM>(_mapper.ConfigurationProvider)
+                .PaginatedListAsync(request.PageNumber, request.PageSize);
 
-            if (titlesList[0].AnimeTitles == null || titlesList[0].AnimeTitles.Count == 0)
+            if (titles == null)
             {
-                throw new NotFoundException(nameof(AnimeCollection), request.Id);
+                throw new NotFoundException(nameof(AnimeCollection), request.CollectionId);
             }
 
-            return new TitlesListVM { AnimeTitles = titlesList[0].AnimeTitles };
+            return titles;
         }
     }
 }
