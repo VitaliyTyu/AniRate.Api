@@ -24,11 +24,13 @@ namespace AniRate.Application.AnimeCollections.Commands.CreateCollection
         {
             var animeTitles = new List<AnimeTitle>();
 
-            foreach (var animeId in request.AnimeTitlesId)
+            foreach (var animeId in request.AnimeTitlesIds)
             {
-                var entity = await _dbContext.AnimeTitles.FirstOrDefaultAsync(a => a.Id == animeId, cancellationToken);
+                var entity = await _dbContext.AnimeTitles
+                    .Include(a => a.Image)
+                    .FirstOrDefaultAsync(a => a.Id == animeId, cancellationToken);
 
-                if (entity == null || entity.UserId != request.UserId)
+                if (entity == null)
                 {
                     throw new NotFoundException(nameof(AnimeTitle), animeId);
                 }
@@ -41,9 +43,8 @@ namespace AniRate.Application.AnimeCollections.Commands.CreateCollection
                 Id = Guid.NewGuid(),
                 UserId = request.UserId,
                 Name = request.Name,
-                //AverageRating = request.AverageRating,
-                //Comment = request.Comment,
                 AnimeTitles = animeTitles,
+                Image = animeTitles.Count() == 0 ? null : animeTitles[0].Image,
             };
 
             await _dbContext.AnimeCollections.AddAsync(animeCollection, cancellationToken);

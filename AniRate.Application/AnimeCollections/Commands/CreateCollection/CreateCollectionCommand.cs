@@ -12,8 +12,6 @@ namespace AniRate.Application.AnimeCollections.Commands.CreateCollection
     {
         public Guid UserId { get; set; }
         public string Name { get; set; }
-        public string? Comment { get; set; }
-        public double? AverageRating { get; set; }
-        public List<Guid> AnimeTitlesId { get; set; } = new List<Guid>();
+        public List<Guid> AnimeTitlesIds { get; set; } = new List<Guid>();
     }
 }

@@ -73,21 +73,21 @@ namespace AniRate.WebApi.Controllers
         }
 
 
-        ///// <summary>
-        ///// создать коллекцию со списком аниме
-        ///// </summary>
-        ///// <returns>Guid id</returns>
-        ///// <response code="201">Success</response>
-        //[ProducesResponseType(StatusCodes.Status201Created)]
-        //[HttpPost("Collection")]
-        //[Authorize]
-        //public async Task<ActionResult<Guid>> Create([FromBody] CreateCollectionDto createCollectionDto)
-        //{
-        //    var command = _mapper.Map<CreateCollectionCommand>(createCollectionDto);
-        //    command.UserId = UserId;
-        //    var collectionId = await Mediator.Send(command);
-        //    return Ok(collectionId);
-        //}
+        /// <summary>
+        /// создать коллекцию со списком аниме
+        /// </summary>
+        /// <returns>Guid id</returns>
+        /// <response code="201">Success</response>
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [HttpPost("Collection")]
+        [Authorize]
+        public async Task<ActionResult<Guid>> Create([FromBody] CreateCollectionDto createCollectionDto)
+        {
+            var command = _mapper.Map<CreateCollectionCommand>(createCollectionDto);
+            command.UserId = UserId;
+            var collectionId = await Mediator.Send(command);
+            return Ok(collectionId);
+        }
 
 
         ///// <summary>

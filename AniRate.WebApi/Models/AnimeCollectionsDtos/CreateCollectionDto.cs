@@ -13,21 +13,16 @@ namespace AniRate.WebApi.Models.AnimeCollectionsDtos
         : IMapWith<CreateCollectionCommand>
     {
         public string Name { get; set; }
-        public string? Comment { get; set; }
-        public double? AverageRating { get; set; }
-        public List<Guid> AnimeTitlesId { get; set; } = new List<Guid>();
+        public List<Guid> AnimeTitlesIds { get; set; } = new List<Guid>();
+
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<CreateCollectionDto, CreateCollectionCommand>()
                 .ForMember(animeCommand => animeCommand.Name,
                     opt => opt.MapFrom(animeDto => animeDto.Name))
-                .ForMember(animeCommand => animeCommand.Comment,
-                    opt => opt.MapFrom(animeDto => animeDto.Comment))
-                .ForMember(animeCommand => animeCommand.AverageRating,
-                    opt => opt.MapFrom(animeDto => animeDto.AverageRating))
-                .ForMember(animeCommand => animeCommand.AnimeTitlesId,
-                    opt => opt.MapFrom(animeDto => animeDto.AnimeTitlesId));
+                .ForMember(animeCommand => animeCommand.AnimeTitlesIds,
+                    opt => opt.MapFrom(animeDto => animeDto.AnimeTitlesIds));
         }
     }
 }

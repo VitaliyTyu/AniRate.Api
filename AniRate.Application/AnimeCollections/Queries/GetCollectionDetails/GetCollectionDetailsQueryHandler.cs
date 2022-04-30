@@ -59,7 +59,6 @@ namespace AniRate.Application.AnimeCollections.Queries.GetCollectionDetails
                 .Select(c => new CollectionDetailsVM()
                 {
                     Id = c.Id,
-                    UserId = c.UserId,
                     Image = c.Image,
                     Name = c.Name,
                     UserRates = c.UserRates,
@@ -68,7 +67,7 @@ namespace AniRate.Application.AnimeCollections.Queries.GetCollectionDetails
                 .ToListAsync();
 
 
-            if (titles == null || collections[0] == null || collections[0].UserId != request.UserId)
+            if (titles == null || collections[0] == null)
             {
                 throw new NotFoundException(nameof(AnimeCollection), request.Id);
             }
