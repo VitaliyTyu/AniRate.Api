@@ -30,11 +30,6 @@ namespace AniRate.Infrastructure.Persistence.Configurations
                 .HasForeignKey(genre => genre.AnimeId);
 
             builder
-                .HasMany(anime => anime.UserRates)
-                .WithOne(rate => rate.AnimeTitle)
-                .HasForeignKey(rate => rate.AnimeId);
-
-            builder
                 .HasMany(anime => anime.AnimeCollections)
                 .WithMany(collection => collection.AnimeTitles);
         }

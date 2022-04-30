@@ -26,7 +26,7 @@ namespace AniRate.Application.AnimeCollections.Commands.DeleteTitlesFromCollecti
             {
                 var entity = await _dbContext.AnimeTitles.FirstOrDefaultAsync(a => a.Id == animeId, cancellationToken);
 
-                if (entity == null || entity.UserId != request.UserId)
+                if (entity == null)
                 {
                     throw new NotFoundException(nameof(AnimeTitle), animeId);
                 }

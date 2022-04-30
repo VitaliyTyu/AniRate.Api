@@ -11,8 +11,6 @@ namespace AniRate.Application.AnimeTitles.Queries
 {
     public class TitleDetailsVM : IMapWith<AnimeTitle>
     {
-        //public Guid UserId { get; set; }
-
         public Guid Id { get; set; }
 
         public string? Name { get; set; }
@@ -35,7 +33,9 @@ namespace AniRate.Application.AnimeTitles.Queries
 
         public List<Genre> Genres { get; set; } = new List<Genre>();
 
-        public List<AnimeUserRate> UserRates { get; set; } = new List<AnimeUserRate>();
+        public string? UserComment { get; set; }
+
+        public double? UserRating { get; set; }
 
         public IList<AnimeCollection> AnimeCollections { get; set; } = new List<AnimeCollection>();
 
@@ -64,11 +64,12 @@ namespace AniRate.Application.AnimeTitles.Queries
                     opt.MapFrom(anime => anime.Image))
                 .ForMember(animeDto => animeDto.Genres, opt =>
                     opt.MapFrom(anime => anime.Genres))
-                .ForMember(animeDto => animeDto.UserRates, opt =>
-                    opt.MapFrom(anime => anime.UserRates))
+                .ForMember(animeDto => animeDto.UserComment, opt =>
+                    opt.MapFrom(anime => anime.UserComment))
+                .ForMember(animeDto => animeDto.UserRating, opt =>
+                    opt.MapFrom(anime => anime.UserRating))
                 .ForMember(animeDto => animeDto.AnimeCollections, opt =>
                     opt.MapFrom(anime => anime.AnimeCollections));
-
         }
     }
 }

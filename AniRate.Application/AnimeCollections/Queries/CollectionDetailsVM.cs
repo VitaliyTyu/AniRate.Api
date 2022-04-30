@@ -17,7 +17,9 @@ namespace AniRate.Application.AnimeCollections.Queries
 
         public string Name { get; set; }
 
-        public List<CollectionUserRate> UserRates { get; set; } = new List<CollectionUserRate>();
+        public string? UserComment { get; set; }
+
+        public double? UserRating { get; set; }
 
         public Image? Image { get; set; } = null!;
 
@@ -30,8 +32,10 @@ namespace AniRate.Application.AnimeCollections.Queries
                     opt.MapFrom(collection => collection.Id))
                 .ForMember(collectionDto => collectionDto.Name, opt =>
                     opt.MapFrom(collection => collection.Name))
-                .ForMember(collectionDto => collectionDto.UserRates, opt =>
-                    opt.MapFrom(collection => collection.UserRates))
+                .ForMember(collectionDto => collectionDto.UserComment, opt =>
+                    opt.MapFrom(collection => collection.UserComment))
+                .ForMember(collectionDto => collectionDto.UserRating, opt =>
+                    opt.MapFrom(collection => collection.UserRating))
                 .ForMember(collectionDto => collectionDto.Image, opt =>
                     opt.MapFrom(collection => collection.Image))
                 .ForMember(collectionDto => collectionDto.AnimeTitles, opt =>

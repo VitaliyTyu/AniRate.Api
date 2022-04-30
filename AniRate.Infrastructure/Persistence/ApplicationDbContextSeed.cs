@@ -22,6 +22,17 @@ namespace AniRate.Infrastructure.Persistence
                     Id = Guid.NewGuid(),
                     UserId = Guid.Parse("A9168C5E-CEB2-4faa-B6BF-329BF39FA1E4"),
                     Name = "Main collection",
+                    UserComment = "Main collection comment",
+                    UserRating = 10,
+                };
+
+                var secondCollection = new AnimeCollection
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = Guid.Parse("A9168C5E-CEB2-4faa-B6BF-329BF39FA1E4"),
+                    Name = "Second collection",
+                    UserComment = "Second collection comment",
+                    UserRating = 5,
                 };
 
                 var user = new Account()
@@ -31,17 +42,25 @@ namespace AniRate.Infrastructure.Persistence
                     Password = "user",
                 };
 
-                var titles = context.AnimeTitles.Take(5).ToArray();
-                foreach (var title in titles)
+                var titles1 = context.AnimeTitles.Take(5).ToArray();
+                foreach (var title in titles1)
                 {
                     mainCollection.AnimeTitles.Add(title);
                 }
-
                 mainCollection.Image = mainCollection.AnimeTitles[0].Image;
+
+
+                var titles2 = context.AnimeTitles.Skip(10).Take(3).ToArray();
+                foreach (var title in titles2)
+                {
+                    secondCollection.AnimeTitles.Add(title);
+                }
+                secondCollection.Image = secondCollection.AnimeTitles[0].Image;
+
 
                 await context.Accounts.AddAsync(user);
 
-                await context.AnimeCollections.AddAsync(mainCollection);
+                await context.AnimeCollections.AddRangeAsync(mainCollection, secondCollection);
 
                 await context.SaveChangesAsync();
             }

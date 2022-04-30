@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AniRate.Application.AnimeTitles.Commands.MakeTitlesUnanonymous
+namespace AniRate.Application.AnimeCollections.Commands.AddTitlesInCollections
 {
-    public class MakeTitlesUnanonymousCommand : IRequest<List<Guid>>
+    public class AddTitlesInCollectionsCommand : IRequest
     {
         public Guid UserId { get; set; }
+        public List<Guid> CollectionsIds { get; set; } = new List<Guid>();
         public List<Guid> AnimeTitlesIds { get; set; } = new List<Guid>();
     }
 }

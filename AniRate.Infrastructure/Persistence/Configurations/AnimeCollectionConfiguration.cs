@@ -23,10 +23,6 @@ namespace AniRate.Infrastructure.Persistence.Configurations
                 .HasMany(collection => collection.AnimeTitles)
                 .WithMany(anime => anime.AnimeCollections);
 
-            builder
-                .HasMany(collection => collection.UserRates)
-                .WithOne(rate => rate.AnimeCollection)
-                .HasForeignKey(rate => rate.CollectionId);
         }
     }
 }

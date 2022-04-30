@@ -22,7 +22,7 @@ namespace AniRate.Application.AnimeCollections.Commands.DeleteCollections
         {
             var collections = new List<AnimeCollection>();
 
-            foreach (var collectionId in request.AnimeCollectionsId)
+            foreach (var collectionId in request.AnimeCollectionsIds)
             {
                 var collection = await _dbContext.AnimeCollections.FirstOrDefaultAsync(c => c.Id == collectionId, cancellationToken);
 

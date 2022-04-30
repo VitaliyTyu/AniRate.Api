@@ -10,6 +10,6 @@ namespace AniRate.Application.AnimeCollections.Commands.DeleteCollections
     public class DeleteCollectionsCommand : IRequest
     {
         public Guid UserId { get; set; }
-        public List<Guid> AnimeCollectionsId { get; set; } = new List<Guid>();
+        public List<Guid> AnimeCollectionsIds { get; set; } = new List<Guid>();
     }
 }

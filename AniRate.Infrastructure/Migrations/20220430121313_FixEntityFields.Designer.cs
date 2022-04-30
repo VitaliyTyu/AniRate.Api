@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AniRate.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220428120321_NewArch")]
-    partial class NewArch
+    [Migration("20220430121313_FixEntityFields")]
+    partial class FixEntityFields
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -77,8 +77,14 @@ namespace AniRate.Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
+                    b.Property<string>("UserComment")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<double?>("UserRating")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -122,8 +128,11 @@ namespace AniRate.Infrastructure.Migrations
                     b.Property<string>("Score")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserComment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double?>("UserRating")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -131,56 +140,6 @@ namespace AniRate.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("AnimeTitles");
-                });
-
-            modelBuilder.Entity("AniRate.Domain.Entities.AnimeUserRate", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AnimeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("Rating")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AnimeId");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.ToTable("AnimeUserRates");
-                });
-
-            modelBuilder.Entity("AniRate.Domain.Entities.CollectionUserRate", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CollectionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Comment")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double?>("Rating")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CollectionId");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.ToTable("CollectionUserRates");
                 });
 
             modelBuilder.Entity("AniRate.Domain.Entities.Genre", b =>
@@ -264,28 +223,6 @@ namespace AniRate.Infrastructure.Migrations
                     b.Navigation("Image");
                 });
 
-            modelBuilder.Entity("AniRate.Domain.Entities.AnimeUserRate", b =>
-                {
-                    b.HasOne("AniRate.Domain.Entities.AnimeTitle", "AnimeTitle")
-                        .WithMany("UserRates")
-                        .HasForeignKey("AnimeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AnimeTitle");
-                });
-
-            modelBuilder.Entity("AniRate.Domain.Entities.CollectionUserRate", b =>
-                {
-                    b.HasOne("AniRate.Domain.Entities.AnimeCollection", "AnimeCollection")
-                        .WithMany("UserRates")
-                        .HasForeignKey("CollectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AnimeCollection");
-                });
-
             modelBuilder.Entity("AniRate.Domain.Entities.Genre", b =>
                 {
                     b.HasOne("AniRate.Domain.Entities.AnimeTitle", "AnimeTitle")
@@ -308,18 +245,11 @@ namespace AniRate.Infrastructure.Migrations
                     b.Navigation("AnimeTitle");
                 });
 
-            modelBuilder.Entity("AniRate.Domain.Entities.AnimeCollection", b =>
-                {
-                    b.Navigation("UserRates");
-                });
-
             modelBuilder.Entity("AniRate.Domain.Entities.AnimeTitle", b =>
                 {
                     b.Navigation("Genres");
 
                     b.Navigation("Image");
-
-                    b.Navigation("UserRates");
                 });
 #pragma warning restore 612, 618
         }

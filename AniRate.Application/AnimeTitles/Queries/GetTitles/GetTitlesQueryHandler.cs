@@ -30,7 +30,6 @@ namespace AniRate.Application.AnimeTitles.Queries.GetTitles
         public async Task<PaginatedList<BriefTitleVM>> Handle(GetTitlesQuery request, CancellationToken cancellationToken)
         {
             var titles = await _dbContext.AnimeTitles
-                //.Where(a => a.UserId == request.UserId)
                 .OrderByDescending(a => a.Score)
                 .ProjectTo<BriefTitleVM>(_mapper.ConfigurationProvider)
                 .PaginatedListAsync(request.PageNumber, request.PageSize);

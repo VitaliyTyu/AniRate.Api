@@ -31,8 +31,6 @@ namespace AniRate.Application.AnimeTitles.Queries
                     opt.MapFrom(anime => anime.Score))
                 .ForMember(animeDto => animeDto.Image, opt =>
                     opt.MapFrom(anime => anime.Image));
-
-
         }
     }
 }
