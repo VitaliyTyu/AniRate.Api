@@ -33,6 +33,7 @@ namespace AniRate.Application.AnimeTitles.Queries.GetTitlesFromCollection
                 .Where(c => c.Id == request.CollectionId && c.UserId == request.UserId)
                 .SelectMany(c => c.AnimeTitles)
                 .ProjectTo<BriefTitleVM>(_mapper.ConfigurationProvider)
+                .OrderByDescending(a => a.Score)
                 .PaginatedListAsync(request.PageNumber, request.PageSize);
 
             if (titles == null)

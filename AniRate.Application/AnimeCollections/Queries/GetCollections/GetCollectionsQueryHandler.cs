@@ -28,6 +28,7 @@ namespace AniRate.Application.AnimeCollections.Queries.GetCollections
         {
             var collections = await _dbContext.AnimeCollections
                 .Where(c => c.UserId == request.UserId)
+                .OrderByDescending(c => c.AnimeTitles.Count())
                 .ProjectTo<BriefCollectionVM>(_mapper.ConfigurationProvider)
                 .PaginatedListAsync(request.PageNumber, request.PageSize);
 
