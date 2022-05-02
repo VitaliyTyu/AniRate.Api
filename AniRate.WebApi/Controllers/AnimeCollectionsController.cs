@@ -2,6 +2,7 @@
 using AniRate.Application.AnimeCollections.Commands.CreateCollection;
 using AniRate.Application.AnimeCollections.Commands.DeleteCollections;
 using AniRate.Application.AnimeCollections.Commands.DeleteManyTitlesFromCollection;
+using AniRate.Application.AnimeCollections.Commands.DeleteTitleFromManyCollections;
 using AniRate.Application.AnimeCollections.Commands.UpdateCollectionDetails;
 using AniRate.Application.AnimeCollections.Queries;
 using AniRate.Application.AnimeCollections.Queries.GetCollectionDetails;
@@ -148,20 +149,20 @@ namespace AniRate.WebApi.Controllers
 
 
 
-        ///// <summary>
-        ///// удалить тайтл из коллекций
-        ///// </summary>
-        ///// <returns>NoContent</returns>
-        ///// <response code="204">Success</response>
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[HttpDelete("TitleFromManyCollections")]
-        //[Authorize]
-        //public async Task<ActionResult> DeleteFromCollections([FromBody] DeleteTitleFromManyCollectionsDto deleteTitleFromManyCollectionsDto)
-        //{
-        //    var command = _mapper.Map<DeleteTitleFromManyCollectionsCommand>(deleteTitleFromManyCollectionsDto);
-        //    command.UserId = UserId;
-        //    await Mediator.Send(command);
-        //    return NoContent();
-        //}
+        /// <summary>
+        /// удалить тайтл из коллекций
+        /// </summary>
+        /// <returns>NoContent</returns>
+        /// <response code="204">Success</response>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpDelete("TitleFromManyCollections")]
+        [Authorize]
+        public async Task<ActionResult> DeleteFromCollections([FromBody] DeleteTitleFromManyCollectionsDto deleteTitleFromManyCollectionsDto)
+        {
+            var command = _mapper.Map<DeleteTitleFromManyCollectionsCommand>(deleteTitleFromManyCollectionsDto);
+            command.UserId = UserId;
+            await Mediator.Send(command);
+            return NoContent();
+        }
     }
 }
