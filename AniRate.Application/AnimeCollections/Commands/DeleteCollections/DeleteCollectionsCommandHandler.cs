@@ -20,6 +20,11 @@ namespace AniRate.Application.AnimeCollections.Commands.DeleteCollections
         }
         public async Task<Unit> Handle(DeleteCollectionsCommand request, CancellationToken cancellationToken)
         {
+            if (request.AnimeCollectionsIds.Count == 0)
+            {
+                throw new EmptyStateException(nameof(request.AnimeCollectionsIds));
+            }
+
             var collections = new List<AnimeCollection>();
 
             foreach (var collectionId in request.AnimeCollectionsIds)

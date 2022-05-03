@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace AniRate.Application.Common.Exceptions
 {
-    public class ForbiddenAccessException : Exception
+    public class EmptyStateException : Exception
     {
-        public ForbiddenAccessException() : base() { }
+        public EmptyStateException(string name) : base($"Entity \"{name}\" must be not empty")
+        {
+        }
     }
 }

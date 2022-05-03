@@ -17,7 +17,6 @@ namespace AniRate.WebApi.Models.AnimeCollectionsDtos
         public string Name { get; set; }
         public string? UserComment { get; set; }
         public double? UserRating { get; set; }
-        public Image? Image { get; set; } = null!;
 
         public void Mapping(Profile profile)
         {

@@ -14,6 +14,12 @@ namespace AniRate.Application.Interfaces
 
         DbSet<AnimeCollection> AnimeCollections { get; }
 
+        DbSet<Account> Accounts { get; }
+
+        DbSet<Image> Images { get; }
+
+        DbSet<Genre> Genres { get; }
+
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

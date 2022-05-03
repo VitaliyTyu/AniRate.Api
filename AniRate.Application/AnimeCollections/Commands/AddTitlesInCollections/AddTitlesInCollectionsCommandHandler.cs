@@ -22,6 +22,16 @@ namespace AniRate.Application.AnimeCollections.Commands.AddTitlesInCollections
 
         public async Task<Unit> Handle(AddTitlesInCollectionsCommand request, CancellationToken cancellationToken)
         {
+            if (request.CollectionsIds.Count == 0)
+            {
+                throw new EmptyStateException(nameof(request.CollectionsIds));
+            }
+
+            if (request.AnimeTitlesIds.Count == 0)
+            {
+                throw new EmptyStateException(nameof(request.AnimeTitlesIds));
+            }
+
             var animeTitles = new List<AnimeTitle>();
 
             foreach (var animeId in request.AnimeTitlesIds)

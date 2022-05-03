@@ -1,21 +1,19 @@
 ﻿using AniRate.Application.AnimeCollections.Commands.AddTitlesInCollections;
 using AniRate.Application.AnimeCollections.Commands.CreateCollection;
 using AniRate.Application.AnimeCollections.Commands.DeleteCollections;
-using AniRate.Application.AnimeCollections.Commands.DeleteTitlesFromCollection;
+using AniRate.Application.AnimeCollections.Commands.DeleteManyTitlesFromCollection;
+using AniRate.Application.AnimeCollections.Commands.DeleteTitleFromManyCollections;
 using AniRate.Application.AnimeCollections.Commands.UpdateCollectionDetails;
 using AniRate.Application.AnimeCollections.Queries;
 using AniRate.Application.AnimeCollections.Queries.GetCollectionDetails;
 using AniRate.Application.AnimeCollections.Queries.GetCollections;
 using AniRate.Application.Common.Models;
 using AniRate.Application.Interfaces;
-using AniRate.Domain.Entities;
 using AniRate.WebApi.Models.AnimeCollectionsDtos;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-//develop branch
 namespace AniRate.WebApi.Controllers
 {
     [Produces("application/json")]
@@ -47,7 +45,6 @@ namespace AniRate.WebApi.Controllers
             var collectionsVM = await Mediator.Send(query);
             return Ok(collectionsVM);
         }
-
 
 
         /// <summary>
@@ -134,60 +131,38 @@ namespace AniRate.WebApi.Controllers
         }
 
 
-        ///// <summary>
-        ///// удалить тайтлы из коллекции
-        ///// </summary>
-        ///// <returns>NoContent</returns>
-        ///// <response code="204">Success</response>
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[HttpDelete("TitlesFromCollection")]
-        ////[Authorize]
-        //public async Task<ActionResult> DeleteFromCollection([FromBody] DeleteTitlesFromCollectionDto deleteTitlesFromCollectionDto)
-        //{
-        //    var command = _mapper.Map<DeleteTitlesFromCollectionCommand>(deleteTitlesFromCollectionDto);
-        //    command.UserId = UserId;
-        //    await Mediator.Send(command);
-        //    return NoContent();
-        //}
+        /// <summary>
+        /// удалить тайтлы из коллекции
+        /// </summary>
+        /// <returns>NoContent</returns>
+        /// <response code="204">Success</response>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpDelete("ManyTitlesFromCollection")]
+        [Authorize]
+        public async Task<ActionResult> DeleteFromCollection([FromBody] DeleteManyTitlesFromCollectionDto deleteManyTitlesFromCollectionDto)
+        {
+            var command = _mapper.Map<DeleteManyTitlesFromCollectionCommand>(deleteManyTitlesFromCollectionDto);
+            command.UserId = UserId;
+            await Mediator.Send(command);
+            return NoContent();
+        }
 
 
 
-        ///// <summary>
-        ///// удалить тайтл из коллекций
-        ///// </summary>
-        ///// <returns>NoContent</returns>
-        ///// <response code="204">Success</response>
-        //[ProducesResponseType(StatusCodes.Status204NoContent)]
-        //[HttpDelete("TitlesFromCollection")]
-        ////[Authorize]
-        //public async Task<ActionResult> DeleteFromCollection([FromBody] DeleteTitlesFromCollectionDto deleteTitlesFromCollectionDto)
-        //{
-        //}
-
-
-
-
-
-
-
-        ///// <summary>
-        ///// получить коллекции определенного тайтла
-        ///// </summary>
-        ///// <returns>Returns CollectionDetailsVM</returns>
-        ///// <response code="200">Success</response>
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[HttpGet("CollectionsFromTitle/{id}")]
-        ////[Authorize]
-        //public async Task<ActionResult<CollectionDetailsVM>> GetCollectionsFromTitle(Guid id)
-        //{
-        //    var query = new GetCollectionsFromTitleQuery()
-        //    {
-        //        Id = id,
-        //        UserId = UserId,
-        //    };
-        //    var collectionDetailsVM = await Mediator.Send(query);
-
-        //    return Ok(collectionDetailsVM);
-        //}
+        /// <summary>
+        /// удалить тайтл из коллекций
+        /// </summary>
+        /// <returns>NoContent</returns>
+        /// <response code="204">Success</response>
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [HttpDelete("TitleFromManyCollections")]
+        [Authorize]
+        public async Task<ActionResult> DeleteFromCollections([FromBody] DeleteTitleFromManyCollectionsDto deleteTitleFromManyCollectionsDto)
+        {
+            var command = _mapper.Map<DeleteTitleFromManyCollectionsCommand>(deleteTitleFromManyCollectionsDto);
+            command.UserId = UserId;
+            await Mediator.Send(command);
+            return NoContent();
+        }
     }
 }
