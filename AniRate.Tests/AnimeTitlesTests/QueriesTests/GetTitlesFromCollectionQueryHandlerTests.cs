@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AniRate.Tests.AnimeTitles
+namespace AniRate.Tests.AnimeTitlesTests.QueriesTests
 {
     [Collection("QueryCollection")]
     public class GetTitlesFromCollectionQueryHandlerTests
@@ -46,7 +46,7 @@ namespace AniRate.Tests.AnimeTitles
         }
 
         [Fact]
-        public async Task GetNoteListQueryHandler_FailOnWrongCollectionId()
+        public async Task GetTitlesFromCollectionQueryHandler_FailOnWrongCollectionId()
         {
             // Arrange
             var handler = new GetTitlesFromCollectionQueryHandler(Context, Mapper);
@@ -65,7 +65,7 @@ namespace AniRate.Tests.AnimeTitles
         }
 
         [Fact]
-        public async Task GetNoteListQueryHandler_FailOnWrongUserId()
+        public async Task GetTitlesFromCollectionQueryHandler_FailOnWrongUserId()
         {
             // Arrange
             var handler = new GetTitlesFromCollectionQueryHandler(Context, Mapper);

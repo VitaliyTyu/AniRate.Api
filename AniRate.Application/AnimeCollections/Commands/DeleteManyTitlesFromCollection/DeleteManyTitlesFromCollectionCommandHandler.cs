@@ -20,6 +20,11 @@ namespace AniRate.Application.AnimeCollections.Commands.DeleteManyTitlesFromColl
         }
         public async Task<Unit> Handle(DeleteManyTitlesFromCollectionCommand request, CancellationToken cancellationToken)
         {
+            if (request.AnimeTitlesIds.Count == 0)
+            {
+                throw new EmptyStateException(nameof(request.AnimeTitlesIds));
+            }
+
             var collection = await _dbContext.AnimeCollections
                 .Include(c => c.AnimeTitles)
                 .FirstOrDefaultAsync(c =>

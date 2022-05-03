@@ -13,12 +13,10 @@ using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace AniRate.Tests.AnimeCollections
+namespace AniRate.Tests.AnimeCollectionsTest.CommandsTests
 {
     public class CreateCollectionCommandHandlerTests : TestCommandBase
     {
-
-
         [Fact]
         public async Task CreateCollectionCommandHandler_CreateEmpty_Success()
         {
@@ -43,8 +41,10 @@ namespace AniRate.Tests.AnimeCollections
             Assert.NotNull(
                 await Context.AnimeCollections.SingleOrDefaultAsync(collection =>
                     collection.Id == collectionId &&
-                    collection.Name == collectionName));
+                    collection.Name == collectionName &&
+                    collection.Image == null));
         }
+
 
         [Fact]
         public async Task CreateCollectionCommandHandler_CreateWithOneAnime_Success()
@@ -67,12 +67,16 @@ namespace AniRate.Tests.AnimeCollections
                 CancellationToken.None);
 
             //Assert
+            var anime = await Context.AnimeTitles.SingleOrDefaultAsync(a => a.Id == ContextFactory.FirstAnimeId);
+
             Assert.NotNull(
                 await Context.AnimeCollections.SingleOrDefaultAsync(collection =>
                     collection.Id == collectionId &&
                     collection.Name == collectionName &&
-                    collection.AnimeTitles.Any(a => a.Id == ContextFactory.FirstAnimeId)));
+                    collection.AnimeTitles.Any(a => a.Id == ContextFactory.FirstAnimeId) &&
+                    collection.Image == anime.Image));
         }
+
 
         [Fact]
         public async Task CreateCollectionCommandHandler_CreateWithManyAnimes_Success()
@@ -97,14 +101,18 @@ namespace AniRate.Tests.AnimeCollections
                 CancellationToken.None);
 
             //Assert
+            var anime = await Context.AnimeTitles.SingleOrDefaultAsync(a => a.Id == ContextFactory.FirstAnimeId);
+
             Assert.NotNull(
                 await Context.AnimeCollections.SingleOrDefaultAsync(collection =>
                     collection.Id == collectionId &&
                     collection.Name == collectionName &&
                     collection.AnimeTitles.Any(a => a.Id == ContextFactory.FirstAnimeId) &&
                     collection.AnimeTitles.Any(a => a.Id == ContextFactory.SecondAnimeId) &&
-                    collection.AnimeTitles.Any(a => a.Id == ContextFactory.ThirdAnimeId)));
+                    collection.AnimeTitles.Any(a => a.Id == ContextFactory.ThirdAnimeId) &&
+                    collection.Image == anime.Image));
         }
+
 
         [Fact]
         public async Task CreateCollectionCommandHandler_CreateWithManyAnimes_FailOnWrongId()

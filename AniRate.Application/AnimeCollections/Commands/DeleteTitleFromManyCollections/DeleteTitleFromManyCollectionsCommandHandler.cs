@@ -16,6 +16,11 @@ namespace AniRate.Application.AnimeCollections.Commands.DeleteTitleFromManyColle
 
         public async Task<Unit> Handle(DeleteTitleFromManyCollectionsCommand request, CancellationToken cancellationToken)
         {
+            if (request.CollectionsIds.Count == 0)
+            {
+                throw new EmptyStateException(nameof(request.CollectionsIds));
+            }
+
             var anime = await _dbContext.AnimeTitles
                 .Include(a => a.AnimeCollections)
                 .FirstOrDefaultAsync(c =>

@@ -21,6 +21,11 @@ namespace AniRate.Application.AnimeCollections.Commands.UpdateCollectionDetails
 
         public async Task<Unit> Handle(UpdateCollectionDetailsCommand request, CancellationToken cancellationToken)
         {
+            if (request.Name == String.Empty)
+            {
+                throw new EmptyStateException(nameof(request.Name));
+            }
+
             var collection = await _dbContext.AnimeCollections.FirstOrDefaultAsync(collection => collection.Id == request.Id, cancellationToken);
 
             if (collection == null || collection.UserId != request.UserId)

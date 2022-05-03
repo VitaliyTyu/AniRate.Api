@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AniRate.Tests.AnimeTitles
+namespace AniRate.Tests.AnimeTitlesTests.QueriesTests
 {
     [Collection("QueryCollection")]
     public class GetTitlesQueryHandlerTests
@@ -24,7 +24,7 @@ namespace AniRate.Tests.AnimeTitles
         }
 
         [Fact]
-        public async Task GetNoteListQueryHandler_Success()
+        public async Task GetTitlesQueryHandler_Success()
         {
             // Arrange
             var handler = new GetTitlesQueryHandler(Context, Mapper);
