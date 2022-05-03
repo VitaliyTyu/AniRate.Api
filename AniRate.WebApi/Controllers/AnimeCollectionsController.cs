@@ -29,7 +29,7 @@ namespace AniRate.WebApi.Controllers
 
 
         /// <summary>
-        /// получить все коллекции
+        /// получить все коллекции с пагинацией
         /// </summary>
         /// <returns>Returns CollectionsListVM</returns>
         /// <response code="200">Success</response>
@@ -48,7 +48,7 @@ namespace AniRate.WebApi.Controllers
 
 
         /// <summary>
-        /// получить детали коллекции
+        /// получить детали коллекции с пагинацией тайтлов
         /// </summary>
         /// <returns>Returns CollectionDetailsVM</returns>
         /// <response code="200">Success</response>
@@ -64,7 +64,7 @@ namespace AniRate.WebApi.Controllers
 
 
         /// <summary>
-        /// создать коллекцию со списком аниме
+        /// создать коллекцию со списком аниме (он может быть пустым)
         /// </summary>
         /// <returns>Guid id</returns>
         /// <response code="201">Success</response>

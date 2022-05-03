@@ -17,7 +17,7 @@ namespace AniRate.WebApi.Controllers
         public AnimeTitlesController(IMapper mapper) => _mapper = mapper;
 
         /// <summary>
-        /// Получение всех аниме
+        /// Получение всех аниме с пагинацией
         /// </summary>
         /// <returns>Returns TitlesListVM</returns>
         /// <response code="200">Success</response>
@@ -52,7 +52,7 @@ namespace AniRate.WebApi.Controllers
 
 
         /// <summary>
-        /// Получение всех аниме в конкретной коллекции
+        /// Получение всех аниме в конкретной коллекции с пагинацией аниме
         /// </summary>
         /// <returns>Returns TitlesListVM</returns>
         /// <response code="200">Success</response>

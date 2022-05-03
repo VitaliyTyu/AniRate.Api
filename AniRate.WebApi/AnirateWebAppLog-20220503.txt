@@ -299,3 +299,100 @@ FluentValidation.ValidationException: Validation failed:
    at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
    at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
 2022-05-03 18:45:03.936 +05:00 [INF] Request finished HTTP/1.1 PUT https://localhost:5001/api/AnimeCollections/Details application/json 166 - 500 - text/plain;+charset=utf-8 2879.4950ms
+2022-05-03 18:52:31.583 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-03 18:52:31.869 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-03 18:52:31.869 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-03 18:52:31.872 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-03 18:52:31.872 +05:00 [INF] Hosting environment: Development
+2022-05-03 18:52:31.872 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\AniRate\AnirateWeb\AniRate\AniRate.Api\AniRate.WebApi
+2022-05-03 18:52:32.527 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/index.html - -
+2022-05-03 18:52:32.764 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/index.html - - - 200 - text/html;charset=utf-8 240.7666ms
+2022-05-03 18:52:32.764 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2022-05-03 18:52:32.771 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 7.4559ms
+2022-05-03 18:52:33.107 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-03 18:52:33.312 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 204.8755ms
+2022-05-03 18:53:37.342 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-03 18:53:37.583 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-03 18:53:37.583 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-03 18:53:37.587 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-03 18:53:37.587 +05:00 [INF] Hosting environment: Development
+2022-05-03 18:53:37.587 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\AniRate\AnirateWeb\AniRate\AniRate.Api\AniRate.WebApi
+2022-05-03 18:53:37.949 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/index.html - -
+2022-05-03 18:53:38.166 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/index.html - - - 200 - text/html;charset=utf-8 220.4747ms
+2022-05-03 18:53:38.169 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2022-05-03 18:53:38.172 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 3.1140ms
+2022-05-03 18:53:38.536 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-03 18:53:38.560 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/favicon-32x32.png - -
+2022-05-03 18:53:38.578 +05:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2022-05-03 18:53:38.579 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/favicon-32x32.png - - - 200 628 image/png 18.9791ms
+2022-05-03 18:53:38.735 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 198.5471ms
+2022-05-03 18:55:19.689 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-03 18:55:19.926 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-03 18:55:19.926 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-03 18:55:19.930 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-03 18:55:19.930 +05:00 [INF] Hosting environment: Development
+2022-05-03 18:55:19.930 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\AniRate\AnirateWeb\AniRate\AniRate.Api\AniRate.WebApi
+2022-05-03 18:55:20.332 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/index.html - -
+2022-05-03 18:55:20.571 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/index.html - - - 200 - text/html;charset=utf-8 242.6007ms
+2022-05-03 18:55:20.579 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2022-05-03 18:55:20.582 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 3.1954ms
+2022-05-03 18:55:20.990 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-03 18:55:21.199 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 209.0576ms
+2022-05-03 18:56:01.296 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-03 18:56:01.539 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-03 18:56:01.539 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-03 18:56:01.542 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-03 18:56:01.542 +05:00 [INF] Hosting environment: Development
+2022-05-03 18:56:01.542 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\AniRate\AnirateWeb\AniRate\AniRate.Api\AniRate.WebApi
+2022-05-03 18:56:02.020 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/index.html - -
+2022-05-03 18:56:02.249 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/index.html - - - 200 - text/html;charset=utf-8 232.8657ms
+2022-05-03 18:56:02.259 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2022-05-03 18:56:02.263 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 3.1833ms
+2022-05-03 18:56:02.627 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-03 18:56:02.879 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 251.4378ms
+2022-05-03 18:56:42.361 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-03 18:56:42.629 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-03 18:56:42.629 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-03 18:56:42.633 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-03 18:56:42.633 +05:00 [INF] Hosting environment: Development
+2022-05-03 18:56:42.633 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\AniRate\AnirateWeb\AniRate\AniRate.Api\AniRate.WebApi
+2022-05-03 18:56:42.938 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/index.html - -
+2022-05-03 18:56:43.154 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/index.html - - - 200 - text/html;charset=utf-8 219.7302ms
+2022-05-03 18:56:43.163 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2022-05-03 18:56:43.167 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 4.4780ms
+2022-05-03 18:57:07.378 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-03 18:57:07.630 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-03 18:57:07.631 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-03 18:57:07.635 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-03 18:57:07.635 +05:00 [INF] Hosting environment: Development
+2022-05-03 18:57:07.635 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\AniRate\AnirateWeb\AniRate\AniRate.Api\AniRate.WebApi
+2022-05-03 18:57:08.198 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/index.html - -
+2022-05-03 18:57:08.440 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/index.html - - - 200 - text/html;charset=utf-8 247.3890ms
+2022-05-03 18:57:08.451 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2022-05-03 18:57:08.455 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 3.8773ms
+2022-05-03 18:57:08.785 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-03 18:57:09.051 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 266.5703ms
+2022-05-03 18:58:36.124 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-03 18:58:36.368 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-03 18:58:36.368 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-03 18:58:36.372 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-03 18:58:36.372 +05:00 [INF] Hosting environment: Development
+2022-05-03 18:58:36.372 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\AniRate\AnirateWeb\AniRate\AniRate.Api\AniRate.WebApi
+2022-05-03 18:58:36.901 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/index.html - -
+2022-05-03 18:58:37.156 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/index.html - - - 200 - text/html;charset=utf-8 259.5285ms
+2022-05-03 18:58:37.165 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2022-05-03 18:58:37.169 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 3.4179ms
+2022-05-03 18:58:37.543 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-03 18:58:37.728 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 184.9539ms
+2022-05-03 18:59:24.575 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-03 18:59:24.809 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-03 18:59:24.809 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-03 18:59:24.812 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-03 18:59:24.813 +05:00 [INF] Hosting environment: Development
+2022-05-03 18:59:24.813 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\AniRate\AnirateWeb\AniRate\AniRate.Api\AniRate.WebApi
+2022-05-03 18:59:25.456 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/index.html - -
+2022-05-03 18:59:25.709 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/index.html - - - 200 - text/html;charset=utf-8 263.1714ms
+2022-05-03 18:59:25.720 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2022-05-03 18:59:25.724 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 3.1781ms
+2022-05-03 18:59:26.101 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-03 18:59:26.336 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 235.0849ms
