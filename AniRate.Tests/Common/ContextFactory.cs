@@ -18,33 +18,42 @@ namespace AniRate.Tests.Common
         public static Guid ThirdCollectionId;
         public static Guid FourthCollectionId;
 
+        public static Guid FirstAnimeId;
+        public static Guid SecondAnimeId;
+        public static Guid ThirdAnimeId;
+        public static Guid FourthAnimeId;
 
-        public static Guid CollectionIdToCreateEmpty = Guid.NewGuid();
-        public static Guid CollectionIdToCreateWithOne = Guid.NewGuid();
-        public static Guid CollectionIdToCreateWithMany = Guid.NewGuid();
 
-
-        public static AnimeTitle Anime1 = new AnimeTitle
+        public static ApplicationDbContext Create()
         {
-            Id = Guid.Parse("0F1FD77C-7A9D-4E74-86F0-B5597C95A262"),
-            Name = "1 аниме",
-            Russian = "1 аниме",
-            Score = "10",
-            Episodes = 64,
-            AiredOn = "1",
-            ReleasedOn = "1",
-            Description = "1",
-            DescriptionHtml = "1",
-            Image = new Image()
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .Options;
+            var context = new ApplicationDbContext(options);
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+
+            var Anime1 = new AnimeTitle
             {
-                Id = Guid.Parse("3D03FBD1-766C-4C0E-ABCB-DC05D54CCF8E"),
-                AnimeId = Guid.Parse("0F1FD77C-7A9D-4E74-86F0-B5597C95A262"),
-                Original = "1",
-                Preview = "1",
-                X96 = "1",
-                X48 = "1",
-            },
-            Genres = new List<Genre>()
+                Id = Guid.Parse("0F1FD77C-7A9D-4E74-86F0-B5597C95A262"),
+                Name = "1 аниме",
+                Russian = "1 аниме",
+                Score = "10",
+                Episodes = 64,
+                AiredOn = "1",
+                ReleasedOn = "1",
+                Description = "1",
+                DescriptionHtml = "1",
+                Image = new Image()
+                {
+                    Id = Guid.Parse("3D03FBD1-766C-4C0E-ABCB-DC05D54CCF8E"),
+                    AnimeId = Guid.Parse("0F1FD77C-7A9D-4E74-86F0-B5597C95A262"),
+                    Original = "1",
+                    Preview = "1",
+                    X96 = "1",
+                    X48 = "1",
+                },
+                Genres = new List<Genre>()
                     {
                         new Genre()
                         {
@@ -62,28 +71,30 @@ namespace AniRate.Tests.Common
                             Russian = "2 жанр"
                         }
                     }
-        };
-        public static AnimeTitle Anime2 = new AnimeTitle
-        {
-            Id = Guid.Parse("2499F50B-BE59-4F3C-9DD8-2A1C4F9CFF96"),
-            Name = "2 аниме",
-            Russian = "2 аниме",
-            Score = "9",
-            Episodes = 64,
-            AiredOn = "2",
-            ReleasedOn = "2",
-            Description = "2",
-            DescriptionHtml = "2",
-            Image = new Image()
+            };
+            FirstAnimeId = Anime1.Id;
+
+            var Anime2 = new AnimeTitle
             {
-                Id = Guid.Parse("95EA153B-F6A5-4816-BE78-543C58CB59B0"),
-                AnimeId = Guid.Parse("2499F50B-BE59-4F3C-9DD8-2A1C4F9CFF96"),
-                Original = "2",
-                Preview = "2",
-                X96 = "2",
-                X48 = "2",
-            },
-            Genres = new List<Genre>()
+                Id = Guid.Parse("2499F50B-BE59-4F3C-9DD8-2A1C4F9CFF96"),
+                Name = "2 аниме",
+                Russian = "2 аниме",
+                Score = "9",
+                Episodes = 64,
+                AiredOn = "2",
+                ReleasedOn = "2",
+                Description = "2",
+                DescriptionHtml = "2",
+                Image = new Image()
+                {
+                    Id = Guid.Parse("95EA153B-F6A5-4816-BE78-543C58CB59B0"),
+                    AnimeId = Guid.Parse("2499F50B-BE59-4F3C-9DD8-2A1C4F9CFF96"),
+                    Original = "2",
+                    Preview = "2",
+                    X96 = "2",
+                    X48 = "2",
+                },
+                Genres = new List<Genre>()
                     {
                         new Genre()
                         {
@@ -101,28 +112,30 @@ namespace AniRate.Tests.Common
                             Russian = "3 жанр"
                         }
                     }
-        };
-        public static AnimeTitle Anime3 = new AnimeTitle
-        {
-            Id = Guid.Parse("6D0DB8AC-46B6-4597-94E2-6FEC376D0470"),
-            Name = "3 аниме",
-            Russian = "3 аниме",
-            Score = "8",
-            Episodes = 64,
-            AiredOn = "3",
-            ReleasedOn = "3",
-            Description = "3",
-            DescriptionHtml = "3",
-            Image = new Image()
+            };
+            SecondAnimeId = Anime2.Id;
+
+            var Anime3 = new AnimeTitle
             {
-                Id = Guid.Parse("25EA185B-F6A5-4816-BE78-543C58CB59C1"),
-                AnimeId = Guid.Parse("6D0DB8AC-46B6-4597-94E2-6FEC376D0470"),
-                Original = "3",
-                Preview = "3",
-                X96 = "3",
-                X48 = "3",
-            },
-            Genres = new List<Genre>()
+                Id = Guid.Parse("6D0DB8AC-46B6-4597-94E2-6FEC376D0470"),
+                Name = "3 аниме",
+                Russian = "3 аниме",
+                Score = "8",
+                Episodes = 64,
+                AiredOn = "3",
+                ReleasedOn = "3",
+                Description = "3",
+                DescriptionHtml = "3",
+                Image = new Image()
+                {
+                    Id = Guid.Parse("25EA185B-F6A5-4816-BE78-543C58CB59C1"),
+                    AnimeId = Guid.Parse("6D0DB8AC-46B6-4597-94E2-6FEC376D0470"),
+                    Original = "3",
+                    Preview = "3",
+                    X96 = "3",
+                    X48 = "3",
+                },
+                Genres = new List<Genre>()
                     {
                         new Genre()
                         {
@@ -140,8 +153,10 @@ namespace AniRate.Tests.Common
                             Russian = "5 жанр"
                         }
                     }
-        };
-        public static AnimeTitle Anime4 = new AnimeTitle
+            };
+            ThirdAnimeId = Anime3.Id;
+
+            var Anime4 = new AnimeTitle
             {
                 Id = Guid.Parse("C03A864C-E0D8-4AA7-9228-AC94E2222600"),
                 Name = "4 аниме",
@@ -153,8 +168,8 @@ namespace AniRate.Tests.Common
                 Description = "4",
                 DescriptionHtml = "4",
                 Image = new Image()
-        {
-            Id = Guid.Parse("197DABB3-E469-4D60-A119-A78268B1031F"),
+                {
+                    Id = Guid.Parse("197DABB3-E469-4D60-A119-A78268B1031F"),
                     AnimeId = Guid.Parse("C03A864C-E0D8-4AA7-9228-AC94E2222600"),
                     Original = "4",
                     Preview = "4",
@@ -179,21 +194,12 @@ namespace AniRate.Tests.Common
                             Russian = "6 жанр"
                         }
     }
-};
-
-        public static ApplicationDbContext Create()
-        {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString())
-                .Options;
-            var context = new ApplicationDbContext(options);
-            context.Database.EnsureCreated();
-
-            context.AnimeTitles.AddRange(Anime1, Anime2, Anime3, Anime4);
+            };
+            FourthAnimeId = Anime4.Id;
 
             var collection1 = new AnimeCollection
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("109B3614-47B8-41BD-92B6-62669EB2174B"),
                 Image = Anime1.Image,
                 Name = "1 collection",
                 UserComment = "1",
@@ -202,11 +208,14 @@ namespace AniRate.Tests.Common
             };
             collection1.AnimeTitles.Add(Anime1);
             collection1.AnimeTitles.Add(Anime2);
+            collection1.AnimeTitles.Add(Anime3);
+            collection1.AnimeTitles.Add(Anime4);
             FirstCollectionId = collection1.Id;
+
 
             var collection2 = new AnimeCollection
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("90D5F70A-9CF1-46B7-98D3-9F4347F8971B"),
                 Name = "2 collection",
                 UserComment = "2",
                 UserRating = 5,
@@ -217,7 +226,7 @@ namespace AniRate.Tests.Common
 
             var collection3 = new AnimeCollection
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("31430E0C-ACBB-416D-A2F2-3585E9A26B71"),
                 Image = Anime3.Image,
                 Name = "3 collection",
                 UserComment = "1",
@@ -231,7 +240,7 @@ namespace AniRate.Tests.Common
 
             var collection4 = new AnimeCollection
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("33161C70-A14A-4F95-AD7A-69F0AA09AC41"),
                 Image = Anime4.Image,
                 Name = "4 collection",
                 UserComment = "2",
@@ -241,15 +250,11 @@ namespace AniRate.Tests.Common
             collection4.AnimeTitles.Add(Anime4);
             FourthCollectionId = collection4.Id;
 
-            var a = context.AnimeCollections;
 
-            context.AnimeCollections.Add(collection1);
-            context.AnimeCollections.Add(collection2);
-            context.AnimeCollections.Add(collection3);
-            context.AnimeCollections.Add(collection4);
-
+            context.AnimeCollections.AddRange(collection1, collection2, collection3, collection4);
 
             context.SaveChanges();
+
             return context;
         }
 

@@ -27,8 +27,4 @@
     <ProjectReference Include="..\AniRate.Infrastructure\AniRate.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="AnimeTitles\" />
-  </ItemGroup>
-
 </Project>

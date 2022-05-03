@@ -1,6 +1,7 @@
 ﻿using AniRate.Application.AnimeCollections.Commands.CreateCollection;
 using AniRate.Application.Common.Exceptions;
 using AniRate.Tests.Common;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -53,7 +54,7 @@ namespace AniRate.Tests.AnimeCollections
             var userId = ContextFactory.UserAId;
             var collectionName = "2 created collection";
             var animeTitlesIds = new List<Guid>();
-            animeTitlesIds.Add(ContextFactory.Anime1.Id);
+            animeTitlesIds.Add(ContextFactory.FirstAnimeId);
 
             // Act
             var collectionId = await handler.Handle(
@@ -70,7 +71,7 @@ namespace AniRate.Tests.AnimeCollections
                 await Context.AnimeCollections.SingleOrDefaultAsync(collection =>
                     collection.Id == collectionId &&
                     collection.Name == collectionName &&
-                    collection.AnimeTitles.Contains(ContextFactory.Anime1)));
+                    collection.AnimeTitles.Any(a => a.Id == ContextFactory.FirstAnimeId)));
         }
 
         [Fact]
@@ -81,9 +82,9 @@ namespace AniRate.Tests.AnimeCollections
             var userId = ContextFactory.UserAId;
             var collectionName = "3 created collection";
             var animeTitlesIds = new List<Guid>();
-            animeTitlesIds.Add(ContextFactory.Anime1.Id);
-            animeTitlesIds.Add(ContextFactory.Anime2.Id);
-            animeTitlesIds.Add(ContextFactory.Anime3.Id);
+            animeTitlesIds.Add(ContextFactory.FirstAnimeId);
+            animeTitlesIds.Add(ContextFactory.SecondAnimeId);
+            animeTitlesIds.Add(ContextFactory.ThirdAnimeId);
 
             // Act
             var collectionId = await handler.Handle(
@@ -100,9 +101,9 @@ namespace AniRate.Tests.AnimeCollections
                 await Context.AnimeCollections.SingleOrDefaultAsync(collection =>
                     collection.Id == collectionId &&
                     collection.Name == collectionName &&
-                    collection.AnimeTitles.Contains(ContextFactory.Anime1) &&
-                    collection.AnimeTitles.Contains(ContextFactory.Anime2) &&
-                    collection.AnimeTitles.Contains(ContextFactory.Anime3)));
+                    collection.AnimeTitles.Any(a => a.Id == ContextFactory.FirstAnimeId) &&
+                    collection.AnimeTitles.Any(a => a.Id == ContextFactory.SecondAnimeId) &&
+                    collection.AnimeTitles.Any(a => a.Id == ContextFactory.ThirdAnimeId)));
         }
 
         [Fact]
@@ -113,7 +114,7 @@ namespace AniRate.Tests.AnimeCollections
             var userId = ContextFactory.UserAId;
             var collectionName = "4 created collection";
             var animeTitlesIds = new List<Guid>();
-            animeTitlesIds.Add(ContextFactory.Anime1.Id);
+            animeTitlesIds.Add(ContextFactory.FirstAnimeId);
             animeTitlesIds.Add(Guid.NewGuid());
 
             // Act

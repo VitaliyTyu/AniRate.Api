@@ -29,6 +29,15 @@ namespace AniRate.Application.AnimeTitles.Queries.GetTitlesFromCollection
 
         public async Task<PaginatedList<BriefTitleVM>> Handle(GetTitlesFromCollectionQuery request, CancellationToken cancellationToken)
         {
+            var collections = await _dbContext.AnimeCollections
+                .Where(c => c.Id == request.CollectionId && c.UserId == request.UserId)
+                .ToListAsync(cancellationToken);
+
+            if (collections.Count == 0 || collections[0] == null)
+            {
+                throw new NotFoundException(nameof(AnimeCollection), request.CollectionId);
+            }
+
             var titles = await _dbContext.AnimeCollections
                 .Where(c => c.Id == request.CollectionId && c.UserId == request.UserId)
                 .SelectMany(c => c.AnimeTitles)
@@ -36,10 +45,6 @@ namespace AniRate.Application.AnimeTitles.Queries.GetTitlesFromCollection
                 .OrderByDescending(a => a.Score)
                 .PaginatedListAsync(request.PageNumber, request.PageSize);
 
-            if (titles == null)
-            {
-                throw new NotFoundException(nameof(AnimeCollection), request.CollectionId);
-            }
 
             return titles;
         }
