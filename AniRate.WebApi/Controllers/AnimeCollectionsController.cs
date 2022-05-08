@@ -53,7 +53,7 @@ namespace AniRate.WebApi.Controllers
         /// <returns>Returns CollectionDetailsVM</returns>
         /// <response code="200">Success</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [HttpGet("details")]
+        [HttpGet("CollectionDetails")]
         [Authorize]
         public async Task<ActionResult<CollectionDetailsVM>> Get([FromQuery] GetCollectionDetailsQuery query)
         {
@@ -103,7 +103,7 @@ namespace AniRate.WebApi.Controllers
         /// <returns>NoContent</returns>
         /// <response code="204">Success</response>
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [HttpPut("Details")]
+        [HttpPut("ChangeDetails")]
         [Authorize]
         public async Task<ActionResult> Update([FromBody] UpdateCollectionDetailsDto updateCollectionDetailsDto)
         {

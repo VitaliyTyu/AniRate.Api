@@ -2,14 +2,18 @@
 using AniRate.Infrastructure.Persistence;
 using AniRate.WebApi.Models;
 using AniRate.WebApi.Models.AuthModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,12 +27,13 @@ namespace AniRate.WebApi.Controllers
         private readonly IOptions<AuthOptions> _authOptions;
         private readonly ApplicationDbContext _dbContext;
 
-        public AuthController(IOptions<AuthOptions> authOptions, ApplicationDbContext dbContext)
+        public AuthController(
+            IOptions<AuthOptions> authOptions, 
+            ApplicationDbContext dbContext)
         {
             _authOptions = authOptions;
             _dbContext = dbContext;
         }
-
 
 
         [HttpPost("login")]
@@ -51,7 +56,7 @@ namespace AniRate.WebApi.Controllers
             {
                 var token = GenerateJWT(user);
 
-                return Ok(new { access_token = token });
+                return Ok(token);
             }
 
             return Unauthorized();
@@ -77,7 +82,7 @@ namespace AniRate.WebApi.Controllers
 
             if (sameUser != null)
             {
-                return BadRequest("Имя занято");
+                return Conflict("Имя занято");
             }
 
             await _dbContext.Accounts.AddAsync(user);
@@ -85,7 +90,7 @@ namespace AniRate.WebApi.Controllers
 
             var token = GenerateJWT(user);
 
-            return Ok(new { access_token = token });
+            return Ok(token);
         }
 
 
