@@ -36,11 +36,13 @@ namespace AniRate.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<PaginatedList<BriefCollectionVM>>> GetAll()
+        public async Task<ActionResult<PaginatedList<BriefCollectionVM>>> GetAll(int page, int size)
         {
             var query = new GetCollectionsQuery()
             {
-                UserId = UserId
+                UserId = UserId,
+                PageNumber = page,
+                PageSize = size,
             };
             var collectionsVM = await Mediator.Send(query);
             return Ok(collectionsVM);
@@ -55,8 +57,15 @@ namespace AniRate.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("CollectionDetails")]
         [Authorize]
-        public async Task<ActionResult<CollectionDetailsVM>> Get([FromQuery] GetCollectionDetailsQuery query)
+        public async Task<ActionResult<CollectionDetailsVM>> Get(Guid id, int animePage, int animeSize)
         {
+            var query = new GetCollectionDetailsQuery()
+            {
+                UserId = UserId,
+                Id = id,
+                AnimeTitlesPageNumber = animePage,
+                AnimeTitlesPageSize = animeSize,
+            };
             query.UserId = UserId;
             var collectionDetailsVM = await Mediator.Send(query);
             return Ok(collectionDetailsVM);

@@ -1,4 +1,5 @@
 ﻿using AniRate.Application.AnimeTitles.Queries;
+using AniRate.Application.AnimeTitles.Queries.GetTitlesFromCollection;
 using AniRate.Application.Common.Exceptions;
 using AniRate.Application.Common.Mappings;
 using AniRate.Application.Interfaces;
@@ -29,12 +30,15 @@ namespace AniRate.Application.AnimeCollections.Queries.GetCollectionDetails
 
         public async Task<CollectionDetailsVM> Handle(GetCollectionDetailsQuery request, CancellationToken cancellationToken)
         {
-            var titles = await _dbContext.AnimeCollections
-                .Where(c => c.Id == request.Id && c.UserId == request.UserId)
-                .SelectMany(c => c.AnimeTitles)
-                .ProjectTo<BriefTitleVM>(_mapper.ConfigurationProvider)
-                .OrderByDescending(a=> a.Score)
-                .PaginatedListAsync(request.AnimeTitlesPageNumber, request.AnimeTitlesPageSize);
+            var handler = new GetTitlesFromCollectionQueryHandler(_dbContext, _mapper);
+
+            var titles = await handler.Handle(
+                new GetTitlesFromCollectionQuery
+                {
+                    CollectionId = request.Id,
+                    UserId = request.UserId,
+                },
+                CancellationToken.None);
 
             var collections = await _dbContext.AnimeCollections
                 .Where(c => c.Id == request.Id && c.UserId == request.UserId)
@@ -49,11 +53,11 @@ namespace AniRate.Application.AnimeCollections.Queries.GetCollectionDetails
                 })
                 .ToListAsync();
 
-
             if (collections.Count == 0 || collections[0] == null)
             {
                 throw new NotFoundException(nameof(AnimeCollection), request.Id);
             }
+
 
             return collections[0];
         }
