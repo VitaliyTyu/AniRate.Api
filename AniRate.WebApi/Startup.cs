@@ -1,5 +1,4 @@
-﻿
-using AniRate.Application;
+﻿using AniRate.Application;
 using AniRate.Application.Common.Mappings;
 using AniRate.Application.Interfaces;
 using AniRate.Infrastructure;

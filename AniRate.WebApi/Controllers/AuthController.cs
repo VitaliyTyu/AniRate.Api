@@ -1,23 +1,14 @@
 ﻿using AniRate.Domain.Entities;
 using AniRate.Infrastructure.Persistence;
+using AniRate.Infrastructure.Services;
 using AniRate.WebApi.Models;
 using AniRate.WebApi.Models.AuthModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Options;
-using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net;
 using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AniRate.WebApi.Controllers
 {
@@ -27,13 +18,16 @@ namespace AniRate.WebApi.Controllers
     {
         private readonly IOptions<AuthOptions> _authOptions;
         private readonly ApplicationDbContext _dbContext;
+        private readonly HashService _hashService;
 
         public AuthController(
             IOptions<AuthOptions> authOptions, 
-            ApplicationDbContext dbContext)
+            ApplicationDbContext dbContext,
+            HashService hashService)
         {
             _authOptions = authOptions;
             _dbContext = dbContext;
+            _hashService = hashService;
         }
 
 
@@ -45,7 +39,7 @@ namespace AniRate.WebApi.Controllers
                 return BadRequest(loginViewModel);
             }
 
-            var passworsHash = CalculateMD5Hash(loginViewModel.Password);
+            var passworsHash = _hashService.CalculateMD5Hash(loginViewModel.Password);
 
             var user = await _dbContext.Accounts.SingleOrDefaultAsync(u => u.UserName == loginViewModel.Username && u.Password == passworsHash);
 
@@ -74,7 +68,7 @@ namespace AniRate.WebApi.Controllers
                 return BadRequest(registerViewModel);
             }
 
-            var passworsHash = CalculateMD5Hash(registerViewModel.Password);
+            var passworsHash = _hashService.CalculateMD5Hash(registerViewModel.Password);
 
             var user = new Account
             {
@@ -119,19 +113,6 @@ namespace AniRate.WebApi.Controllers
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        private string CalculateMD5Hash(string input)
-        {
-            MD5 md5 = MD5.Create();
-            byte[] inputBytes = Encoding.ASCII.GetBytes(input);
-            byte[] hash = md5.ComputeHash(inputBytes);
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < hash.Length; i++)
-            {
-                sb.Append(hash[i].ToString("X2"));
-            }
-            return sb.ToString();
         }
     }
 }

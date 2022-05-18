@@ -133,3 +133,1343 @@ WHERE ([a].[Id] = @__request_Id_0) AND ([a].[UserId] = @__request_UserId_1)
 2022-05-18 19:50:40.804 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeCollectionsController.Get (AniRate.WebApi) in 101.1156ms
 2022-05-18 19:50:40.804 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.Get (AniRate.WebApi)'
 2022-05-18 19:50:40.804 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:5001/api/AnimeCollections/CollectionDetails/?id=7b1358dc-ab8d-46f7-b10b-3370137c1289&AnimeTitlesPageNumber=1&AnimeTitlesPageSize=10 - - - 200 - application/json;+charset=utf-8 110.9046ms
+2022-05-18 19:54:15.688 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-18 19:54:16.162 +05:00 [INF] Executed DbCommand (40ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-05-18 19:54:19.282 +05:00 [INF] Executed DbCommand (3,039ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [AniRate.db] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+END;
+2022-05-18 19:54:19.338 +05:00 [INF] Executed DbCommand (56ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+DROP DATABASE [AniRate.db];
+2022-05-18 19:54:19.671 +05:00 [INF] Executed DbCommand (273ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [AniRate.db];
+2022-05-18 19:54:19.738 +05:00 [INF] Executed DbCommand (66ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [AniRate.db] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2022-05-18 19:54:19.743 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-05-18 19:54:19.888 +05:00 [INF] Executed DbCommand (10ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Accounts] (
+    [Id] uniqueidentifier NOT NULL,
+    [UserName] nvarchar(200) NOT NULL,
+    [Password] nvarchar(200) NOT NULL,
+    CONSTRAINT [PK_Accounts] PRIMARY KEY ([Id])
+);
+2022-05-18 19:54:19.893 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AnimeTitles] (
+    [Id] uniqueidentifier NOT NULL,
+    [UserComment] nvarchar(max) NULL,
+    [UserRating] float NULL,
+    [Name] nvarchar(200) NOT NULL,
+    [Russian] nvarchar(max) NULL,
+    [Score] nvarchar(max) NULL,
+    [Episodes] int NULL,
+    [AiredOn] nvarchar(max) NULL,
+    [ReleasedOn] nvarchar(max) NULL,
+    [Description] nvarchar(max) NULL,
+    [DescriptionHtml] nvarchar(max) NULL,
+    CONSTRAINT [PK_AnimeTitles] PRIMARY KEY ([Id])
+);
+2022-05-18 19:54:19.897 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Genres] (
+    [Id] uniqueidentifier NOT NULL,
+    [AnimeId] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [Russian] nvarchar(max) NULL,
+    CONSTRAINT [PK_Genres] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Genres_AnimeTitles_AnimeId] FOREIGN KEY ([AnimeId]) REFERENCES [AnimeTitles] ([Id]) ON DELETE CASCADE
+);
+2022-05-18 19:54:19.899 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Images] (
+    [Id] uniqueidentifier NOT NULL,
+    [AnimeId] uniqueidentifier NOT NULL,
+    [Original] nvarchar(max) NULL,
+    [Preview] nvarchar(max) NULL,
+    [X96] nvarchar(max) NULL,
+    [X48] nvarchar(max) NULL,
+    CONSTRAINT [PK_Images] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Images_AnimeTitles_AnimeId] FOREIGN KEY ([AnimeId]) REFERENCES [AnimeTitles] ([Id]) ON DELETE CASCADE
+);
+2022-05-18 19:54:19.901 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AnimeCollections] (
+    [Id] uniqueidentifier NOT NULL,
+    [UserId] uniqueidentifier NOT NULL,
+    [Name] nvarchar(200) NOT NULL,
+    [UserComment] nvarchar(max) NULL,
+    [UserRating] float NULL,
+    [ImageId] uniqueidentifier NULL,
+    CONSTRAINT [PK_AnimeCollections] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AnimeCollections_Images_ImageId] FOREIGN KEY ([ImageId]) REFERENCES [Images] ([Id])
+);
+2022-05-18 19:54:19.904 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AnimeCollectionAnimeTitle] (
+    [AnimeCollectionsId] uniqueidentifier NOT NULL,
+    [AnimeTitlesId] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_AnimeCollectionAnimeTitle] PRIMARY KEY ([AnimeCollectionsId], [AnimeTitlesId]),
+    CONSTRAINT [FK_AnimeCollectionAnimeTitle_AnimeCollections_AnimeCollectionsId] FOREIGN KEY ([AnimeCollectionsId]) REFERENCES [AnimeCollections] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_AnimeCollectionAnimeTitle_AnimeTitles_AnimeTitlesId] FOREIGN KEY ([AnimeTitlesId]) REFERENCES [AnimeTitles] ([Id]) ON DELETE CASCADE
+);
+2022-05-18 19:54:19.908 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Accounts_Id] ON [Accounts] ([Id]);
+2022-05-18 19:54:19.909 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AnimeCollectionAnimeTitle_AnimeTitlesId] ON [AnimeCollectionAnimeTitle] ([AnimeTitlesId]);
+2022-05-18 19:54:19.910 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_AnimeCollections_Id] ON [AnimeCollections] ([Id]);
+2022-05-18 19:54:19.911 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AnimeCollections_ImageId] ON [AnimeCollections] ([ImageId]);
+2022-05-18 19:54:19.912 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_AnimeTitles_Id] ON [AnimeTitles] ([Id]);
+2022-05-18 19:54:19.915 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Genres_AnimeId] ON [Genres] ([AnimeId]);
+2022-05-18 19:54:19.916 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Genres_Id] ON [Genres] ([Id]);
+2022-05-18 19:54:19.917 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Images_AnimeId] ON [Images] ([AnimeId]);
+2022-05-18 19:54:19.918 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Images_Id] ON [Images] ([Id]);
+2022-05-18 19:54:20.220 +05:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AnimeCollections] AS [a]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-05-18 19:54:20.263 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-18 19:54:20.264 +05:00 [INF] Аниме до: 0
+2022-05-18 19:54:20.267 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Genres] AS [g]
+2022-05-18 19:54:20.267 +05:00 [INF] Жанров до: 0
+2022-05-18 19:54:20.268 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-18 20:07:36.104 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-18 20:07:37.689 +05:00 [INF] Executed DbCommand (43ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-05-18 20:07:37.771 +05:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [AniRate.db] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+END;
+2022-05-18 20:07:37.805 +05:00 [INF] Executed DbCommand (34ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+DROP DATABASE [AniRate.db];
+2022-05-18 20:07:38.154 +05:00 [INF] Executed DbCommand (288ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [AniRate.db];
+2022-05-18 20:07:38.252 +05:00 [INF] Executed DbCommand (97ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [AniRate.db] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2022-05-18 20:07:38.262 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-05-18 20:07:38.413 +05:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Accounts] (
+    [Id] uniqueidentifier NOT NULL,
+    [UserName] nvarchar(200) NOT NULL,
+    [Password] nvarchar(200) NOT NULL,
+    CONSTRAINT [PK_Accounts] PRIMARY KEY ([Id])
+);
+2022-05-18 20:07:38.416 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AnimeTitles] (
+    [Id] uniqueidentifier NOT NULL,
+    [UserComment] nvarchar(max) NULL,
+    [UserRating] float NULL,
+    [Name] nvarchar(200) NOT NULL,
+    [Russian] nvarchar(max) NULL,
+    [Score] nvarchar(max) NULL,
+    [Episodes] int NULL,
+    [AiredOn] nvarchar(max) NULL,
+    [ReleasedOn] nvarchar(max) NULL,
+    [Description] nvarchar(max) NULL,
+    [DescriptionHtml] nvarchar(max) NULL,
+    CONSTRAINT [PK_AnimeTitles] PRIMARY KEY ([Id])
+);
+2022-05-18 20:07:38.418 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Genres] (
+    [Id] uniqueidentifier NOT NULL,
+    [AnimeId] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [Russian] nvarchar(max) NULL,
+    CONSTRAINT [PK_Genres] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Genres_AnimeTitles_AnimeId] FOREIGN KEY ([AnimeId]) REFERENCES [AnimeTitles] ([Id]) ON DELETE CASCADE
+);
+2022-05-18 20:07:38.420 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Images] (
+    [Id] uniqueidentifier NOT NULL,
+    [AnimeId] uniqueidentifier NOT NULL,
+    [Original] nvarchar(max) NULL,
+    [Preview] nvarchar(max) NULL,
+    [X96] nvarchar(max) NULL,
+    [X48] nvarchar(max) NULL,
+    CONSTRAINT [PK_Images] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Images_AnimeTitles_AnimeId] FOREIGN KEY ([AnimeId]) REFERENCES [AnimeTitles] ([Id]) ON DELETE CASCADE
+);
+2022-05-18 20:07:38.422 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AnimeCollections] (
+    [Id] uniqueidentifier NOT NULL,
+    [UserId] uniqueidentifier NOT NULL,
+    [Name] nvarchar(200) NOT NULL,
+    [UserComment] nvarchar(max) NULL,
+    [UserRating] float NULL,
+    [ImageId] uniqueidentifier NULL,
+    CONSTRAINT [PK_AnimeCollections] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AnimeCollections_Images_ImageId] FOREIGN KEY ([ImageId]) REFERENCES [Images] ([Id])
+);
+2022-05-18 20:07:38.426 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AnimeCollectionAnimeTitle] (
+    [AnimeCollectionsId] uniqueidentifier NOT NULL,
+    [AnimeTitlesId] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_AnimeCollectionAnimeTitle] PRIMARY KEY ([AnimeCollectionsId], [AnimeTitlesId]),
+    CONSTRAINT [FK_AnimeCollectionAnimeTitle_AnimeCollections_AnimeCollectionsId] FOREIGN KEY ([AnimeCollectionsId]) REFERENCES [AnimeCollections] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_AnimeCollectionAnimeTitle_AnimeTitles_AnimeTitlesId] FOREIGN KEY ([AnimeTitlesId]) REFERENCES [AnimeTitles] ([Id]) ON DELETE CASCADE
+);
+2022-05-18 20:07:38.427 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Accounts_Id] ON [Accounts] ([Id]);
+2022-05-18 20:07:38.428 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AnimeCollectionAnimeTitle_AnimeTitlesId] ON [AnimeCollectionAnimeTitle] ([AnimeTitlesId]);
+2022-05-18 20:07:38.429 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_AnimeCollections_Id] ON [AnimeCollections] ([Id]);
+2022-05-18 20:07:38.430 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AnimeCollections_ImageId] ON [AnimeCollections] ([ImageId]);
+2022-05-18 20:07:38.432 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_AnimeTitles_Id] ON [AnimeTitles] ([Id]);
+2022-05-18 20:07:38.433 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Genres_AnimeId] ON [Genres] ([AnimeId]);
+2022-05-18 20:07:38.434 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Genres_Id] ON [Genres] ([Id]);
+2022-05-18 20:07:38.435 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Images_AnimeId] ON [Images] ([AnimeId]);
+2022-05-18 20:07:38.436 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Images_Id] ON [Images] ([Id]);
+2022-05-18 20:07:38.730 +05:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AnimeCollections] AS [a]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-05-18 20:07:38.765 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-18 20:07:38.767 +05:00 [INF] Аниме до: 0
+2022-05-18 20:07:38.770 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Genres] AS [g]
+2022-05-18 20:07:38.770 +05:00 [INF] Жанров до: 0
+2022-05-18 20:07:38.771 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-18 20:08:37.705 +05:00 [INF] Executed DbCommand (65ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 4000), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = Int32), @p5='?' (Size = 200), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (Size = 4000), @p9='?' (Size = 4000), @p10='?' (DbType = Double), @p11='?' (DbType = Guid), @p12='?' (Size = 4000), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (DbType = Int32), @p16='?' (Size = 200), @p17='?' (Size = 4000), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (Size = 4000), @p21='?' (DbType = Double), @p22='?' (DbType = Guid), @p23='?' (Size = 4000), @p24='?' (Size = 4000), @p25='?' (Size = 4000), @p26='?' (DbType = Int32), @p27='?' (Size = 200), @p28='?' (Size = 4000), @p29='?' (Size = 4000), @p30='?' (Size = 4000), @p31='?' (Size = 4000), @p32='?' (DbType = Double), @p33='?' (DbType = Guid), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (Size = 4000), @p37='?' (DbType = Int32), @p38='?' (Size = 200), @p39='?' (Size = 4000), @p40='?' (Size = 4000), @p41='?' (Size = 4000), @p42='?' (Size = 4000), @p43='?' (DbType = Double), @p44='?' (DbType = Guid), @p45='?' (Size = 4000), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Int32), @p49='?' (Size = 200), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (Size = 4000), @p53='?' (Size = 4000), @p54='?' (DbType = Double), @p55='?' (DbType = Guid), @p56='?' (Size = 4000), @p57='?' (Size = 4000), @p58='?' (Size = 4000), @p59='?' (DbType = Int32), @p60='?' (Size = 200), @p61='?' (Size = 4000), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (Size = 4000), @p65='?' (DbType = Double), @p66='?' (DbType = Guid), @p67='?' (Size = 4000), @p68='?' (Size = 4000), @p69='?' (Size = -1), @p70='?' (DbType = Int32), @p71='?' (Size = 200), @p72='?' (Size = 4000), @p73='?' (Size = 4000), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (DbType = Double), @p77='?' (DbType = Guid), @p78='?' (Size = 4000), @p79='?' (Size = 4000), @p80='?' (Size = 4000), @p81='?' (DbType = Int32), @p82='?' (Size = 200), @p83='?' (Size = 4000), @p84='?' (Size = 4000), @p85='?' (Size = 4000), @p86='?' (Size = 4000), @p87='?' (DbType = Double), @p88='?' (DbType = Guid), @p89='?' (Size = 4000), @p90='?' (Size = 4000), @p91='?' (Size = 4000), @p92='?' (DbType = Int32), @p93='?' (Size = 200), @p94='?' (Size = 4000), @p95='?' (Size = 4000), @p96='?' (Size = 4000), @p97='?' (Size = 4000), @p98='?' (DbType = Double), @p99='?' (DbType = Guid), @p100='?' (Size = 4000), @p101='?' (Size = 4000), @p102='?' (Size = -1), @p103='?' (DbType = Int32), @p104='?' (Size = 200), @p105='?' (Size = 4000), @p106='?' (Size = 4000), @p107='?' (Size = 4000), @p108='?' (Size = 4000), @p109='?' (DbType = Double), @p110='?' (DbType = Guid), @p111='?' (Size = 4000), @p112='?' (Size = 4000), @p113='?' (Size = 4000), @p114='?' (DbType = Int32), @p115='?' (Size = 200), @p116='?' (Size = 4000), @p117='?' (Size = 4000), @p118='?' (Size = 4000), @p119='?' (Size = 4000), @p120='?' (DbType = Double), @p121='?' (DbType = Guid), @p122='?' (Size = 4000), @p123='?' (Size = 4000), @p124='?' (Size = 4000), @p125='?' (DbType = Int32), @p126='?' (Size = 200), @p127='?' (Size = 4000), @p128='?' (Size = 4000), @p129='?' (Size = 4000), @p130='?' (Size = 4000), @p131='?' (DbType = Double), @p132='?' (DbType = Guid), @p133='?' (Size = 4000), @p134='?' (Size = 4000), @p135='?' (Size = 4000), @p136='?' (DbType = Int32), @p137='?' (Size = 200), @p138='?' (Size = 4000), @p139='?' (Size = 4000), @p140='?' (Size = 4000), @p141='?' (Size = 4000), @p142='?' (DbType = Double), @p143='?' (DbType = Guid), @p144='?' (Size = 4000), @p145='?' (Size = 4000), @p146='?' (Size = 4000), @p147='?' (DbType = Int32), @p148='?' (Size = 200), @p149='?' (Size = 4000), @p150='?' (Size = 4000), @p151='?' (Size = 4000), @p152='?' (Size = 4000), @p153='?' (DbType = Double), @p154='?' (DbType = Guid), @p155='?' (Size = 4000), @p156='?' (Size = 4000), @p157='?' (Size = -1), @p158='?' (DbType = Int32), @p159='?' (Size = 200), @p160='?' (Size = 4000), @p161='?' (Size = 4000), @p162='?' (Size = 4000), @p163='?' (Size = 4000), @p164='?' (DbType = Double), @p165='?' (DbType = Guid), @p166='?' (Size = 4000), @p167='?' (Size = 4000), @p168='?' (Size = 4000), @p169='?' (DbType = Int32), @p170='?' (Size = 200), @p171='?' (Size = 4000), @p172='?' (Size = 4000), @p173='?' (Size = 4000), @p174='?' (Size = 4000), @p175='?' (DbType = Double), @p176='?' (DbType = Guid), @p177='?' (Size = 4000), @p178='?' (Size = 4000), @p179='?' (Size = 4000), @p180='?' (DbType = Int32), @p181='?' (Size = 200), @p182='?' (Size = 4000), @p183='?' (Size = 4000), @p184='?' (Size = 4000), @p185='?' (Size = 4000), @p186='?' (DbType = Double), @p187='?' (DbType = Guid), @p188='?' (Size = 4000), @p189='?' (Size = 4000), @p190='?' (Size = 4000), @p191='?' (DbType = Int32), @p192='?' (Size = 200), @p193='?' (Size = 4000), @p194='?' (Size = 4000), @p195='?' (Size = 4000), @p196='?' (Size = 4000), @p197='?' (DbType = Double), @p198='?' (DbType = Guid), @p199='?' (Size = 4000), @p200='?' (Size = 4000), @p201='?' (Size = 4000), @p202='?' (DbType = Int32), @p203='?' (Size = 200), @p204='?' (Size = 4000), @p205='?' (Size = 4000), @p206='?' (Size = 4000), @p207='?' (Size = 4000), @p208='?' (DbType = Double), @p209='?' (DbType = Guid), @p210='?' (Size = 4000), @p211='?' (Size = 4000), @p212='?' (Size = 4000), @p213='?' (DbType = Int32), @p214='?' (Size = 200), @p215='?' (Size = 4000), @p216='?' (Size = 4000), @p217='?' (Size = 4000), @p218='?' (Size = 4000), @p219='?' (DbType = Double), @p220='?' (DbType = Guid), @p221='?' (Size = 4000), @p222='?' (Size = 4000), @p223='?' (Size = 4000), @p224='?' (DbType = Int32), @p225='?' (Size = 200), @p226='?' (Size = 4000), @p227='?' (Size = 4000), @p228='?' (Size = 4000), @p229='?' (Size = 4000), @p230='?' (DbType = Double), @p231='?' (DbType = Guid), @p232='?' (Size = 4000), @p233='?' (Size = 4000), @p234='?' (Size = -1), @p235='?' (DbType = Int32), @p236='?' (Size = 200), @p237='?' (Size = 4000), @p238='?' (Size = 4000), @p239='?' (Size = 4000), @p240='?' (Size = 4000), @p241='?' (DbType = Double), @p242='?' (DbType = Guid), @p243='?' (Size = 4000), @p244='?' (Size = 4000), @p245='?' (Size = -1), @p246='?' (DbType = Int32), @p247='?' (Size = 200), @p248='?' (Size = 4000), @p249='?' (Size = 4000), @p250='?' (Size = 4000), @p251='?' (Size = 4000), @p252='?' (DbType = Double), @p253='?' (DbType = Guid), @p254='?' (Size = 4000), @p255='?' (Size = 4000), @p256='?' (Size = 4000), @p257='?' (DbType = Int32), @p258='?' (Size = 200), @p259='?' (Size = 4000), @p260='?' (Size = 4000), @p261='?' (Size = 4000), @p262='?' (Size = 4000), @p263='?' (DbType = Double), @p264='?' (DbType = Guid), @p265='?' (Size = 4000), @p266='?' (Size = 4000), @p267='?' (Size = 4000), @p268='?' (DbType = Int32), @p269='?' (Size = 200), @p270='?' (Size = 4000), @p271='?' (Size = 4000), @p272='?' (Size = 4000), @p273='?' (Size = 4000), @p274='?' (DbType = Double), @p275='?' (DbType = Guid), @p276='?' (Size = 4000), @p277='?' (Size = 4000), @p278='?' (Size = 4000), @p279='?' (DbType = Int32), @p280='?' (Size = 200), @p281='?' (Size = 4000), @p282='?' (Size = 4000), @p283='?' (Size = 4000), @p284='?' (Size = 4000), @p285='?' (DbType = Double), @p286='?' (DbType = Guid), @p287='?' (Size = 4000), @p288='?' (Size = 4000), @p289='?' (Size = 4000), @p290='?' (DbType = Int32), @p291='?' (Size = 200), @p292='?' (Size = 4000), @p293='?' (Size = 4000), @p294='?' (Size = 4000), @p295='?' (Size = 4000), @p296='?' (DbType = Double), @p297='?' (DbType = Guid), @p298='?' (Size = 4000), @p299='?' (Size = 4000), @p300='?' (Size = 4000), @p301='?' (DbType = Int32), @p302='?' (Size = 200), @p303='?' (Size = 4000), @p304='?' (Size = 4000), @p305='?' (Size = 4000), @p306='?' (Size = 4000), @p307='?' (DbType = Double), @p308='?' (DbType = Guid), @p309='?' (Size = 4000), @p310='?' (Size = 4000), @p311='?' (Size = 4000), @p312='?' (DbType = Int32), @p313='?' (Size = 200), @p314='?' (Size = 4000), @p315='?' (Size = 4000), @p316='?' (Size = 4000), @p317='?' (Size = 4000), @p318='?' (DbType = Double), @p319='?' (DbType = Guid), @p320='?' (Size = 4000), @p321='?' (Size = 4000), @p322='?' (Size = 4000), @p323='?' (DbType = Int32), @p324='?' (Size = 200), @p325='?' (Size = 4000), @p326='?' (Size = 4000), @p327='?' (Size = 4000), @p328='?' (Size = 4000), @p329='?' (DbType = Double), @p330='?' (DbType = Guid), @p331='?' (Size = 4000), @p332='?' (Size = 4000), @p333='?' (Size = -1), @p334='?' (DbType = Int32), @p335='?' (Size = 200), @p336='?' (Size = 4000), @p337='?' (Size = 4000), @p338='?' (Size = 4000), @p339='?' (Size = 4000), @p340='?' (DbType = Double), @p341='?' (DbType = Guid), @p342='?' (Size = 4000), @p343='?' (Size = 4000), @p344='?' (Size = -1), @p345='?' (DbType = Int32), @p346='?' (Size = 200), @p347='?' (Size = 4000), @p348='?' (Size = 4000), @p349='?' (Size = 4000), @p350='?' (Size = 4000), @p351='?' (DbType = Double), @p352='?' (DbType = Guid), @p353='?' (Size = 4000), @p354='?' (Size = 4000), @p355='?' (Size = 4000), @p356='?' (DbType = Int32), @p357='?' (Size = 200), @p358='?' (Size = 4000), @p359='?' (Size = 4000), @p360='?' (Size = 4000), @p361='?' (Size = 4000), @p362='?' (DbType = Double), @p363='?' (DbType = Guid), @p364='?' (Size = 4000), @p365='?' (Size = 4000), @p366='?' (Size = 4000), @p367='?' (DbType = Int32), @p368='?' (Size = 200), @p369='?' (Size = 4000), @p370='?' (Size = 4000), @p371='?' (Size = 4000), @p372='?' (Size = 4000), @p373='?' (DbType = Double), @p374='?' (DbType = Guid), @p375='?' (Size = 4000), @p376='?' (Size = 4000), @p377='?' (Size = 4000), @p378='?' (DbType = Int32), @p379='?' (Size = 200), @p380='?' (Size = 4000), @p381='?' (Size = 4000), @p382='?' (Size = 4000), @p383='?' (Size = 4000), @p384='?' (DbType = Double), @p385='?' (DbType = Guid), @p386='?' (Size = 4000), @p387='?' (Size = 4000), @p388='?' (Size = 4000), @p389='?' (DbType = Int32), @p390='?' (Size = 200), @p391='?' (Size = 4000), @p392='?' (Size = 4000), @p393='?' (Size = 4000), @p394='?' (Size = 4000), @p395='?' (DbType = Double), @p396='?' (DbType = Guid), @p397='?' (Size = 4000), @p398='?' (Size = 4000), @p399='?' (Size = 4000), @p400='?' (DbType = Int32), @p401='?' (Size = 200), @p402='?' (Size = 4000), @p403='?' (Size = 4000), @p404='?' (Size = 4000), @p405='?' (Size = 4000), @p406='?' (DbType = Double), @p407='?' (DbType = Guid), @p408='?' (Size = 4000), @p409='?' (Size = 4000), @p410='?' (Size = 4000), @p411='?' (DbType = Int32), @p412='?' (Size = 200), @p413='?' (Size = 4000), @p414='?' (Size = 4000), @p415='?' (Size = 4000), @p416='?' (Size = 4000), @p417='?' (DbType = Double), @p418='?' (DbType = Guid), @p419='?' (Size = 4000), @p420='?' (Size = 4000), @p421='?' (Size = 4000), @p422='?' (DbType = Int32), @p423='?' (Size = 200), @p424='?' (Size = 4000), @p425='?' (Size = 4000), @p426='?' (Size = 4000), @p427='?' (Size = 4000), @p428='?' (DbType = Double), @p429='?' (DbType = Guid), @p430='?' (Size = 4000), @p431='?' (Size = 4000), @p432='?' (Size = 4000), @p433='?' (DbType = Int32), @p434='?' (Size = 200), @p435='?' (Size = 4000), @p436='?' (Size = 4000), @p437='?' (Size = 4000), @p438='?' (Size = 4000), @p439='?' (DbType = Double), @p440='?' (DbType = Guid), @p441='?' (Size = 4000), @p442='?' (Size = 4000), @p443='?' (Size = 4000), @p444='?' (DbType = Int32), @p445='?' (Size = 200), @p446='?' (Size = 4000), @p447='?' (Size = 4000), @p448='?' (Size = 4000), @p449='?' (Size = 4000), @p450='?' (DbType = Double), @p451='?' (DbType = Guid), @p452='?' (Size = 4000), @p453='?' (Size = 4000), @p454='?' (Size = 4000), @p455='?' (DbType = Int32), @p456='?' (Size = 200), @p457='?' (Size = 4000), @p458='?' (Size = 4000), @p459='?' (Size = 4000), @p460='?' (Size = 4000), @p461='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AnimeTitles] ([Id], [AiredOn], [Description], [DescriptionHtml], [Episodes], [Name], [ReleasedOn], [Russian], [Score], [UserComment], [UserRating])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10),
+(@p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21),
+(@p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32),
+(@p33, @p34, @p35, @p36, @p37, @p38, @p39, @p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47, @p48, @p49, @p50, @p51, @p52, @p53, @p54),
+(@p55, @p56, @p57, @p58, @p59, @p60, @p61, @p62, @p63, @p64, @p65),
+(@p66, @p67, @p68, @p69, @p70, @p71, @p72, @p73, @p74, @p75, @p76),
+(@p77, @p78, @p79, @p80, @p81, @p82, @p83, @p84, @p85, @p86, @p87),
+(@p88, @p89, @p90, @p91, @p92, @p93, @p94, @p95, @p96, @p97, @p98),
+(@p99, @p100, @p101, @p102, @p103, @p104, @p105, @p106, @p107, @p108, @p109),
+(@p110, @p111, @p112, @p113, @p114, @p115, @p116, @p117, @p118, @p119, @p120),
+(@p121, @p122, @p123, @p124, @p125, @p126, @p127, @p128, @p129, @p130, @p131),
+(@p132, @p133, @p134, @p135, @p136, @p137, @p138, @p139, @p140, @p141, @p142),
+(@p143, @p144, @p145, @p146, @p147, @p148, @p149, @p150, @p151, @p152, @p153),
+(@p154, @p155, @p156, @p157, @p158, @p159, @p160, @p161, @p162, @p163, @p164),
+(@p165, @p166, @p167, @p168, @p169, @p170, @p171, @p172, @p173, @p174, @p175),
+(@p176, @p177, @p178, @p179, @p180, @p181, @p182, @p183, @p184, @p185, @p186),
+(@p187, @p188, @p189, @p190, @p191, @p192, @p193, @p194, @p195, @p196, @p197),
+(@p198, @p199, @p200, @p201, @p202, @p203, @p204, @p205, @p206, @p207, @p208),
+(@p209, @p210, @p211, @p212, @p213, @p214, @p215, @p216, @p217, @p218, @p219),
+(@p220, @p221, @p222, @p223, @p224, @p225, @p226, @p227, @p228, @p229, @p230),
+(@p231, @p232, @p233, @p234, @p235, @p236, @p237, @p238, @p239, @p240, @p241),
+(@p242, @p243, @p244, @p245, @p246, @p247, @p248, @p249, @p250, @p251, @p252),
+(@p253, @p254, @p255, @p256, @p257, @p258, @p259, @p260, @p261, @p262, @p263),
+(@p264, @p265, @p266, @p267, @p268, @p269, @p270, @p271, @p272, @p273, @p274),
+(@p275, @p276, @p277, @p278, @p279, @p280, @p281, @p282, @p283, @p284, @p285),
+(@p286, @p287, @p288, @p289, @p290, @p291, @p292, @p293, @p294, @p295, @p296),
+(@p297, @p298, @p299, @p300, @p301, @p302, @p303, @p304, @p305, @p306, @p307),
+(@p308, @p309, @p310, @p311, @p312, @p313, @p314, @p315, @p316, @p317, @p318),
+(@p319, @p320, @p321, @p322, @p323, @p324, @p325, @p326, @p327, @p328, @p329),
+(@p330, @p331, @p332, @p333, @p334, @p335, @p336, @p337, @p338, @p339, @p340),
+(@p341, @p342, @p343, @p344, @p345, @p346, @p347, @p348, @p349, @p350, @p351),
+(@p352, @p353, @p354, @p355, @p356, @p357, @p358, @p359, @p360, @p361, @p362),
+(@p363, @p364, @p365, @p366, @p367, @p368, @p369, @p370, @p371, @p372, @p373),
+(@p374, @p375, @p376, @p377, @p378, @p379, @p380, @p381, @p382, @p383, @p384),
+(@p385, @p386, @p387, @p388, @p389, @p390, @p391, @p392, @p393, @p394, @p395),
+(@p396, @p397, @p398, @p399, @p400, @p401, @p402, @p403, @p404, @p405, @p406),
+(@p407, @p408, @p409, @p410, @p411, @p412, @p413, @p414, @p415, @p416, @p417),
+(@p418, @p419, @p420, @p421, @p422, @p423, @p424, @p425, @p426, @p427, @p428),
+(@p429, @p430, @p431, @p432, @p433, @p434, @p435, @p436, @p437, @p438, @p439),
+(@p440, @p441, @p442, @p443, @p444, @p445, @p446, @p447, @p448, @p449, @p450),
+(@p451, @p452, @p453, @p454, @p455, @p456, @p457, @p458, @p459, @p460, @p461);
+2022-05-18 20:08:37.716 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 4000), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = Int32), @p5='?' (Size = 200), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (Size = 4000), @p9='?' (Size = 4000), @p10='?' (DbType = Double), @p11='?' (DbType = Guid), @p12='?' (Size = 4000), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (DbType = Int32), @p16='?' (Size = 200), @p17='?' (Size = 4000), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (Size = 4000), @p21='?' (DbType = Double), @p22='?' (DbType = Guid), @p23='?' (Size = 4000), @p24='?' (Size = 4000), @p25='?' (Size = 4000), @p26='?' (DbType = Int32), @p27='?' (Size = 200), @p28='?' (Size = 4000), @p29='?' (Size = 4000), @p30='?' (Size = 4000), @p31='?' (Size = 4000), @p32='?' (DbType = Double), @p33='?' (DbType = Guid), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (Size = 4000), @p37='?' (DbType = Int32), @p38='?' (Size = 200), @p39='?' (Size = 4000), @p40='?' (Size = 4000), @p41='?' (Size = 4000), @p42='?' (Size = 4000), @p43='?' (DbType = Double), @p44='?' (DbType = Guid), @p45='?' (Size = 4000), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Int32), @p49='?' (Size = 200), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (Size = 4000), @p53='?' (Size = 4000), @p54='?' (DbType = Double), @p55='?' (DbType = Guid), @p56='?' (Size = 4000), @p57='?' (Size = 4000), @p58='?' (Size = 4000), @p59='?' (DbType = Int32), @p60='?' (Size = 200), @p61='?' (Size = 4000), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (Size = 4000), @p65='?' (DbType = Double), @p66='?' (DbType = Guid), @p67='?' (Size = 4000), @p68='?' (Size = 4000), @p69='?' (Size = 4000), @p70='?' (DbType = Int32), @p71='?' (Size = 200), @p72='?' (Size = 4000), @p73='?' (Size = 4000), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (DbType = Double), @p77='?' (DbType = Guid), @p78='?' (Size = 4000), @p79='?' (Size = 4000), @p80='?' (Size = 4000), @p81='?' (DbType = Int32), @p82='?' (Size = 200), @p83='?' (Size = 4000), @p84='?' (Size = 4000), @p85='?' (Size = 4000), @p86='?' (Size = 4000), @p87='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AnimeTitles] ([Id], [AiredOn], [Description], [DescriptionHtml], [Episodes], [Name], [ReleasedOn], [Russian], [Score], [UserComment], [UserRating])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10),
+(@p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21),
+(@p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32),
+(@p33, @p34, @p35, @p36, @p37, @p38, @p39, @p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47, @p48, @p49, @p50, @p51, @p52, @p53, @p54),
+(@p55, @p56, @p57, @p58, @p59, @p60, @p61, @p62, @p63, @p64, @p65),
+(@p66, @p67, @p68, @p69, @p70, @p71, @p72, @p73, @p74, @p75, @p76),
+(@p77, @p78, @p79, @p80, @p81, @p82, @p83, @p84, @p85, @p86, @p87);
+2022-05-18 20:08:37.729 +05:00 [INF] Executed DbCommand (11ms) [Parameters=[@p88='?' (DbType = Guid), @p89='?' (DbType = Guid), @p90='?' (Size = 4000), @p91='?' (Size = 4000), @p92='?' (DbType = Guid), @p93='?' (DbType = Guid), @p94='?' (Size = 4000), @p95='?' (Size = 4000), @p96='?' (DbType = Guid), @p97='?' (DbType = Guid), @p98='?' (Size = 4000), @p99='?' (Size = 4000), @p100='?' (DbType = Guid), @p101='?' (DbType = Guid), @p102='?' (Size = 4000), @p103='?' (Size = 4000), @p104='?' (DbType = Guid), @p105='?' (DbType = Guid), @p106='?' (Size = 4000), @p107='?' (Size = 4000), @p108='?' (DbType = Guid), @p109='?' (DbType = Guid), @p110='?' (Size = 4000), @p111='?' (Size = 4000), @p112='?' (DbType = Guid), @p113='?' (DbType = Guid), @p114='?' (Size = 4000), @p115='?' (Size = 4000), @p116='?' (DbType = Guid), @p117='?' (DbType = Guid), @p118='?' (Size = 4000), @p119='?' (Size = 4000), @p120='?' (DbType = Guid), @p121='?' (DbType = Guid), @p122='?' (Size = 4000), @p123='?' (Size = 4000), @p124='?' (DbType = Guid), @p125='?' (DbType = Guid), @p126='?' (Size = 4000), @p127='?' (Size = 4000), @p128='?' (DbType = Guid), @p129='?' (DbType = Guid), @p130='?' (Size = 4000), @p131='?' (Size = 4000), @p132='?' (DbType = Guid), @p133='?' (DbType = Guid), @p134='?' (Size = 4000), @p135='?' (Size = 4000), @p136='?' (DbType = Guid), @p137='?' (DbType = Guid), @p138='?' (Size = 4000), @p139='?' (Size = 4000), @p140='?' (DbType = Guid), @p141='?' (DbType = Guid), @p142='?' (Size = 4000), @p143='?' (Size = 4000), @p144='?' (DbType = Guid), @p145='?' (DbType = Guid), @p146='?' (Size = 4000), @p147='?' (Size = 4000), @p148='?' (DbType = Guid), @p149='?' (DbType = Guid), @p150='?' (Size = 4000), @p151='?' (Size = 4000), @p152='?' (DbType = Guid), @p153='?' (DbType = Guid), @p154='?' (Size = 4000), @p155='?' (Size = 4000), @p156='?' (DbType = Guid), @p157='?' (DbType = Guid), @p158='?' (Size = 4000), @p159='?' (Size = 4000), @p160='?' (DbType = Guid), @p161='?' (DbType = Guid), @p162='?' (Size = 4000), @p163='?' (Size = 4000), @p164='?' (DbType = Guid), @p165='?' (DbType = Guid), @p166='?' (Size = 4000), @p167='?' (Size = 4000), @p168='?' (DbType = Guid), @p169='?' (DbType = Guid), @p170='?' (Size = 4000), @p171='?' (Size = 4000), @p172='?' (DbType = Guid), @p173='?' (DbType = Guid), @p174='?' (Size = 4000), @p175='?' (Size = 4000), @p176='?' (DbType = Guid), @p177='?' (DbType = Guid), @p178='?' (Size = 4000), @p179='?' (Size = 4000), @p180='?' (DbType = Guid), @p181='?' (DbType = Guid), @p182='?' (Size = 4000), @p183='?' (Size = 4000), @p184='?' (DbType = Guid), @p185='?' (DbType = Guid), @p186='?' (Size = 4000), @p187='?' (Size = 4000), @p188='?' (DbType = Guid), @p189='?' (DbType = Guid), @p190='?' (Size = 4000), @p191='?' (Size = 4000), @p192='?' (DbType = Guid), @p193='?' (DbType = Guid), @p194='?' (Size = 4000), @p195='?' (Size = 4000), @p196='?' (DbType = Guid), @p197='?' (DbType = Guid), @p198='?' (Size = 4000), @p199='?' (Size = 4000), @p200='?' (DbType = Guid), @p201='?' (DbType = Guid), @p202='?' (Size = 4000), @p203='?' (Size = 4000), @p204='?' (DbType = Guid), @p205='?' (DbType = Guid), @p206='?' (Size = 4000), @p207='?' (Size = 4000), @p208='?' (DbType = Guid), @p209='?' (DbType = Guid), @p210='?' (Size = 4000), @p211='?' (Size = 4000), @p212='?' (DbType = Guid), @p213='?' (DbType = Guid), @p214='?' (Size = 4000), @p215='?' (Size = 4000), @p216='?' (DbType = Guid), @p217='?' (DbType = Guid), @p218='?' (Size = 4000), @p219='?' (Size = 4000), @p220='?' (DbType = Guid), @p221='?' (DbType = Guid), @p222='?' (Size = 4000), @p223='?' (Size = 4000), @p224='?' (DbType = Guid), @p225='?' (DbType = Guid), @p226='?' (Size = 4000), @p227='?' (Size = 4000), @p228='?' (DbType = Guid), @p229='?' (DbType = Guid), @p230='?' (Size = 4000), @p231='?' (Size = 4000), @p232='?' (DbType = Guid), @p233='?' (DbType = Guid), @p234='?' (Size = 4000), @p235='?' (Size = 4000), @p236='?' (DbType = Guid), @p237='?' (DbType = Guid), @p238='?' (Size = 4000), @p239='?' (Size = 4000), @p240='?' (DbType = Guid), @p241='?' (DbType = Guid), @p242='?' (Size = 4000), @p243='?' (Size = 4000), @p244='?' (DbType = Guid), @p245='?' (DbType = Guid), @p246='?' (Size = 4000), @p247='?' (Size = 4000), @p248='?' (DbType = Guid), @p249='?' (DbType = Guid), @p250='?' (Size = 4000), @p251='?' (Size = 4000), @p252='?' (DbType = Guid), @p253='?' (DbType = Guid), @p254='?' (Size = 4000), @p255='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Genres] ([Id], [AnimeId], [Name], [Russian])
+VALUES (@p88, @p89, @p90, @p91),
+(@p92, @p93, @p94, @p95),
+(@p96, @p97, @p98, @p99),
+(@p100, @p101, @p102, @p103),
+(@p104, @p105, @p106, @p107),
+(@p108, @p109, @p110, @p111),
+(@p112, @p113, @p114, @p115),
+(@p116, @p117, @p118, @p119),
+(@p120, @p121, @p122, @p123),
+(@p124, @p125, @p126, @p127),
+(@p128, @p129, @p130, @p131),
+(@p132, @p133, @p134, @p135),
+(@p136, @p137, @p138, @p139),
+(@p140, @p141, @p142, @p143),
+(@p144, @p145, @p146, @p147),
+(@p148, @p149, @p150, @p151),
+(@p152, @p153, @p154, @p155),
+(@p156, @p157, @p158, @p159),
+(@p160, @p161, @p162, @p163),
+(@p164, @p165, @p166, @p167),
+(@p168, @p169, @p170, @p171),
+(@p172, @p173, @p174, @p175),
+(@p176, @p177, @p178, @p179),
+(@p180, @p181, @p182, @p183),
+(@p184, @p185, @p186, @p187),
+(@p188, @p189, @p190, @p191),
+(@p192, @p193, @p194, @p195),
+(@p196, @p197, @p198, @p199),
+(@p200, @p201, @p202, @p203),
+(@p204, @p205, @p206, @p207),
+(@p208, @p209, @p210, @p211),
+(@p212, @p213, @p214, @p215),
+(@p216, @p217, @p218, @p219),
+(@p220, @p221, @p222, @p223),
+(@p224, @p225, @p226, @p227),
+(@p228, @p229, @p230, @p231),
+(@p232, @p233, @p234, @p235),
+(@p236, @p237, @p238, @p239),
+(@p240, @p241, @p242, @p243),
+(@p244, @p245, @p246, @p247),
+(@p248, @p249, @p250, @p251),
+(@p252, @p253, @p254, @p255);
+2022-05-18 20:08:37.739 +05:00 [INF] Executed DbCommand (9ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (DbType = Guid), @p17='?' (DbType = Guid), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (DbType = Guid), @p21='?' (DbType = Guid), @p22='?' (Size = 4000), @p23='?' (Size = 4000), @p24='?' (DbType = Guid), @p25='?' (DbType = Guid), @p26='?' (Size = 4000), @p27='?' (Size = 4000), @p28='?' (DbType = Guid), @p29='?' (DbType = Guid), @p30='?' (Size = 4000), @p31='?' (Size = 4000), @p32='?' (DbType = Guid), @p33='?' (DbType = Guid), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (DbType = Guid), @p37='?' (DbType = Guid), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (DbType = Guid), @p41='?' (DbType = Guid), @p42='?' (Size = 4000), @p43='?' (Size = 4000), @p44='?' (DbType = Guid), @p45='?' (DbType = Guid), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Guid), @p49='?' (DbType = Guid), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (DbType = Guid), @p53='?' (DbType = Guid), @p54='?' (Size = 4000), @p55='?' (Size = 4000), @p56='?' (DbType = Guid), @p57='?' (DbType = Guid), @p58='?' (Size = 4000), @p59='?' (Size = 4000), @p60='?' (DbType = Guid), @p61='?' (DbType = Guid), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (DbType = Guid), @p65='?' (DbType = Guid), @p66='?' (Size = 4000), @p67='?' (Size = 4000), @p68='?' (DbType = Guid), @p69='?' (DbType = Guid), @p70='?' (Size = 4000), @p71='?' (Size = 4000), @p72='?' (DbType = Guid), @p73='?' (DbType = Guid), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (DbType = Guid), @p77='?' (DbType = Guid), @p78='?' (Size = 4000), @p79='?' (Size = 4000), @p80='?' (DbType = Guid), @p81='?' (DbType = Guid), @p82='?' (Size = 4000), @p83='?' (Size = 4000), @p84='?' (DbType = Guid), @p85='?' (DbType = Guid), @p86='?' (Size = 4000), @p87='?' (Size = 4000), @p88='?' (DbType = Guid), @p89='?' (DbType = Guid), @p90='?' (Size = 4000), @p91='?' (Size = 4000), @p92='?' (DbType = Guid), @p93='?' (DbType = Guid), @p94='?' (Size = 4000), @p95='?' (Size = 4000), @p96='?' (DbType = Guid), @p97='?' (DbType = Guid), @p98='?' (Size = 4000), @p99='?' (Size = 4000), @p100='?' (DbType = Guid), @p101='?' (DbType = Guid), @p102='?' (Size = 4000), @p103='?' (Size = 4000), @p104='?' (DbType = Guid), @p105='?' (DbType = Guid), @p106='?' (Size = 4000), @p107='?' (Size = 4000), @p108='?' (DbType = Guid), @p109='?' (DbType = Guid), @p110='?' (Size = 4000), @p111='?' (Size = 4000), @p112='?' (DbType = Guid), @p113='?' (DbType = Guid), @p114='?' (Size = 4000), @p115='?' (Size = 4000), @p116='?' (DbType = Guid), @p117='?' (DbType = Guid), @p118='?' (Size = 4000), @p119='?' (Size = 4000), @p120='?' (DbType = Guid), @p121='?' (DbType = Guid), @p122='?' (Size = 4000), @p123='?' (Size = 4000), @p124='?' (DbType = Guid), @p125='?' (DbType = Guid), @p126='?' (Size = 4000), @p127='?' (Size = 4000), @p128='?' (DbType = Guid), @p129='?' (DbType = Guid), @p130='?' (Size = 4000), @p131='?' (Size = 4000), @p132='?' (DbType = Guid), @p133='?' (DbType = Guid), @p134='?' (Size = 4000), @p135='?' (Size = 4000), @p136='?' (DbType = Guid), @p137='?' (DbType = Guid), @p138='?' (Size = 4000), @p139='?' (Size = 4000), @p140='?' (DbType = Guid), @p141='?' (DbType = Guid), @p142='?' (Size = 4000), @p143='?' (Size = 4000), @p144='?' (DbType = Guid), @p145='?' (DbType = Guid), @p146='?' (Size = 4000), @p147='?' (Size = 4000), @p148='?' (DbType = Guid), @p149='?' (DbType = Guid), @p150='?' (Size = 4000), @p151='?' (Size = 4000), @p152='?' (DbType = Guid), @p153='?' (DbType = Guid), @p154='?' (Size = 4000), @p155='?' (Size = 4000), @p156='?' (DbType = Guid), @p157='?' (DbType = Guid), @p158='?' (Size = 4000), @p159='?' (Size = 4000), @p160='?' (DbType = Guid), @p161='?' (DbType = Guid), @p162='?' (Size = 4000), @p163='?' (Size = 4000), @p164='?' (DbType = Guid), @p165='?' (DbType = Guid), @p166='?' (Size = 4000), @p167='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Genres] ([Id], [AnimeId], [Name], [Russian])
+VALUES (@p0, @p1, @p2, @p3),
+(@p4, @p5, @p6, @p7),
+(@p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15),
+(@p16, @p17, @p18, @p19),
+(@p20, @p21, @p22, @p23),
+(@p24, @p25, @p26, @p27),
+(@p28, @p29, @p30, @p31),
+(@p32, @p33, @p34, @p35),
+(@p36, @p37, @p38, @p39),
+(@p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47),
+(@p48, @p49, @p50, @p51),
+(@p52, @p53, @p54, @p55),
+(@p56, @p57, @p58, @p59),
+(@p60, @p61, @p62, @p63),
+(@p64, @p65, @p66, @p67),
+(@p68, @p69, @p70, @p71),
+(@p72, @p73, @p74, @p75),
+(@p76, @p77, @p78, @p79),
+(@p80, @p81, @p82, @p83),
+(@p84, @p85, @p86, @p87),
+(@p88, @p89, @p90, @p91),
+(@p92, @p93, @p94, @p95),
+(@p96, @p97, @p98, @p99),
+(@p100, @p101, @p102, @p103),
+(@p104, @p105, @p106, @p107),
+(@p108, @p109, @p110, @p111),
+(@p112, @p113, @p114, @p115),
+(@p116, @p117, @p118, @p119),
+(@p120, @p121, @p122, @p123),
+(@p124, @p125, @p126, @p127),
+(@p128, @p129, @p130, @p131),
+(@p132, @p133, @p134, @p135),
+(@p136, @p137, @p138, @p139),
+(@p140, @p141, @p142, @p143),
+(@p144, @p145, @p146, @p147),
+(@p148, @p149, @p150, @p151),
+(@p152, @p153, @p154, @p155),
+(@p156, @p157, @p158, @p159),
+(@p160, @p161, @p162, @p163),
+(@p164, @p165, @p166, @p167);
+2022-05-18 20:08:37.743 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (DbType = Guid), @p17='?' (DbType = Guid), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (DbType = Guid), @p21='?' (DbType = Guid), @p22='?' (Size = 4000), @p23='?' (Size = 4000), @p24='?' (DbType = Guid), @p25='?' (DbType = Guid), @p26='?' (Size = 4000), @p27='?' (Size = 4000), @p28='?' (DbType = Guid), @p29='?' (DbType = Guid), @p30='?' (Size = 4000), @p31='?' (Size = 4000), @p32='?' (DbType = Guid), @p33='?' (DbType = Guid), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (DbType = Guid), @p37='?' (DbType = Guid), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (DbType = Guid), @p41='?' (DbType = Guid), @p42='?' (Size = 4000), @p43='?' (Size = 4000), @p44='?' (DbType = Guid), @p45='?' (DbType = Guid), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Guid), @p49='?' (DbType = Guid), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (DbType = Guid), @p53='?' (DbType = Guid), @p54='?' (Size = 4000), @p55='?' (Size = 4000), @p56='?' (DbType = Guid), @p57='?' (DbType = Guid), @p58='?' (Size = 4000), @p59='?' (Size = 4000), @p60='?' (DbType = Guid), @p61='?' (DbType = Guid), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (DbType = Guid), @p65='?' (DbType = Guid), @p66='?' (Size = 4000), @p67='?' (Size = 4000), @p68='?' (DbType = Guid), @p69='?' (DbType = Guid), @p70='?' (Size = 4000), @p71='?' (Size = 4000), @p72='?' (DbType = Guid), @p73='?' (DbType = Guid), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (DbType = Guid), @p77='?' (DbType = Guid), @p78='?' (Size = 4000), @p79='?' (Size = 4000), @p80='?' (DbType = Guid), @p81='?' (DbType = Guid), @p82='?' (Size = 4000), @p83='?' (Size = 4000), @p84='?' (DbType = Guid), @p85='?' (DbType = Guid), @p86='?' (Size = 4000), @p87='?' (Size = 4000), @p88='?' (DbType = Guid), @p89='?' (DbType = Guid), @p90='?' (Size = 4000), @p91='?' (Size = 4000), @p92='?' (DbType = Guid), @p93='?' (DbType = Guid), @p94='?' (Size = 4000), @p95='?' (Size = 4000), @p96='?' (DbType = Guid), @p97='?' (DbType = Guid), @p98='?' (Size = 4000), @p99='?' (Size = 4000), @p100='?' (DbType = Guid), @p101='?' (DbType = Guid), @p102='?' (Size = 4000), @p103='?' (Size = 4000), @p104='?' (DbType = Guid), @p105='?' (DbType = Guid), @p106='?' (Size = 4000), @p107='?' (Size = 4000), @p108='?' (DbType = Guid), @p109='?' (DbType = Guid), @p110='?' (Size = 4000), @p111='?' (Size = 4000), @p112='?' (DbType = Guid), @p113='?' (DbType = Guid), @p114='?' (Size = 4000), @p115='?' (Size = 4000), @p116='?' (DbType = Guid), @p117='?' (DbType = Guid), @p118='?' (Size = 4000), @p119='?' (Size = 4000), @p120='?' (DbType = Guid), @p121='?' (DbType = Guid), @p122='?' (Size = 4000), @p123='?' (Size = 4000), @p124='?' (DbType = Guid), @p125='?' (DbType = Guid), @p126='?' (Size = 4000), @p127='?' (Size = 4000), @p128='?' (DbType = Guid), @p129='?' (DbType = Guid), @p130='?' (Size = 4000), @p131='?' (Size = 4000), @p132='?' (DbType = Guid), @p133='?' (DbType = Guid), @p134='?' (Size = 4000), @p135='?' (Size = 4000), @p136='?' (DbType = Guid), @p137='?' (DbType = Guid), @p138='?' (Size = 4000), @p139='?' (Size = 4000), @p140='?' (DbType = Guid), @p141='?' (DbType = Guid), @p142='?' (Size = 4000), @p143='?' (Size = 4000), @p144='?' (DbType = Guid), @p145='?' (DbType = Guid), @p146='?' (Size = 4000), @p147='?' (Size = 4000), @p148='?' (DbType = Guid), @p149='?' (DbType = Guid), @p150='?' (Size = 4000), @p151='?' (Size = 4000), @p152='?' (DbType = Guid), @p153='?' (DbType = Guid), @p154='?' (Size = 4000), @p155='?' (Size = 4000), @p156='?' (DbType = Guid), @p157='?' (DbType = Guid), @p158='?' (Size = 4000), @p159='?' (Size = 4000), @p160='?' (DbType = Guid), @p161='?' (DbType = Guid), @p162='?' (Size = 4000), @p163='?' (Size = 4000), @p164='?' (DbType = Guid), @p165='?' (DbType = Guid), @p166='?' (Size = 4000), @p167='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Genres] ([Id], [AnimeId], [Name], [Russian])
+VALUES (@p0, @p1, @p2, @p3),
+(@p4, @p5, @p6, @p7),
+(@p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15),
+(@p16, @p17, @p18, @p19),
+(@p20, @p21, @p22, @p23),
+(@p24, @p25, @p26, @p27),
+(@p28, @p29, @p30, @p31),
+(@p32, @p33, @p34, @p35),
+(@p36, @p37, @p38, @p39),
+(@p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47),
+(@p48, @p49, @p50, @p51),
+(@p52, @p53, @p54, @p55),
+(@p56, @p57, @p58, @p59),
+(@p60, @p61, @p62, @p63),
+(@p64, @p65, @p66, @p67),
+(@p68, @p69, @p70, @p71),
+(@p72, @p73, @p74, @p75),
+(@p76, @p77, @p78, @p79),
+(@p80, @p81, @p82, @p83),
+(@p84, @p85, @p86, @p87),
+(@p88, @p89, @p90, @p91),
+(@p92, @p93, @p94, @p95),
+(@p96, @p97, @p98, @p99),
+(@p100, @p101, @p102, @p103),
+(@p104, @p105, @p106, @p107),
+(@p108, @p109, @p110, @p111),
+(@p112, @p113, @p114, @p115),
+(@p116, @p117, @p118, @p119),
+(@p120, @p121, @p122, @p123),
+(@p124, @p125, @p126, @p127),
+(@p128, @p129, @p130, @p131),
+(@p132, @p133, @p134, @p135),
+(@p136, @p137, @p138, @p139),
+(@p140, @p141, @p142, @p143),
+(@p144, @p145, @p146, @p147),
+(@p148, @p149, @p150, @p151),
+(@p152, @p153, @p154, @p155),
+(@p156, @p157, @p158, @p159),
+(@p160, @p161, @p162, @p163),
+(@p164, @p165, @p166, @p167);
+2022-05-18 20:08:37.746 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (DbType = Guid), @p17='?' (DbType = Guid), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (DbType = Guid), @p21='?' (DbType = Guid), @p22='?' (Size = 4000), @p23='?' (Size = 4000), @p24='?' (DbType = Guid), @p25='?' (DbType = Guid), @p26='?' (Size = 4000), @p27='?' (Size = 4000), @p28='?' (DbType = Guid), @p29='?' (DbType = Guid), @p30='?' (Size = 4000), @p31='?' (Size = 4000), @p32='?' (DbType = Guid), @p33='?' (DbType = Guid), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (DbType = Guid), @p37='?' (DbType = Guid), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (DbType = Guid), @p41='?' (DbType = Guid), @p42='?' (Size = 4000), @p43='?' (Size = 4000), @p44='?' (DbType = Guid), @p45='?' (DbType = Guid), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Guid), @p49='?' (DbType = Guid), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (DbType = Guid), @p53='?' (DbType = Guid), @p54='?' (Size = 4000), @p55='?' (Size = 4000), @p56='?' (DbType = Guid), @p57='?' (DbType = Guid), @p58='?' (Size = 4000), @p59='?' (Size = 4000), @p60='?' (DbType = Guid), @p61='?' (DbType = Guid), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (DbType = Guid), @p65='?' (DbType = Guid), @p66='?' (Size = 4000), @p67='?' (Size = 4000), @p68='?' (DbType = Guid), @p69='?' (DbType = Guid), @p70='?' (Size = 4000), @p71='?' (Size = 4000), @p72='?' (DbType = Guid), @p73='?' (DbType = Guid), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (DbType = Guid), @p77='?' (DbType = Guid), @p78='?' (Size = 4000), @p79='?' (Size = 4000), @p80='?' (DbType = Guid), @p81='?' (DbType = Guid), @p82='?' (Size = 4000), @p83='?' (Size = 4000), @p84='?' (DbType = Guid), @p85='?' (DbType = Guid), @p86='?' (Size = 4000), @p87='?' (Size = 4000), @p88='?' (DbType = Guid), @p89='?' (DbType = Guid), @p90='?' (Size = 4000), @p91='?' (Size = 4000), @p92='?' (DbType = Guid), @p93='?' (DbType = Guid), @p94='?' (Size = 4000), @p95='?' (Size = 4000), @p96='?' (DbType = Guid), @p97='?' (DbType = Guid), @p98='?' (Size = 4000), @p99='?' (Size = 4000), @p100='?' (DbType = Guid), @p101='?' (DbType = Guid), @p102='?' (Size = 4000), @p103='?' (Size = 4000), @p104='?' (DbType = Guid), @p105='?' (DbType = Guid), @p106='?' (Size = 4000), @p107='?' (Size = 4000), @p108='?' (DbType = Guid), @p109='?' (DbType = Guid), @p110='?' (Size = 4000), @p111='?' (Size = 4000), @p112='?' (DbType = Guid), @p113='?' (DbType = Guid), @p114='?' (Size = 4000), @p115='?' (Size = 4000), @p116='?' (DbType = Guid), @p117='?' (DbType = Guid), @p118='?' (Size = 4000), @p119='?' (Size = 4000), @p120='?' (DbType = Guid), @p121='?' (DbType = Guid), @p122='?' (Size = 4000), @p123='?' (Size = 4000), @p124='?' (DbType = Guid), @p125='?' (DbType = Guid), @p126='?' (Size = 4000), @p127='?' (Size = 4000), @p128='?' (DbType = Guid), @p129='?' (DbType = Guid), @p130='?' (Size = 4000), @p131='?' (Size = 4000), @p132='?' (DbType = Guid), @p133='?' (DbType = Guid), @p134='?' (Size = 4000), @p135='?' (Size = 4000), @p136='?' (DbType = Guid), @p137='?' (DbType = Guid), @p138='?' (Size = 4000), @p139='?' (Size = 4000), @p140='?' (DbType = Guid), @p141='?' (DbType = Guid), @p142='?' (Size = 4000), @p143='?' (Size = 4000), @p144='?' (DbType = Guid), @p145='?' (DbType = Guid), @p146='?' (Size = 4000), @p147='?' (Size = 4000), @p148='?' (DbType = Guid), @p149='?' (DbType = Guid), @p150='?' (Size = 4000), @p151='?' (Size = 4000), @p152='?' (DbType = Guid), @p153='?' (DbType = Guid), @p154='?' (Size = 4000), @p155='?' (Size = 4000), @p156='?' (DbType = Guid), @p157='?' (DbType = Guid), @p158='?' (Size = 4000), @p159='?' (Size = 4000), @p160='?' (DbType = Guid), @p161='?' (DbType = Guid), @p162='?' (Size = 4000), @p163='?' (Size = 4000), @p164='?' (DbType = Guid), @p165='?' (DbType = Guid), @p166='?' (Size = 4000), @p167='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Genres] ([Id], [AnimeId], [Name], [Russian])
+VALUES (@p0, @p1, @p2, @p3),
+(@p4, @p5, @p6, @p7),
+(@p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15),
+(@p16, @p17, @p18, @p19),
+(@p20, @p21, @p22, @p23),
+(@p24, @p25, @p26, @p27),
+(@p28, @p29, @p30, @p31),
+(@p32, @p33, @p34, @p35),
+(@p36, @p37, @p38, @p39),
+(@p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47),
+(@p48, @p49, @p50, @p51),
+(@p52, @p53, @p54, @p55),
+(@p56, @p57, @p58, @p59),
+(@p60, @p61, @p62, @p63),
+(@p64, @p65, @p66, @p67),
+(@p68, @p69, @p70, @p71),
+(@p72, @p73, @p74, @p75),
+(@p76, @p77, @p78, @p79),
+(@p80, @p81, @p82, @p83),
+(@p84, @p85, @p86, @p87),
+(@p88, @p89, @p90, @p91),
+(@p92, @p93, @p94, @p95),
+(@p96, @p97, @p98, @p99),
+(@p100, @p101, @p102, @p103),
+(@p104, @p105, @p106, @p107),
+(@p108, @p109, @p110, @p111),
+(@p112, @p113, @p114, @p115),
+(@p116, @p117, @p118, @p119),
+(@p120, @p121, @p122, @p123),
+(@p124, @p125, @p126, @p127),
+(@p128, @p129, @p130, @p131),
+(@p132, @p133, @p134, @p135),
+(@p136, @p137, @p138, @p139),
+(@p140, @p141, @p142, @p143),
+(@p144, @p145, @p146, @p147),
+(@p148, @p149, @p150, @p151),
+(@p152, @p153, @p154, @p155),
+(@p156, @p157, @p158, @p159),
+(@p160, @p161, @p162, @p163),
+(@p164, @p165, @p166, @p167);
+2022-05-18 20:08:37.750 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (DbType = Guid), @p17='?' (DbType = Guid), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (DbType = Guid), @p21='?' (DbType = Guid), @p22='?' (Size = 4000), @p23='?' (Size = 4000), @p24='?' (DbType = Guid), @p25='?' (DbType = Guid), @p26='?' (Size = 4000), @p27='?' (Size = 4000), @p28='?' (DbType = Guid), @p29='?' (DbType = Guid), @p30='?' (Size = 4000), @p31='?' (Size = 4000), @p32='?' (DbType = Guid), @p33='?' (DbType = Guid), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (DbType = Guid), @p37='?' (DbType = Guid), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (DbType = Guid), @p41='?' (DbType = Guid), @p42='?' (Size = 4000), @p43='?' (Size = 4000), @p44='?' (DbType = Guid), @p45='?' (DbType = Guid), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Guid), @p49='?' (DbType = Guid), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (DbType = Guid), @p53='?' (DbType = Guid), @p54='?' (Size = 4000), @p55='?' (Size = 4000), @p56='?' (DbType = Guid), @p57='?' (DbType = Guid), @p58='?' (Size = 4000), @p59='?' (Size = 4000), @p60='?' (DbType = Guid), @p61='?' (DbType = Guid), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (DbType = Guid), @p65='?' (DbType = Guid), @p66='?' (Size = 4000), @p67='?' (Size = 4000), @p68='?' (DbType = Guid), @p69='?' (DbType = Guid), @p70='?' (Size = 4000), @p71='?' (Size = 4000), @p72='?' (DbType = Guid), @p73='?' (DbType = Guid), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (DbType = Guid), @p77='?' (DbType = Guid), @p78='?' (Size = 4000), @p79='?' (Size = 4000), @p80='?' (DbType = Guid), @p81='?' (DbType = Guid), @p82='?' (Size = 4000), @p83='?' (Size = 4000), @p84='?' (DbType = Guid), @p85='?' (DbType = Guid), @p86='?' (Size = 4000), @p87='?' (Size = 4000), @p88='?' (DbType = Guid), @p89='?' (DbType = Guid), @p90='?' (Size = 4000), @p91='?' (Size = 4000), @p92='?' (DbType = Guid), @p93='?' (DbType = Guid), @p94='?' (Size = 4000), @p95='?' (Size = 4000), @p96='?' (DbType = Guid), @p97='?' (DbType = Guid), @p98='?' (Size = 4000), @p99='?' (Size = 4000), @p100='?' (DbType = Guid), @p101='?' (DbType = Guid), @p102='?' (Size = 4000), @p103='?' (Size = 4000), @p104='?' (DbType = Guid), @p105='?' (DbType = Guid), @p106='?' (Size = 4000), @p107='?' (Size = 4000), @p108='?' (DbType = Guid), @p109='?' (DbType = Guid), @p110='?' (Size = 4000), @p111='?' (Size = 4000), @p112='?' (DbType = Guid), @p113='?' (DbType = Guid), @p114='?' (Size = 4000), @p115='?' (Size = 4000), @p116='?' (DbType = Guid), @p117='?' (DbType = Guid), @p118='?' (Size = 4000), @p119='?' (Size = 4000), @p120='?' (DbType = Guid), @p121='?' (DbType = Guid), @p122='?' (Size = 4000), @p123='?' (Size = 4000), @p124='?' (DbType = Guid), @p125='?' (DbType = Guid), @p126='?' (Size = 4000), @p127='?' (Size = 4000), @p128='?' (DbType = Guid), @p129='?' (DbType = Guid), @p130='?' (Size = 4000), @p131='?' (Size = 4000), @p132='?' (DbType = Guid), @p133='?' (DbType = Guid), @p134='?' (Size = 4000), @p135='?' (Size = 4000), @p136='?' (DbType = Guid), @p137='?' (DbType = Guid), @p138='?' (Size = 4000), @p139='?' (Size = 4000), @p140='?' (DbType = Guid), @p141='?' (DbType = Guid), @p142='?' (Size = 4000), @p143='?' (Size = 4000), @p144='?' (DbType = Guid), @p145='?' (DbType = Guid), @p146='?' (Size = 4000), @p147='?' (Size = 4000), @p148='?' (DbType = Guid), @p149='?' (DbType = Guid), @p150='?' (Size = 4000), @p151='?' (Size = 4000), @p152='?' (DbType = Guid), @p153='?' (DbType = Guid), @p154='?' (Size = 4000), @p155='?' (Size = 4000), @p156='?' (DbType = Guid), @p157='?' (DbType = Guid), @p158='?' (Size = 4000), @p159='?' (Size = 4000), @p160='?' (DbType = Guid), @p161='?' (DbType = Guid), @p162='?' (Size = 4000), @p163='?' (Size = 4000), @p164='?' (DbType = Guid), @p165='?' (DbType = Guid), @p166='?' (Size = 4000), @p167='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Genres] ([Id], [AnimeId], [Name], [Russian])
+VALUES (@p0, @p1, @p2, @p3),
+(@p4, @p5, @p6, @p7),
+(@p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15),
+(@p16, @p17, @p18, @p19),
+(@p20, @p21, @p22, @p23),
+(@p24, @p25, @p26, @p27),
+(@p28, @p29, @p30, @p31),
+(@p32, @p33, @p34, @p35),
+(@p36, @p37, @p38, @p39),
+(@p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47),
+(@p48, @p49, @p50, @p51),
+(@p52, @p53, @p54, @p55),
+(@p56, @p57, @p58, @p59),
+(@p60, @p61, @p62, @p63),
+(@p64, @p65, @p66, @p67),
+(@p68, @p69, @p70, @p71),
+(@p72, @p73, @p74, @p75),
+(@p76, @p77, @p78, @p79),
+(@p80, @p81, @p82, @p83),
+(@p84, @p85, @p86, @p87),
+(@p88, @p89, @p90, @p91),
+(@p92, @p93, @p94, @p95),
+(@p96, @p97, @p98, @p99),
+(@p100, @p101, @p102, @p103),
+(@p104, @p105, @p106, @p107),
+(@p108, @p109, @p110, @p111),
+(@p112, @p113, @p114, @p115),
+(@p116, @p117, @p118, @p119),
+(@p120, @p121, @p122, @p123),
+(@p124, @p125, @p126, @p127),
+(@p128, @p129, @p130, @p131),
+(@p132, @p133, @p134, @p135),
+(@p136, @p137, @p138, @p139),
+(@p140, @p141, @p142, @p143),
+(@p144, @p145, @p146, @p147),
+(@p148, @p149, @p150, @p151),
+(@p152, @p153, @p154, @p155),
+(@p156, @p157, @p158, @p159),
+(@p160, @p161, @p162, @p163),
+(@p164, @p165, @p166, @p167);
+2022-05-18 20:08:37.753 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (DbType = Guid), @p17='?' (DbType = Guid), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (DbType = Guid), @p21='?' (DbType = Guid), @p22='?' (Size = 4000), @p23='?' (Size = 4000), @p24='?' (DbType = Guid), @p25='?' (DbType = Guid), @p26='?' (Size = 4000), @p27='?' (Size = 4000), @p28='?' (DbType = Guid), @p29='?' (DbType = Guid), @p30='?' (Size = 4000), @p31='?' (Size = 4000), @p32='?' (DbType = Guid), @p33='?' (DbType = Guid), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (DbType = Guid), @p37='?' (DbType = Guid), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (DbType = Guid), @p41='?' (DbType = Guid), @p42='?' (Size = 4000), @p43='?' (Size = 4000), @p44='?' (DbType = Guid), @p45='?' (DbType = Guid), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Guid), @p49='?' (DbType = Guid), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (DbType = Guid), @p53='?' (DbType = Guid), @p54='?' (Size = 4000), @p55='?' (Size = 4000), @p56='?' (DbType = Guid), @p57='?' (DbType = Guid), @p58='?' (Size = 4000), @p59='?' (Size = 4000), @p60='?' (DbType = Guid), @p61='?' (DbType = Guid), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (DbType = Guid), @p65='?' (DbType = Guid), @p66='?' (Size = 4000), @p67='?' (Size = 4000), @p68='?' (DbType = Guid), @p69='?' (DbType = Guid), @p70='?' (Size = 4000), @p71='?' (Size = 4000), @p72='?' (DbType = Guid), @p73='?' (DbType = Guid), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (DbType = Guid), @p77='?' (DbType = Guid), @p78='?' (Size = 4000), @p79='?' (Size = 4000), @p80='?' (DbType = Guid), @p81='?' (DbType = Guid), @p82='?' (Size = 4000), @p83='?' (Size = 4000), @p84='?' (DbType = Guid), @p85='?' (DbType = Guid), @p86='?' (Size = 4000), @p87='?' (Size = 4000), @p88='?' (DbType = Guid), @p89='?' (DbType = Guid), @p90='?' (Size = 4000), @p91='?' (Size = 4000), @p92='?' (DbType = Guid), @p93='?' (DbType = Guid), @p94='?' (Size = 4000), @p95='?' (Size = 4000), @p96='?' (DbType = Guid), @p97='?' (DbType = Guid), @p98='?' (Size = 4000), @p99='?' (Size = 4000), @p100='?' (DbType = Guid), @p101='?' (DbType = Guid), @p102='?' (Size = 4000), @p103='?' (Size = 4000), @p104='?' (DbType = Guid), @p105='?' (DbType = Guid), @p106='?' (Size = 4000), @p107='?' (Size = 4000), @p108='?' (DbType = Guid), @p109='?' (DbType = Guid), @p110='?' (Size = 4000), @p111='?' (Size = 4000), @p112='?' (DbType = Guid), @p113='?' (DbType = Guid), @p114='?' (Size = 4000), @p115='?' (Size = 4000), @p116='?' (DbType = Guid), @p117='?' (DbType = Guid), @p118='?' (Size = 4000), @p119='?' (Size = 4000), @p120='?' (DbType = Guid), @p121='?' (DbType = Guid), @p122='?' (Size = 4000), @p123='?' (Size = 4000), @p124='?' (DbType = Guid), @p125='?' (DbType = Guid), @p126='?' (Size = 4000), @p127='?' (Size = 4000), @p128='?' (DbType = Guid), @p129='?' (DbType = Guid), @p130='?' (Size = 4000), @p131='?' (Size = 4000), @p132='?' (DbType = Guid), @p133='?' (DbType = Guid), @p134='?' (Size = 4000), @p135='?' (Size = 4000), @p136='?' (DbType = Guid), @p137='?' (DbType = Guid), @p138='?' (Size = 4000), @p139='?' (Size = 4000), @p140='?' (DbType = Guid), @p141='?' (DbType = Guid), @p142='?' (Size = 4000), @p143='?' (Size = 4000), @p144='?' (DbType = Guid), @p145='?' (DbType = Guid), @p146='?' (Size = 4000), @p147='?' (Size = 4000), @p148='?' (DbType = Guid), @p149='?' (DbType = Guid), @p150='?' (Size = 4000), @p151='?' (Size = 4000), @p152='?' (DbType = Guid), @p153='?' (DbType = Guid), @p154='?' (Size = 4000), @p155='?' (Size = 4000), @p156='?' (DbType = Guid), @p157='?' (DbType = Guid), @p158='?' (Size = 4000), @p159='?' (Size = 4000), @p160='?' (DbType = Guid), @p161='?' (DbType = Guid), @p162='?' (Size = 4000), @p163='?' (Size = 4000), @p164='?' (DbType = Guid), @p165='?' (DbType = Guid), @p166='?' (Size = 4000), @p167='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Genres] ([Id], [AnimeId], [Name], [Russian])
+VALUES (@p0, @p1, @p2, @p3),
+(@p4, @p5, @p6, @p7),
+(@p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15),
+(@p16, @p17, @p18, @p19),
+(@p20, @p21, @p22, @p23),
+(@p24, @p25, @p26, @p27),
+(@p28, @p29, @p30, @p31),
+(@p32, @p33, @p34, @p35),
+(@p36, @p37, @p38, @p39),
+(@p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47),
+(@p48, @p49, @p50, @p51),
+(@p52, @p53, @p54, @p55),
+(@p56, @p57, @p58, @p59),
+(@p60, @p61, @p62, @p63),
+(@p64, @p65, @p66, @p67),
+(@p68, @p69, @p70, @p71),
+(@p72, @p73, @p74, @p75),
+(@p76, @p77, @p78, @p79),
+(@p80, @p81, @p82, @p83),
+(@p84, @p85, @p86, @p87),
+(@p88, @p89, @p90, @p91),
+(@p92, @p93, @p94, @p95),
+(@p96, @p97, @p98, @p99),
+(@p100, @p101, @p102, @p103),
+(@p104, @p105, @p106, @p107),
+(@p108, @p109, @p110, @p111),
+(@p112, @p113, @p114, @p115),
+(@p116, @p117, @p118, @p119),
+(@p120, @p121, @p122, @p123),
+(@p124, @p125, @p126, @p127),
+(@p128, @p129, @p130, @p131),
+(@p132, @p133, @p134, @p135),
+(@p136, @p137, @p138, @p139),
+(@p140, @p141, @p142, @p143),
+(@p144, @p145, @p146, @p147),
+(@p148, @p149, @p150, @p151),
+(@p152, @p153, @p154, @p155),
+(@p156, @p157, @p158, @p159),
+(@p160, @p161, @p162, @p163),
+(@p164, @p165, @p166, @p167);
+2022-05-18 20:08:37.772 +05:00 [INF] Executed DbCommand (17ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (DbType = Guid), @p17='?' (DbType = Guid), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (DbType = Guid), @p21='?' (DbType = Guid), @p22='?' (Size = 4000), @p23='?' (Size = 4000), @p24='?' (DbType = Guid), @p25='?' (DbType = Guid), @p26='?' (Size = 4000), @p27='?' (Size = 4000), @p28='?' (Size = 4000), @p29='?' (Size = 4000), @p30='?' (DbType = Guid), @p31='?' (DbType = Guid), @p32='?' (Size = 4000), @p33='?' (Size = 4000), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (DbType = Guid), @p37='?' (DbType = Guid), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (Size = 4000), @p41='?' (Size = 4000), @p42='?' (DbType = Guid), @p43='?' (DbType = Guid), @p44='?' (Size = 4000), @p45='?' (Size = 4000), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Guid), @p49='?' (DbType = Guid), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (Size = 4000), @p53='?' (Size = 4000), @p54='?' (DbType = Guid), @p55='?' (DbType = Guid), @p56='?' (Size = 4000), @p57='?' (Size = 4000), @p58='?' (Size = 4000), @p59='?' (Size = 4000), @p60='?' (DbType = Guid), @p61='?' (DbType = Guid), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (Size = 4000), @p65='?' (Size = 4000), @p66='?' (DbType = Guid), @p67='?' (DbType = Guid), @p68='?' (Size = 4000), @p69='?' (Size = 4000), @p70='?' (Size = 4000), @p71='?' (Size = 4000), @p72='?' (DbType = Guid), @p73='?' (DbType = Guid), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (Size = 4000), @p77='?' (Size = 4000), @p78='?' (DbType = Guid), @p79='?' (DbType = Guid), @p80='?' (Size = 4000), @p81='?' (Size = 4000), @p82='?' (Size = 4000), @p83='?' (Size = 4000), @p84='?' (DbType = Guid), @p85='?' (DbType = Guid), @p86='?' (Size = 4000), @p87='?' (Size = 4000), @p88='?' (Size = 4000), @p89='?' (Size = 4000), @p90='?' (DbType = Guid), @p91='?' (DbType = Guid), @p92='?' (Size = 4000), @p93='?' (Size = 4000), @p94='?' (Size = 4000), @p95='?' (Size = 4000), @p96='?' (DbType = Guid), @p97='?' (DbType = Guid), @p98='?' (Size = 4000), @p99='?' (Size = 4000), @p100='?' (Size = 4000), @p101='?' (Size = 4000), @p102='?' (DbType = Guid), @p103='?' (DbType = Guid), @p104='?' (Size = 4000), @p105='?' (Size = 4000), @p106='?' (Size = 4000), @p107='?' (Size = 4000), @p108='?' (DbType = Guid), @p109='?' (DbType = Guid), @p110='?' (Size = 4000), @p111='?' (Size = 4000), @p112='?' (Size = 4000), @p113='?' (Size = 4000), @p114='?' (DbType = Guid), @p115='?' (DbType = Guid), @p116='?' (Size = 4000), @p117='?' (Size = 4000), @p118='?' (Size = 4000), @p119='?' (Size = 4000), @p120='?' (DbType = Guid), @p121='?' (DbType = Guid), @p122='?' (Size = 4000), @p123='?' (Size = 4000), @p124='?' (Size = 4000), @p125='?' (Size = 4000), @p126='?' (DbType = Guid), @p127='?' (DbType = Guid), @p128='?' (Size = 4000), @p129='?' (Size = 4000), @p130='?' (Size = 4000), @p131='?' (Size = 4000), @p132='?' (DbType = Guid), @p133='?' (DbType = Guid), @p134='?' (Size = 4000), @p135='?' (Size = 4000), @p136='?' (Size = 4000), @p137='?' (Size = 4000), @p138='?' (DbType = Guid), @p139='?' (DbType = Guid), @p140='?' (Size = 4000), @p141='?' (Size = 4000), @p142='?' (Size = 4000), @p143='?' (Size = 4000), @p144='?' (DbType = Guid), @p145='?' (DbType = Guid), @p146='?' (Size = 4000), @p147='?' (Size = 4000), @p148='?' (Size = 4000), @p149='?' (Size = 4000), @p150='?' (DbType = Guid), @p151='?' (DbType = Guid), @p152='?' (Size = 4000), @p153='?' (Size = 4000), @p154='?' (Size = 4000), @p155='?' (Size = 4000), @p156='?' (DbType = Guid), @p157='?' (DbType = Guid), @p158='?' (Size = 4000), @p159='?' (Size = 4000), @p160='?' (Size = 4000), @p161='?' (Size = 4000), @p162='?' (DbType = Guid), @p163='?' (DbType = Guid), @p164='?' (Size = 4000), @p165='?' (Size = 4000), @p166='?' (Size = 4000), @p167='?' (Size = 4000), @p168='?' (DbType = Guid), @p169='?' (DbType = Guid), @p170='?' (Size = 4000), @p171='?' (Size = 4000), @p172='?' (Size = 4000), @p173='?' (Size = 4000), @p174='?' (DbType = Guid), @p175='?' (DbType = Guid), @p176='?' (Size = 4000), @p177='?' (Size = 4000), @p178='?' (Size = 4000), @p179='?' (Size = 4000), @p180='?' (DbType = Guid), @p181='?' (DbType = Guid), @p182='?' (Size = 4000), @p183='?' (Size = 4000), @p184='?' (Size = 4000), @p185='?' (Size = 4000), @p186='?' (DbType = Guid), @p187='?' (DbType = Guid), @p188='?' (Size = 4000), @p189='?' (Size = 4000), @p190='?' (Size = 4000), @p191='?' (Size = 4000), @p192='?' (DbType = Guid), @p193='?' (DbType = Guid), @p194='?' (Size = 4000), @p195='?' (Size = 4000), @p196='?' (Size = 4000), @p197='?' (Size = 4000), @p198='?' (DbType = Guid), @p199='?' (DbType = Guid), @p200='?' (Size = 4000), @p201='?' (Size = 4000), @p202='?' (Size = 4000), @p203='?' (Size = 4000), @p204='?' (DbType = Guid), @p205='?' (DbType = Guid), @p206='?' (Size = 4000), @p207='?' (Size = 4000), @p208='?' (Size = 4000), @p209='?' (Size = 4000), @p210='?' (DbType = Guid), @p211='?' (DbType = Guid), @p212='?' (Size = 4000), @p213='?' (Size = 4000), @p214='?' (Size = 4000), @p215='?' (Size = 4000), @p216='?' (DbType = Guid), @p217='?' (DbType = Guid), @p218='?' (Size = 4000), @p219='?' (Size = 4000), @p220='?' (Size = 4000), @p221='?' (Size = 4000), @p222='?' (DbType = Guid), @p223='?' (DbType = Guid), @p224='?' (Size = 4000), @p225='?' (Size = 4000), @p226='?' (Size = 4000), @p227='?' (Size = 4000), @p228='?' (DbType = Guid), @p229='?' (DbType = Guid), @p230='?' (Size = 4000), @p231='?' (Size = 4000), @p232='?' (Size = 4000), @p233='?' (Size = 4000), @p234='?' (DbType = Guid), @p235='?' (DbType = Guid), @p236='?' (Size = 4000), @p237='?' (Size = 4000), @p238='?' (Size = 4000), @p239='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Genres] ([Id], [AnimeId], [Name], [Russian])
+VALUES (@p0, @p1, @p2, @p3),
+(@p4, @p5, @p6, @p7),
+(@p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15),
+(@p16, @p17, @p18, @p19),
+(@p20, @p21, @p22, @p23);
+INSERT INTO [Images] ([Id], [AnimeId], [Original], [Preview], [X48], [X96])
+VALUES (@p24, @p25, @p26, @p27, @p28, @p29),
+(@p30, @p31, @p32, @p33, @p34, @p35),
+(@p36, @p37, @p38, @p39, @p40, @p41),
+(@p42, @p43, @p44, @p45, @p46, @p47),
+(@p48, @p49, @p50, @p51, @p52, @p53),
+(@p54, @p55, @p56, @p57, @p58, @p59),
+(@p60, @p61, @p62, @p63, @p64, @p65),
+(@p66, @p67, @p68, @p69, @p70, @p71),
+(@p72, @p73, @p74, @p75, @p76, @p77),
+(@p78, @p79, @p80, @p81, @p82, @p83),
+(@p84, @p85, @p86, @p87, @p88, @p89),
+(@p90, @p91, @p92, @p93, @p94, @p95),
+(@p96, @p97, @p98, @p99, @p100, @p101),
+(@p102, @p103, @p104, @p105, @p106, @p107),
+(@p108, @p109, @p110, @p111, @p112, @p113),
+(@p114, @p115, @p116, @p117, @p118, @p119),
+(@p120, @p121, @p122, @p123, @p124, @p125),
+(@p126, @p127, @p128, @p129, @p130, @p131),
+(@p132, @p133, @p134, @p135, @p136, @p137),
+(@p138, @p139, @p140, @p141, @p142, @p143),
+(@p144, @p145, @p146, @p147, @p148, @p149),
+(@p150, @p151, @p152, @p153, @p154, @p155),
+(@p156, @p157, @p158, @p159, @p160, @p161),
+(@p162, @p163, @p164, @p165, @p166, @p167),
+(@p168, @p169, @p170, @p171, @p172, @p173),
+(@p174, @p175, @p176, @p177, @p178, @p179),
+(@p180, @p181, @p182, @p183, @p184, @p185),
+(@p186, @p187, @p188, @p189, @p190, @p191),
+(@p192, @p193, @p194, @p195, @p196, @p197),
+(@p198, @p199, @p200, @p201, @p202, @p203),
+(@p204, @p205, @p206, @p207, @p208, @p209),
+(@p210, @p211, @p212, @p213, @p214, @p215),
+(@p216, @p217, @p218, @p219, @p220, @p221),
+(@p222, @p223, @p224, @p225, @p226, @p227),
+(@p228, @p229, @p230, @p231, @p232, @p233),
+(@p234, @p235, @p236, @p237, @p238, @p239);
+2022-05-18 20:08:37.777 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (Size = 4000), @p5='?' (Size = 4000), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (Size = 4000), @p9='?' (Size = 4000), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (Size = 4000), @p17='?' (Size = 4000), @p18='?' (DbType = Guid), @p19='?' (DbType = Guid), @p20='?' (Size = 4000), @p21='?' (Size = 4000), @p22='?' (Size = 4000), @p23='?' (Size = 4000), @p24='?' (DbType = Guid), @p25='?' (DbType = Guid), @p26='?' (Size = 4000), @p27='?' (Size = 4000), @p28='?' (Size = 4000), @p29='?' (Size = 4000), @p30='?' (DbType = Guid), @p31='?' (DbType = Guid), @p32='?' (Size = 4000), @p33='?' (Size = 4000), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (DbType = Guid), @p37='?' (DbType = Guid), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (Size = 4000), @p41='?' (Size = 4000), @p42='?' (DbType = Guid), @p43='?' (DbType = Guid), @p44='?' (Size = 4000), @p45='?' (Size = 4000), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Guid), @p49='?' (DbType = Guid), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (Size = 4000), @p53='?' (Size = 4000), @p54='?' (DbType = Guid), @p55='?' (DbType = Guid), @p56='?' (Size = 4000), @p57='?' (Size = 4000), @p58='?' (Size = 4000), @p59='?' (Size = 4000), @p60='?' (DbType = Guid), @p61='?' (DbType = Guid), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (Size = 4000), @p65='?' (Size = 4000), @p66='?' (DbType = Guid), @p67='?' (DbType = Guid), @p68='?' (Size = 4000), @p69='?' (Size = 4000), @p70='?' (Size = 4000), @p71='?' (Size = 4000), @p72='?' (DbType = Guid), @p73='?' (DbType = Guid), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (Size = 4000), @p77='?' (Size = 4000), @p78='?' (DbType = Guid), @p79='?' (DbType = Guid), @p80='?' (Size = 4000), @p81='?' (Size = 4000), @p82='?' (Size = 4000), @p83='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Images] ([Id], [AnimeId], [Original], [Preview], [X48], [X96])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5),
+(@p6, @p7, @p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15, @p16, @p17),
+(@p18, @p19, @p20, @p21, @p22, @p23),
+(@p24, @p25, @p26, @p27, @p28, @p29),
+(@p30, @p31, @p32, @p33, @p34, @p35),
+(@p36, @p37, @p38, @p39, @p40, @p41),
+(@p42, @p43, @p44, @p45, @p46, @p47),
+(@p48, @p49, @p50, @p51, @p52, @p53),
+(@p54, @p55, @p56, @p57, @p58, @p59),
+(@p60, @p61, @p62, @p63, @p64, @p65),
+(@p66, @p67, @p68, @p69, @p70, @p71),
+(@p72, @p73, @p74, @p75, @p76, @p77),
+(@p78, @p79, @p80, @p81, @p82, @p83);
+2022-05-18 20:08:37.788 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-18 20:08:37.789 +05:00 [INF] Аниме после: 50
+2022-05-18 20:08:37.789 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Genres] AS [g]
+2022-05-18 20:08:37.789 +05:00 [INF] Жанров после: 258
+2022-05-18 20:08:37.813 +05:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-05-18 20:08:37.838 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_0) [a].[Id], [a].[AiredOn], [a].[Description], [a].[DescriptionHtml], [a].[Episodes], [a].[Name], [a].[ReleasedOn], [a].[Russian], [a].[Score], [a].[UserComment], [a].[UserRating]
+FROM [AnimeTitles] AS [a]
+2022-05-18 20:08:37.842 +05:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-05-18 20:08:37.842 +05:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-05-18 20:08:37.847 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[AiredOn], [a].[Description], [a].[DescriptionHtml], [a].[Episodes], [a].[Name], [a].[ReleasedOn], [a].[Russian], [a].[Score], [a].[UserComment], [a].[UserRating]
+FROM [AnimeTitles] AS [a]
+ORDER BY (SELECT 1)
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2022-05-18 20:08:37.925 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 200), @p2='?' (Size = 200)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Accounts] ([Id], [Password], [UserName])
+VALUES (@p0, @p1, @p2);
+2022-05-18 20:08:37.927 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 200), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AnimeCollections] ([Id], [ImageId], [Name], [UserComment], [UserId], [UserRating])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2022-05-18 20:08:37.928 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 200), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AnimeCollections] ([Id], [ImageId], [Name], [UserComment], [UserId], [UserRating])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2022-05-18 20:08:37.932 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (DbType = Guid), @p11='?' (DbType = Guid), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (DbType = Guid), @p15='?' (DbType = Guid), @p16='?' (DbType = Guid), @p17='?' (DbType = Guid), @p18='?' (DbType = Guid), @p19='?' (DbType = Guid), @p20='?' (DbType = Guid), @p21='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AnimeCollectionAnimeTitle] ([AnimeCollectionsId], [AnimeTitlesId])
+VALUES (@p6, @p7),
+(@p8, @p9),
+(@p10, @p11),
+(@p12, @p13),
+(@p14, @p15),
+(@p16, @p17),
+(@p18, @p19),
+(@p20, @p21);
+2022-05-18 20:08:37.952 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-18 20:08:38.144 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-18 20:08:38.144 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-18 20:08:38.148 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-18 20:08:38.148 +05:00 [INF] Hosting environment: Development
+2022-05-18 20:08:38.148 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\_AniRate\AniRate.Api\AniRate.WebApi
+2022-05-18 20:09:33.174 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-18 20:09:34.045 +05:00 [INF] Executed DbCommand (39ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-05-18 20:09:34.147 +05:00 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [AniRate.db] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+END;
+2022-05-18 20:09:34.169 +05:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+DROP DATABASE [AniRate.db];
+2022-05-18 20:09:34.556 +05:00 [INF] Executed DbCommand (316ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [AniRate.db];
+2022-05-18 20:09:34.641 +05:00 [INF] Executed DbCommand (80ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [AniRate.db] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2022-05-18 20:09:34.658 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-05-18 20:09:34.820 +05:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Accounts] (
+    [Id] uniqueidentifier NOT NULL,
+    [UserName] nvarchar(200) NOT NULL,
+    [Password] nvarchar(200) NOT NULL,
+    CONSTRAINT [PK_Accounts] PRIMARY KEY ([Id])
+);
+2022-05-18 20:09:34.823 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AnimeTitles] (
+    [Id] uniqueidentifier NOT NULL,
+    [UserComment] nvarchar(max) NULL,
+    [UserRating] float NULL,
+    [Name] nvarchar(200) NOT NULL,
+    [Russian] nvarchar(max) NULL,
+    [Score] nvarchar(max) NULL,
+    [Episodes] int NULL,
+    [AiredOn] nvarchar(max) NULL,
+    [ReleasedOn] nvarchar(max) NULL,
+    [Description] nvarchar(max) NULL,
+    [DescriptionHtml] nvarchar(max) NULL,
+    CONSTRAINT [PK_AnimeTitles] PRIMARY KEY ([Id])
+);
+2022-05-18 20:09:34.826 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Genres] (
+    [Id] uniqueidentifier NOT NULL,
+    [AnimeId] uniqueidentifier NOT NULL,
+    [Name] nvarchar(max) NULL,
+    [Russian] nvarchar(max) NULL,
+    CONSTRAINT [PK_Genres] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Genres_AnimeTitles_AnimeId] FOREIGN KEY ([AnimeId]) REFERENCES [AnimeTitles] ([Id]) ON DELETE CASCADE
+);
+2022-05-18 20:09:34.828 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Images] (
+    [Id] uniqueidentifier NOT NULL,
+    [AnimeId] uniqueidentifier NOT NULL,
+    [Original] nvarchar(max) NULL,
+    [Preview] nvarchar(max) NULL,
+    [X96] nvarchar(max) NULL,
+    [X48] nvarchar(max) NULL,
+    CONSTRAINT [PK_Images] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Images_AnimeTitles_AnimeId] FOREIGN KEY ([AnimeId]) REFERENCES [AnimeTitles] ([Id]) ON DELETE CASCADE
+);
+2022-05-18 20:09:34.831 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AnimeCollections] (
+    [Id] uniqueidentifier NOT NULL,
+    [UserId] uniqueidentifier NOT NULL,
+    [Name] nvarchar(200) NOT NULL,
+    [UserComment] nvarchar(max) NULL,
+    [UserRating] float NULL,
+    [ImageId] uniqueidentifier NULL,
+    CONSTRAINT [PK_AnimeCollections] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AnimeCollections_Images_ImageId] FOREIGN KEY ([ImageId]) REFERENCES [Images] ([Id])
+);
+2022-05-18 20:09:34.834 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [AnimeCollectionAnimeTitle] (
+    [AnimeCollectionsId] uniqueidentifier NOT NULL,
+    [AnimeTitlesId] uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_AnimeCollectionAnimeTitle] PRIMARY KEY ([AnimeCollectionsId], [AnimeTitlesId]),
+    CONSTRAINT [FK_AnimeCollectionAnimeTitle_AnimeCollections_AnimeCollectionsId] FOREIGN KEY ([AnimeCollectionsId]) REFERENCES [AnimeCollections] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_AnimeCollectionAnimeTitle_AnimeTitles_AnimeTitlesId] FOREIGN KEY ([AnimeTitlesId]) REFERENCES [AnimeTitles] ([Id]) ON DELETE CASCADE
+);
+2022-05-18 20:09:34.835 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Accounts_Id] ON [Accounts] ([Id]);
+2022-05-18 20:09:34.836 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AnimeCollectionAnimeTitle_AnimeTitlesId] ON [AnimeCollectionAnimeTitle] ([AnimeTitlesId]);
+2022-05-18 20:09:34.837 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_AnimeCollections_Id] ON [AnimeCollections] ([Id]);
+2022-05-18 20:09:34.839 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_AnimeCollections_ImageId] ON [AnimeCollections] ([ImageId]);
+2022-05-18 20:09:34.840 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_AnimeTitles_Id] ON [AnimeTitles] ([Id]);
+2022-05-18 20:09:34.841 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Genres_AnimeId] ON [Genres] ([AnimeId]);
+2022-05-18 20:09:34.842 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Genres_Id] ON [Genres] ([Id]);
+2022-05-18 20:09:34.843 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Images_AnimeId] ON [Images] ([AnimeId]);
+2022-05-18 20:09:34.844 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE UNIQUE INDEX [IX_Images_Id] ON [Images] ([Id]);
+2022-05-18 20:09:35.241 +05:00 [INF] Executed DbCommand (7ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AnimeCollections] AS [a]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-05-18 20:09:35.318 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-18 20:09:35.320 +05:00 [INF] Аниме до: 0
+2022-05-18 20:09:35.323 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Genres] AS [g]
+2022-05-18 20:09:35.323 +05:00 [INF] Жанров до: 0
+2022-05-18 20:09:35.325 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-18 20:10:15.650 +05:00 [INF] Executed DbCommand (89ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 4000), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = Int32), @p5='?' (Size = 200), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (Size = 4000), @p9='?' (Size = 4000), @p10='?' (DbType = Double), @p11='?' (DbType = Guid), @p12='?' (Size = 4000), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (DbType = Int32), @p16='?' (Size = 200), @p17='?' (Size = 4000), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (Size = 4000), @p21='?' (DbType = Double), @p22='?' (DbType = Guid), @p23='?' (Size = 4000), @p24='?' (Size = 4000), @p25='?' (Size = -1), @p26='?' (DbType = Int32), @p27='?' (Size = 200), @p28='?' (Size = 4000), @p29='?' (Size = 4000), @p30='?' (Size = 4000), @p31='?' (Size = 4000), @p32='?' (DbType = Double), @p33='?' (DbType = Guid), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (Size = 4000), @p37='?' (DbType = Int32), @p38='?' (Size = 200), @p39='?' (Size = 4000), @p40='?' (Size = 4000), @p41='?' (Size = 4000), @p42='?' (Size = 4000), @p43='?' (DbType = Double), @p44='?' (DbType = Guid), @p45='?' (Size = 4000), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Int32), @p49='?' (Size = 200), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (Size = 4000), @p53='?' (Size = 4000), @p54='?' (DbType = Double), @p55='?' (DbType = Guid), @p56='?' (Size = 4000), @p57='?' (Size = 4000), @p58='?' (Size = 4000), @p59='?' (DbType = Int32), @p60='?' (Size = 200), @p61='?' (Size = 4000), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (Size = 4000), @p65='?' (DbType = Double), @p66='?' (DbType = Guid), @p67='?' (Size = 4000), @p68='?' (Size = 4000), @p69='?' (Size = -1), @p70='?' (DbType = Int32), @p71='?' (Size = 200), @p72='?' (Size = 4000), @p73='?' (Size = 4000), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (DbType = Double), @p77='?' (DbType = Guid), @p78='?' (Size = 4000), @p79='?' (Size = 4000), @p80='?' (Size = 4000), @p81='?' (DbType = Int32), @p82='?' (Size = 200), @p83='?' (Size = 4000), @p84='?' (Size = 4000), @p85='?' (Size = 4000), @p86='?' (Size = 4000), @p87='?' (DbType = Double), @p88='?' (DbType = Guid), @p89='?' (Size = 4000), @p90='?' (Size = 4000), @p91='?' (Size = 4000), @p92='?' (DbType = Int32), @p93='?' (Size = 200), @p94='?' (Size = 4000), @p95='?' (Size = 4000), @p96='?' (Size = 4000), @p97='?' (Size = 4000), @p98='?' (DbType = Double), @p99='?' (DbType = Guid), @p100='?' (Size = 4000), @p101='?' (Size = 4000), @p102='?' (Size = 4000), @p103='?' (DbType = Int32), @p104='?' (Size = 200), @p105='?' (Size = 4000), @p106='?' (Size = 4000), @p107='?' (Size = 4000), @p108='?' (Size = 4000), @p109='?' (DbType = Double), @p110='?' (DbType = Guid), @p111='?' (Size = 4000), @p112='?' (Size = 4000), @p113='?' (Size = 4000), @p114='?' (DbType = Int32), @p115='?' (Size = 200), @p116='?' (Size = 4000), @p117='?' (Size = 4000), @p118='?' (Size = 4000), @p119='?' (Size = 4000), @p120='?' (DbType = Double), @p121='?' (DbType = Guid), @p122='?' (Size = 4000), @p123='?' (Size = 4000), @p124='?' (Size = -1), @p125='?' (DbType = Int32), @p126='?' (Size = 200), @p127='?' (Size = 4000), @p128='?' (Size = 4000), @p129='?' (Size = 4000), @p130='?' (Size = 4000), @p131='?' (DbType = Double), @p132='?' (DbType = Guid), @p133='?' (Size = 4000), @p134='?' (Size = 4000), @p135='?' (Size = 4000), @p136='?' (DbType = Int32), @p137='?' (Size = 200), @p138='?' (Size = 4000), @p139='?' (Size = 4000), @p140='?' (Size = 4000), @p141='?' (Size = 4000), @p142='?' (DbType = Double), @p143='?' (DbType = Guid), @p144='?' (Size = 4000), @p145='?' (Size = 4000), @p146='?' (Size = 4000), @p147='?' (DbType = Int32), @p148='?' (Size = 200), @p149='?' (Size = 4000), @p150='?' (Size = 4000), @p151='?' (Size = 4000), @p152='?' (Size = 4000), @p153='?' (DbType = Double), @p154='?' (DbType = Guid), @p155='?' (Size = 4000), @p156='?' (Size = 4000), @p157='?' (Size = 4000), @p158='?' (DbType = Int32), @p159='?' (Size = 200), @p160='?' (Size = 4000), @p161='?' (Size = 4000), @p162='?' (Size = 4000), @p163='?' (Size = 4000), @p164='?' (DbType = Double), @p165='?' (DbType = Guid), @p166='?' (Size = 4000), @p167='?' (Size = 4000), @p168='?' (Size = 4000), @p169='?' (DbType = Int32), @p170='?' (Size = 200), @p171='?' (Size = 4000), @p172='?' (Size = 4000), @p173='?' (Size = 4000), @p174='?' (Size = 4000), @p175='?' (DbType = Double), @p176='?' (DbType = Guid), @p177='?' (Size = 4000), @p178='?' (Size = 4000), @p179='?' (Size = 4000), @p180='?' (DbType = Int32), @p181='?' (Size = 200), @p182='?' (Size = 4000), @p183='?' (Size = 4000), @p184='?' (Size = 4000), @p185='?' (Size = 4000), @p186='?' (DbType = Double), @p187='?' (DbType = Guid), @p188='?' (Size = 4000), @p189='?' (Size = 4000), @p190='?' (Size = 4000), @p191='?' (DbType = Int32), @p192='?' (Size = 200), @p193='?' (Size = 4000), @p194='?' (Size = 4000), @p195='?' (Size = 4000), @p196='?' (Size = 4000), @p197='?' (DbType = Double), @p198='?' (DbType = Guid), @p199='?' (Size = 4000), @p200='?' (Size = 4000), @p201='?' (Size = 4000), @p202='?' (DbType = Int32), @p203='?' (Size = 200), @p204='?' (Size = 4000), @p205='?' (Size = 4000), @p206='?' (Size = 4000), @p207='?' (Size = 4000), @p208='?' (DbType = Double), @p209='?' (DbType = Guid), @p210='?' (Size = 4000), @p211='?' (Size = 4000), @p212='?' (Size = 4000), @p213='?' (DbType = Int32), @p214='?' (Size = 200), @p215='?' (Size = 4000), @p216='?' (Size = 4000), @p217='?' (Size = 4000), @p218='?' (Size = 4000), @p219='?' (DbType = Double), @p220='?' (DbType = Guid), @p221='?' (Size = 4000), @p222='?' (Size = 4000), @p223='?' (Size = 4000), @p224='?' (DbType = Int32), @p225='?' (Size = 200), @p226='?' (Size = 4000), @p227='?' (Size = 4000), @p228='?' (Size = 4000), @p229='?' (Size = 4000), @p230='?' (DbType = Double), @p231='?' (DbType = Guid), @p232='?' (Size = 4000), @p233='?' (Size = 4000), @p234='?' (Size = 4000), @p235='?' (DbType = Int32), @p236='?' (Size = 200), @p237='?' (Size = 4000), @p238='?' (Size = 4000), @p239='?' (Size = 4000), @p240='?' (Size = 4000), @p241='?' (DbType = Double), @p242='?' (DbType = Guid), @p243='?' (Size = 4000), @p244='?' (Size = 4000), @p245='?' (Size = 4000), @p246='?' (DbType = Int32), @p247='?' (Size = 200), @p248='?' (Size = 4000), @p249='?' (Size = 4000), @p250='?' (Size = 4000), @p251='?' (Size = 4000), @p252='?' (DbType = Double), @p253='?' (DbType = Guid), @p254='?' (Size = 4000), @p255='?' (Size = 4000), @p256='?' (Size = 4000), @p257='?' (DbType = Int32), @p258='?' (Size = 200), @p259='?' (Size = 4000), @p260='?' (Size = 4000), @p261='?' (Size = 4000), @p262='?' (Size = 4000), @p263='?' (DbType = Double), @p264='?' (DbType = Guid), @p265='?' (Size = 4000), @p266='?' (Size = 4000), @p267='?' (Size = 4000), @p268='?' (DbType = Int32), @p269='?' (Size = 200), @p270='?' (Size = 4000), @p271='?' (Size = 4000), @p272='?' (Size = 4000), @p273='?' (Size = 4000), @p274='?' (DbType = Double), @p275='?' (DbType = Guid), @p276='?' (Size = 4000), @p277='?' (Size = 4000), @p278='?' (Size = 4000), @p279='?' (DbType = Int32), @p280='?' (Size = 200), @p281='?' (Size = 4000), @p282='?' (Size = 4000), @p283='?' (Size = 4000), @p284='?' (Size = 4000), @p285='?' (DbType = Double), @p286='?' (DbType = Guid), @p287='?' (Size = 4000), @p288='?' (Size = 4000), @p289='?' (Size = 4000), @p290='?' (DbType = Int32), @p291='?' (Size = 200), @p292='?' (Size = 4000), @p293='?' (Size = 4000), @p294='?' (Size = 4000), @p295='?' (Size = 4000), @p296='?' (DbType = Double), @p297='?' (DbType = Guid), @p298='?' (Size = 4000), @p299='?' (Size = 4000), @p300='?' (Size = 4000), @p301='?' (DbType = Int32), @p302='?' (Size = 200), @p303='?' (Size = 4000), @p304='?' (Size = 4000), @p305='?' (Size = 4000), @p306='?' (Size = 4000), @p307='?' (DbType = Double), @p308='?' (DbType = Guid), @p309='?' (Size = 4000), @p310='?' (Size = 4000), @p311='?' (Size = 4000), @p312='?' (DbType = Int32), @p313='?' (Size = 200), @p314='?' (Size = 4000), @p315='?' (Size = 4000), @p316='?' (Size = 4000), @p317='?' (Size = 4000), @p318='?' (DbType = Double), @p319='?' (DbType = Guid), @p320='?' (Size = 4000), @p321='?' (Size = 4000), @p322='?' (Size = -1), @p323='?' (DbType = Int32), @p324='?' (Size = 200), @p325='?' (Size = 4000), @p326='?' (Size = 4000), @p327='?' (Size = 4000), @p328='?' (Size = 4000), @p329='?' (DbType = Double), @p330='?' (DbType = Guid), @p331='?' (Size = 4000), @p332='?' (Size = 4000), @p333='?' (Size = 4000), @p334='?' (DbType = Int32), @p335='?' (Size = 200), @p336='?' (Size = 4000), @p337='?' (Size = 4000), @p338='?' (Size = 4000), @p339='?' (Size = 4000), @p340='?' (DbType = Double), @p341='?' (DbType = Guid), @p342='?' (Size = 4000), @p343='?' (Size = 4000), @p344='?' (Size = 4000), @p345='?' (DbType = Int32), @p346='?' (Size = 200), @p347='?' (Size = 4000), @p348='?' (Size = 4000), @p349='?' (Size = 4000), @p350='?' (Size = 4000), @p351='?' (DbType = Double), @p352='?' (DbType = Guid), @p353='?' (Size = 4000), @p354='?' (Size = 4000), @p355='?' (Size = 4000), @p356='?' (DbType = Int32), @p357='?' (Size = 200), @p358='?' (Size = 4000), @p359='?' (Size = 4000), @p360='?' (Size = 4000), @p361='?' (Size = 4000), @p362='?' (DbType = Double), @p363='?' (DbType = Guid), @p364='?' (Size = 4000), @p365='?' (Size = 4000), @p366='?' (Size = 4000), @p367='?' (DbType = Int32), @p368='?' (Size = 200), @p369='?' (Size = 4000), @p370='?' (Size = 4000), @p371='?' (Size = 4000), @p372='?' (Size = 4000), @p373='?' (DbType = Double), @p374='?' (DbType = Guid), @p375='?' (Size = 4000), @p376='?' (Size = 4000), @p377='?' (Size = -1), @p378='?' (DbType = Int32), @p379='?' (Size = 200), @p380='?' (Size = 4000), @p381='?' (Size = 4000), @p382='?' (Size = 4000), @p383='?' (Size = 4000), @p384='?' (DbType = Double), @p385='?' (DbType = Guid), @p386='?' (Size = 4000), @p387='?' (Size = 4000), @p388='?' (Size = -1), @p389='?' (DbType = Int32), @p390='?' (Size = 200), @p391='?' (Size = 4000), @p392='?' (Size = 4000), @p393='?' (Size = 4000), @p394='?' (Size = 4000), @p395='?' (DbType = Double), @p396='?' (DbType = Guid), @p397='?' (Size = 4000), @p398='?' (Size = 4000), @p399='?' (Size = 4000), @p400='?' (DbType = Int32), @p401='?' (Size = 200), @p402='?' (Size = 4000), @p403='?' (Size = 4000), @p404='?' (Size = 4000), @p405='?' (Size = 4000), @p406='?' (DbType = Double), @p407='?' (DbType = Guid), @p408='?' (Size = 4000), @p409='?' (Size = 4000), @p410='?' (Size = 4000), @p411='?' (DbType = Int32), @p412='?' (Size = 200), @p413='?' (Size = 4000), @p414='?' (Size = 4000), @p415='?' (Size = 4000), @p416='?' (Size = 4000), @p417='?' (DbType = Double), @p418='?' (DbType = Guid), @p419='?' (Size = 4000), @p420='?' (Size = 4000), @p421='?' (Size = 4000), @p422='?' (DbType = Int32), @p423='?' (Size = 200), @p424='?' (Size = 4000), @p425='?' (Size = 4000), @p426='?' (Size = 4000), @p427='?' (Size = 4000), @p428='?' (DbType = Double), @p429='?' (DbType = Guid), @p430='?' (Size = 4000), @p431='?' (Size = 4000), @p432='?' (Size = 4000), @p433='?' (DbType = Int32), @p434='?' (Size = 200), @p435='?' (Size = 4000), @p436='?' (Size = 4000), @p437='?' (Size = 4000), @p438='?' (Size = 4000), @p439='?' (DbType = Double), @p440='?' (DbType = Guid), @p441='?' (Size = 4000), @p442='?' (Size = 4000), @p443='?' (Size = -1), @p444='?' (DbType = Int32), @p445='?' (Size = 200), @p446='?' (Size = 4000), @p447='?' (Size = 4000), @p448='?' (Size = 4000), @p449='?' (Size = 4000), @p450='?' (DbType = Double), @p451='?' (DbType = Guid), @p452='?' (Size = 4000), @p453='?' (Size = 4000), @p454='?' (Size = 4000), @p455='?' (DbType = Int32), @p456='?' (Size = 200), @p457='?' (Size = 4000), @p458='?' (Size = 4000), @p459='?' (Size = 4000), @p460='?' (Size = 4000), @p461='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AnimeTitles] ([Id], [AiredOn], [Description], [DescriptionHtml], [Episodes], [Name], [ReleasedOn], [Russian], [Score], [UserComment], [UserRating])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10),
+(@p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21),
+(@p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32),
+(@p33, @p34, @p35, @p36, @p37, @p38, @p39, @p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47, @p48, @p49, @p50, @p51, @p52, @p53, @p54),
+(@p55, @p56, @p57, @p58, @p59, @p60, @p61, @p62, @p63, @p64, @p65),
+(@p66, @p67, @p68, @p69, @p70, @p71, @p72, @p73, @p74, @p75, @p76),
+(@p77, @p78, @p79, @p80, @p81, @p82, @p83, @p84, @p85, @p86, @p87),
+(@p88, @p89, @p90, @p91, @p92, @p93, @p94, @p95, @p96, @p97, @p98),
+(@p99, @p100, @p101, @p102, @p103, @p104, @p105, @p106, @p107, @p108, @p109),
+(@p110, @p111, @p112, @p113, @p114, @p115, @p116, @p117, @p118, @p119, @p120),
+(@p121, @p122, @p123, @p124, @p125, @p126, @p127, @p128, @p129, @p130, @p131),
+(@p132, @p133, @p134, @p135, @p136, @p137, @p138, @p139, @p140, @p141, @p142),
+(@p143, @p144, @p145, @p146, @p147, @p148, @p149, @p150, @p151, @p152, @p153),
+(@p154, @p155, @p156, @p157, @p158, @p159, @p160, @p161, @p162, @p163, @p164),
+(@p165, @p166, @p167, @p168, @p169, @p170, @p171, @p172, @p173, @p174, @p175),
+(@p176, @p177, @p178, @p179, @p180, @p181, @p182, @p183, @p184, @p185, @p186),
+(@p187, @p188, @p189, @p190, @p191, @p192, @p193, @p194, @p195, @p196, @p197),
+(@p198, @p199, @p200, @p201, @p202, @p203, @p204, @p205, @p206, @p207, @p208),
+(@p209, @p210, @p211, @p212, @p213, @p214, @p215, @p216, @p217, @p218, @p219),
+(@p220, @p221, @p222, @p223, @p224, @p225, @p226, @p227, @p228, @p229, @p230),
+(@p231, @p232, @p233, @p234, @p235, @p236, @p237, @p238, @p239, @p240, @p241),
+(@p242, @p243, @p244, @p245, @p246, @p247, @p248, @p249, @p250, @p251, @p252),
+(@p253, @p254, @p255, @p256, @p257, @p258, @p259, @p260, @p261, @p262, @p263),
+(@p264, @p265, @p266, @p267, @p268, @p269, @p270, @p271, @p272, @p273, @p274),
+(@p275, @p276, @p277, @p278, @p279, @p280, @p281, @p282, @p283, @p284, @p285),
+(@p286, @p287, @p288, @p289, @p290, @p291, @p292, @p293, @p294, @p295, @p296),
+(@p297, @p298, @p299, @p300, @p301, @p302, @p303, @p304, @p305, @p306, @p307),
+(@p308, @p309, @p310, @p311, @p312, @p313, @p314, @p315, @p316, @p317, @p318),
+(@p319, @p320, @p321, @p322, @p323, @p324, @p325, @p326, @p327, @p328, @p329),
+(@p330, @p331, @p332, @p333, @p334, @p335, @p336, @p337, @p338, @p339, @p340),
+(@p341, @p342, @p343, @p344, @p345, @p346, @p347, @p348, @p349, @p350, @p351),
+(@p352, @p353, @p354, @p355, @p356, @p357, @p358, @p359, @p360, @p361, @p362),
+(@p363, @p364, @p365, @p366, @p367, @p368, @p369, @p370, @p371, @p372, @p373),
+(@p374, @p375, @p376, @p377, @p378, @p379, @p380, @p381, @p382, @p383, @p384),
+(@p385, @p386, @p387, @p388, @p389, @p390, @p391, @p392, @p393, @p394, @p395),
+(@p396, @p397, @p398, @p399, @p400, @p401, @p402, @p403, @p404, @p405, @p406),
+(@p407, @p408, @p409, @p410, @p411, @p412, @p413, @p414, @p415, @p416, @p417),
+(@p418, @p419, @p420, @p421, @p422, @p423, @p424, @p425, @p426, @p427, @p428),
+(@p429, @p430, @p431, @p432, @p433, @p434, @p435, @p436, @p437, @p438, @p439),
+(@p440, @p441, @p442, @p443, @p444, @p445, @p446, @p447, @p448, @p449, @p450),
+(@p451, @p452, @p453, @p454, @p455, @p456, @p457, @p458, @p459, @p460, @p461);
+2022-05-18 20:10:15.662 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 4000), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = Int32), @p5='?' (Size = 200), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (Size = 4000), @p9='?' (Size = 4000), @p10='?' (DbType = Double), @p11='?' (DbType = Guid), @p12='?' (Size = 4000), @p13='?' (Size = 4000), @p14='?' (Size = 4000), @p15='?' (DbType = Int32), @p16='?' (Size = 200), @p17='?' (Size = 4000), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (Size = 4000), @p21='?' (DbType = Double), @p22='?' (DbType = Guid), @p23='?' (Size = 4000), @p24='?' (Size = 4000), @p25='?' (Size = 4000), @p26='?' (DbType = Int32), @p27='?' (Size = 200), @p28='?' (Size = 4000), @p29='?' (Size = 4000), @p30='?' (Size = 4000), @p31='?' (Size = 4000), @p32='?' (DbType = Double), @p33='?' (DbType = Guid), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (Size = 4000), @p37='?' (DbType = Int32), @p38='?' (Size = 200), @p39='?' (Size = 4000), @p40='?' (Size = 4000), @p41='?' (Size = 4000), @p42='?' (Size = 4000), @p43='?' (DbType = Double), @p44='?' (DbType = Guid), @p45='?' (Size = 4000), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Int32), @p49='?' (Size = 200), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (Size = 4000), @p53='?' (Size = 4000), @p54='?' (DbType = Double), @p55='?' (DbType = Guid), @p56='?' (Size = 4000), @p57='?' (Size = 4000), @p58='?' (Size = 4000), @p59='?' (DbType = Int32), @p60='?' (Size = 200), @p61='?' (Size = 4000), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (Size = 4000), @p65='?' (DbType = Double), @p66='?' (DbType = Guid), @p67='?' (Size = 4000), @p68='?' (Size = 4000), @p69='?' (Size = 4000), @p70='?' (DbType = Int32), @p71='?' (Size = 200), @p72='?' (Size = 4000), @p73='?' (Size = 4000), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (DbType = Double), @p77='?' (DbType = Guid), @p78='?' (Size = 4000), @p79='?' (Size = 4000), @p80='?' (Size = 4000), @p81='?' (DbType = Int32), @p82='?' (Size = 200), @p83='?' (Size = 4000), @p84='?' (Size = 4000), @p85='?' (Size = 4000), @p86='?' (Size = 4000), @p87='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AnimeTitles] ([Id], [AiredOn], [Description], [DescriptionHtml], [Episodes], [Name], [ReleasedOn], [Russian], [Score], [UserComment], [UserRating])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10),
+(@p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18, @p19, @p20, @p21),
+(@p22, @p23, @p24, @p25, @p26, @p27, @p28, @p29, @p30, @p31, @p32),
+(@p33, @p34, @p35, @p36, @p37, @p38, @p39, @p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47, @p48, @p49, @p50, @p51, @p52, @p53, @p54),
+(@p55, @p56, @p57, @p58, @p59, @p60, @p61, @p62, @p63, @p64, @p65),
+(@p66, @p67, @p68, @p69, @p70, @p71, @p72, @p73, @p74, @p75, @p76),
+(@p77, @p78, @p79, @p80, @p81, @p82, @p83, @p84, @p85, @p86, @p87);
+2022-05-18 20:10:15.675 +05:00 [INF] Executed DbCommand (11ms) [Parameters=[@p88='?' (DbType = Guid), @p89='?' (DbType = Guid), @p90='?' (Size = 4000), @p91='?' (Size = 4000), @p92='?' (DbType = Guid), @p93='?' (DbType = Guid), @p94='?' (Size = 4000), @p95='?' (Size = 4000), @p96='?' (DbType = Guid), @p97='?' (DbType = Guid), @p98='?' (Size = 4000), @p99='?' (Size = 4000), @p100='?' (DbType = Guid), @p101='?' (DbType = Guid), @p102='?' (Size = 4000), @p103='?' (Size = 4000), @p104='?' (DbType = Guid), @p105='?' (DbType = Guid), @p106='?' (Size = 4000), @p107='?' (Size = 4000), @p108='?' (DbType = Guid), @p109='?' (DbType = Guid), @p110='?' (Size = 4000), @p111='?' (Size = 4000), @p112='?' (DbType = Guid), @p113='?' (DbType = Guid), @p114='?' (Size = 4000), @p115='?' (Size = 4000), @p116='?' (DbType = Guid), @p117='?' (DbType = Guid), @p118='?' (Size = 4000), @p119='?' (Size = 4000), @p120='?' (DbType = Guid), @p121='?' (DbType = Guid), @p122='?' (Size = 4000), @p123='?' (Size = 4000), @p124='?' (DbType = Guid), @p125='?' (DbType = Guid), @p126='?' (Size = 4000), @p127='?' (Size = 4000), @p128='?' (DbType = Guid), @p129='?' (DbType = Guid), @p130='?' (Size = 4000), @p131='?' (Size = 4000), @p132='?' (DbType = Guid), @p133='?' (DbType = Guid), @p134='?' (Size = 4000), @p135='?' (Size = 4000), @p136='?' (DbType = Guid), @p137='?' (DbType = Guid), @p138='?' (Size = 4000), @p139='?' (Size = 4000), @p140='?' (DbType = Guid), @p141='?' (DbType = Guid), @p142='?' (Size = 4000), @p143='?' (Size = 4000), @p144='?' (DbType = Guid), @p145='?' (DbType = Guid), @p146='?' (Size = 4000), @p147='?' (Size = 4000), @p148='?' (DbType = Guid), @p149='?' (DbType = Guid), @p150='?' (Size = 4000), @p151='?' (Size = 4000), @p152='?' (DbType = Guid), @p153='?' (DbType = Guid), @p154='?' (Size = 4000), @p155='?' (Size = 4000), @p156='?' (DbType = Guid), @p157='?' (DbType = Guid), @p158='?' (Size = 4000), @p159='?' (Size = 4000), @p160='?' (DbType = Guid), @p161='?' (DbType = Guid), @p162='?' (Size = 4000), @p163='?' (Size = 4000), @p164='?' (DbType = Guid), @p165='?' (DbType = Guid), @p166='?' (Size = 4000), @p167='?' (Size = 4000), @p168='?' (DbType = Guid), @p169='?' (DbType = Guid), @p170='?' (Size = 4000), @p171='?' (Size = 4000), @p172='?' (DbType = Guid), @p173='?' (DbType = Guid), @p174='?' (Size = 4000), @p175='?' (Size = 4000), @p176='?' (DbType = Guid), @p177='?' (DbType = Guid), @p178='?' (Size = 4000), @p179='?' (Size = 4000), @p180='?' (DbType = Guid), @p181='?' (DbType = Guid), @p182='?' (Size = 4000), @p183='?' (Size = 4000), @p184='?' (DbType = Guid), @p185='?' (DbType = Guid), @p186='?' (Size = 4000), @p187='?' (Size = 4000), @p188='?' (DbType = Guid), @p189='?' (DbType = Guid), @p190='?' (Size = 4000), @p191='?' (Size = 4000), @p192='?' (DbType = Guid), @p193='?' (DbType = Guid), @p194='?' (Size = 4000), @p195='?' (Size = 4000), @p196='?' (DbType = Guid), @p197='?' (DbType = Guid), @p198='?' (Size = 4000), @p199='?' (Size = 4000), @p200='?' (DbType = Guid), @p201='?' (DbType = Guid), @p202='?' (Size = 4000), @p203='?' (Size = 4000), @p204='?' (DbType = Guid), @p205='?' (DbType = Guid), @p206='?' (Size = 4000), @p207='?' (Size = 4000), @p208='?' (DbType = Guid), @p209='?' (DbType = Guid), @p210='?' (Size = 4000), @p211='?' (Size = 4000), @p212='?' (DbType = Guid), @p213='?' (DbType = Guid), @p214='?' (Size = 4000), @p215='?' (Size = 4000), @p216='?' (DbType = Guid), @p217='?' (DbType = Guid), @p218='?' (Size = 4000), @p219='?' (Size = 4000), @p220='?' (DbType = Guid), @p221='?' (DbType = Guid), @p222='?' (Size = 4000), @p223='?' (Size = 4000), @p224='?' (DbType = Guid), @p225='?' (DbType = Guid), @p226='?' (Size = 4000), @p227='?' (Size = 4000), @p228='?' (DbType = Guid), @p229='?' (DbType = Guid), @p230='?' (Size = 4000), @p231='?' (Size = 4000), @p232='?' (DbType = Guid), @p233='?' (DbType = Guid), @p234='?' (Size = 4000), @p235='?' (Size = 4000), @p236='?' (DbType = Guid), @p237='?' (DbType = Guid), @p238='?' (Size = 4000), @p239='?' (Size = 4000), @p240='?' (DbType = Guid), @p241='?' (DbType = Guid), @p242='?' (Size = 4000), @p243='?' (Size = 4000), @p244='?' (DbType = Guid), @p245='?' (DbType = Guid), @p246='?' (Size = 4000), @p247='?' (Size = 4000), @p248='?' (DbType = Guid), @p249='?' (DbType = Guid), @p250='?' (Size = 4000), @p251='?' (Size = 4000), @p252='?' (DbType = Guid), @p253='?' (DbType = Guid), @p254='?' (Size = 4000), @p255='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Genres] ([Id], [AnimeId], [Name], [Russian])
+VALUES (@p88, @p89, @p90, @p91),
+(@p92, @p93, @p94, @p95),
+(@p96, @p97, @p98, @p99),
+(@p100, @p101, @p102, @p103),
+(@p104, @p105, @p106, @p107),
+(@p108, @p109, @p110, @p111),
+(@p112, @p113, @p114, @p115),
+(@p116, @p117, @p118, @p119),
+(@p120, @p121, @p122, @p123),
+(@p124, @p125, @p126, @p127),
+(@p128, @p129, @p130, @p131),
+(@p132, @p133, @p134, @p135),
+(@p136, @p137, @p138, @p139),
+(@p140, @p141, @p142, @p143),
+(@p144, @p145, @p146, @p147),
+(@p148, @p149, @p150, @p151),
+(@p152, @p153, @p154, @p155),
+(@p156, @p157, @p158, @p159),
+(@p160, @p161, @p162, @p163),
+(@p164, @p165, @p166, @p167),
+(@p168, @p169, @p170, @p171),
+(@p172, @p173, @p174, @p175),
+(@p176, @p177, @p178, @p179),
+(@p180, @p181, @p182, @p183),
+(@p184, @p185, @p186, @p187),
+(@p188, @p189, @p190, @p191),
+(@p192, @p193, @p194, @p195),
+(@p196, @p197, @p198, @p199),
+(@p200, @p201, @p202, @p203),
+(@p204, @p205, @p206, @p207),
+(@p208, @p209, @p210, @p211),
+(@p212, @p213, @p214, @p215),
+(@p216, @p217, @p218, @p219),
+(@p220, @p221, @p222, @p223),
+(@p224, @p225, @p226, @p227),
+(@p228, @p229, @p230, @p231),
+(@p232, @p233, @p234, @p235),
+(@p236, @p237, @p238, @p239),
+(@p240, @p241, @p242, @p243),
+(@p244, @p245, @p246, @p247),
+(@p248, @p249, @p250, @p251),
+(@p252, @p253, @p254, @p255);
+2022-05-18 20:10:15.684 +05:00 [INF] Executed DbCommand (9ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (DbType = Guid), @p17='?' (DbType = Guid), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (DbType = Guid), @p21='?' (DbType = Guid), @p22='?' (Size = 4000), @p23='?' (Size = 4000), @p24='?' (DbType = Guid), @p25='?' (DbType = Guid), @p26='?' (Size = 4000), @p27='?' (Size = 4000), @p28='?' (DbType = Guid), @p29='?' (DbType = Guid), @p30='?' (Size = 4000), @p31='?' (Size = 4000), @p32='?' (DbType = Guid), @p33='?' (DbType = Guid), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (DbType = Guid), @p37='?' (DbType = Guid), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (DbType = Guid), @p41='?' (DbType = Guid), @p42='?' (Size = 4000), @p43='?' (Size = 4000), @p44='?' (DbType = Guid), @p45='?' (DbType = Guid), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Guid), @p49='?' (DbType = Guid), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (DbType = Guid), @p53='?' (DbType = Guid), @p54='?' (Size = 4000), @p55='?' (Size = 4000), @p56='?' (DbType = Guid), @p57='?' (DbType = Guid), @p58='?' (Size = 4000), @p59='?' (Size = 4000), @p60='?' (DbType = Guid), @p61='?' (DbType = Guid), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (DbType = Guid), @p65='?' (DbType = Guid), @p66='?' (Size = 4000), @p67='?' (Size = 4000), @p68='?' (DbType = Guid), @p69='?' (DbType = Guid), @p70='?' (Size = 4000), @p71='?' (Size = 4000), @p72='?' (DbType = Guid), @p73='?' (DbType = Guid), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (DbType = Guid), @p77='?' (DbType = Guid), @p78='?' (Size = 4000), @p79='?' (Size = 4000), @p80='?' (DbType = Guid), @p81='?' (DbType = Guid), @p82='?' (Size = 4000), @p83='?' (Size = 4000), @p84='?' (DbType = Guid), @p85='?' (DbType = Guid), @p86='?' (Size = 4000), @p87='?' (Size = 4000), @p88='?' (DbType = Guid), @p89='?' (DbType = Guid), @p90='?' (Size = 4000), @p91='?' (Size = 4000), @p92='?' (DbType = Guid), @p93='?' (DbType = Guid), @p94='?' (Size = 4000), @p95='?' (Size = 4000), @p96='?' (DbType = Guid), @p97='?' (DbType = Guid), @p98='?' (Size = 4000), @p99='?' (Size = 4000), @p100='?' (DbType = Guid), @p101='?' (DbType = Guid), @p102='?' (Size = 4000), @p103='?' (Size = 4000), @p104='?' (DbType = Guid), @p105='?' (DbType = Guid), @p106='?' (Size = 4000), @p107='?' (Size = 4000), @p108='?' (DbType = Guid), @p109='?' (DbType = Guid), @p110='?' (Size = 4000), @p111='?' (Size = 4000), @p112='?' (DbType = Guid), @p113='?' (DbType = Guid), @p114='?' (Size = 4000), @p115='?' (Size = 4000), @p116='?' (DbType = Guid), @p117='?' (DbType = Guid), @p118='?' (Size = 4000), @p119='?' (Size = 4000), @p120='?' (DbType = Guid), @p121='?' (DbType = Guid), @p122='?' (Size = 4000), @p123='?' (Size = 4000), @p124='?' (DbType = Guid), @p125='?' (DbType = Guid), @p126='?' (Size = 4000), @p127='?' (Size = 4000), @p128='?' (DbType = Guid), @p129='?' (DbType = Guid), @p130='?' (Size = 4000), @p131='?' (Size = 4000), @p132='?' (DbType = Guid), @p133='?' (DbType = Guid), @p134='?' (Size = 4000), @p135='?' (Size = 4000), @p136='?' (DbType = Guid), @p137='?' (DbType = Guid), @p138='?' (Size = 4000), @p139='?' (Size = 4000), @p140='?' (DbType = Guid), @p141='?' (DbType = Guid), @p142='?' (Size = 4000), @p143='?' (Size = 4000), @p144='?' (DbType = Guid), @p145='?' (DbType = Guid), @p146='?' (Size = 4000), @p147='?' (Size = 4000), @p148='?' (DbType = Guid), @p149='?' (DbType = Guid), @p150='?' (Size = 4000), @p151='?' (Size = 4000), @p152='?' (DbType = Guid), @p153='?' (DbType = Guid), @p154='?' (Size = 4000), @p155='?' (Size = 4000), @p156='?' (DbType = Guid), @p157='?' (DbType = Guid), @p158='?' (Size = 4000), @p159='?' (Size = 4000), @p160='?' (DbType = Guid), @p161='?' (DbType = Guid), @p162='?' (Size = 4000), @p163='?' (Size = 4000), @p164='?' (DbType = Guid), @p165='?' (DbType = Guid), @p166='?' (Size = 4000), @p167='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Genres] ([Id], [AnimeId], [Name], [Russian])
+VALUES (@p0, @p1, @p2, @p3),
+(@p4, @p5, @p6, @p7),
+(@p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15),
+(@p16, @p17, @p18, @p19),
+(@p20, @p21, @p22, @p23),
+(@p24, @p25, @p26, @p27),
+(@p28, @p29, @p30, @p31),
+(@p32, @p33, @p34, @p35),
+(@p36, @p37, @p38, @p39),
+(@p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47),
+(@p48, @p49, @p50, @p51),
+(@p52, @p53, @p54, @p55),
+(@p56, @p57, @p58, @p59),
+(@p60, @p61, @p62, @p63),
+(@p64, @p65, @p66, @p67),
+(@p68, @p69, @p70, @p71),
+(@p72, @p73, @p74, @p75),
+(@p76, @p77, @p78, @p79),
+(@p80, @p81, @p82, @p83),
+(@p84, @p85, @p86, @p87),
+(@p88, @p89, @p90, @p91),
+(@p92, @p93, @p94, @p95),
+(@p96, @p97, @p98, @p99),
+(@p100, @p101, @p102, @p103),
+(@p104, @p105, @p106, @p107),
+(@p108, @p109, @p110, @p111),
+(@p112, @p113, @p114, @p115),
+(@p116, @p117, @p118, @p119),
+(@p120, @p121, @p122, @p123),
+(@p124, @p125, @p126, @p127),
+(@p128, @p129, @p130, @p131),
+(@p132, @p133, @p134, @p135),
+(@p136, @p137, @p138, @p139),
+(@p140, @p141, @p142, @p143),
+(@p144, @p145, @p146, @p147),
+(@p148, @p149, @p150, @p151),
+(@p152, @p153, @p154, @p155),
+(@p156, @p157, @p158, @p159),
+(@p160, @p161, @p162, @p163),
+(@p164, @p165, @p166, @p167);
+2022-05-18 20:10:15.688 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (DbType = Guid), @p17='?' (DbType = Guid), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (DbType = Guid), @p21='?' (DbType = Guid), @p22='?' (Size = 4000), @p23='?' (Size = 4000), @p24='?' (DbType = Guid), @p25='?' (DbType = Guid), @p26='?' (Size = 4000), @p27='?' (Size = 4000), @p28='?' (DbType = Guid), @p29='?' (DbType = Guid), @p30='?' (Size = 4000), @p31='?' (Size = 4000), @p32='?' (DbType = Guid), @p33='?' (DbType = Guid), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (DbType = Guid), @p37='?' (DbType = Guid), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (DbType = Guid), @p41='?' (DbType = Guid), @p42='?' (Size = 4000), @p43='?' (Size = 4000), @p44='?' (DbType = Guid), @p45='?' (DbType = Guid), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Guid), @p49='?' (DbType = Guid), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (DbType = Guid), @p53='?' (DbType = Guid), @p54='?' (Size = 4000), @p55='?' (Size = 4000), @p56='?' (DbType = Guid), @p57='?' (DbType = Guid), @p58='?' (Size = 4000), @p59='?' (Size = 4000), @p60='?' (DbType = Guid), @p61='?' (DbType = Guid), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (DbType = Guid), @p65='?' (DbType = Guid), @p66='?' (Size = 4000), @p67='?' (Size = 4000), @p68='?' (DbType = Guid), @p69='?' (DbType = Guid), @p70='?' (Size = 4000), @p71='?' (Size = 4000), @p72='?' (DbType = Guid), @p73='?' (DbType = Guid), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (DbType = Guid), @p77='?' (DbType = Guid), @p78='?' (Size = 4000), @p79='?' (Size = 4000), @p80='?' (DbType = Guid), @p81='?' (DbType = Guid), @p82='?' (Size = 4000), @p83='?' (Size = 4000), @p84='?' (DbType = Guid), @p85='?' (DbType = Guid), @p86='?' (Size = 4000), @p87='?' (Size = 4000), @p88='?' (DbType = Guid), @p89='?' (DbType = Guid), @p90='?' (Size = 4000), @p91='?' (Size = 4000), @p92='?' (DbType = Guid), @p93='?' (DbType = Guid), @p94='?' (Size = 4000), @p95='?' (Size = 4000), @p96='?' (DbType = Guid), @p97='?' (DbType = Guid), @p98='?' (Size = 4000), @p99='?' (Size = 4000), @p100='?' (DbType = Guid), @p101='?' (DbType = Guid), @p102='?' (Size = 4000), @p103='?' (Size = 4000), @p104='?' (DbType = Guid), @p105='?' (DbType = Guid), @p106='?' (Size = 4000), @p107='?' (Size = 4000), @p108='?' (DbType = Guid), @p109='?' (DbType = Guid), @p110='?' (Size = 4000), @p111='?' (Size = 4000), @p112='?' (DbType = Guid), @p113='?' (DbType = Guid), @p114='?' (Size = 4000), @p115='?' (Size = 4000), @p116='?' (DbType = Guid), @p117='?' (DbType = Guid), @p118='?' (Size = 4000), @p119='?' (Size = 4000), @p120='?' (DbType = Guid), @p121='?' (DbType = Guid), @p122='?' (Size = 4000), @p123='?' (Size = 4000), @p124='?' (DbType = Guid), @p125='?' (DbType = Guid), @p126='?' (Size = 4000), @p127='?' (Size = 4000), @p128='?' (DbType = Guid), @p129='?' (DbType = Guid), @p130='?' (Size = 4000), @p131='?' (Size = 4000), @p132='?' (DbType = Guid), @p133='?' (DbType = Guid), @p134='?' (Size = 4000), @p135='?' (Size = 4000), @p136='?' (DbType = Guid), @p137='?' (DbType = Guid), @p138='?' (Size = 4000), @p139='?' (Size = 4000), @p140='?' (DbType = Guid), @p141='?' (DbType = Guid), @p142='?' (Size = 4000), @p143='?' (Size = 4000), @p144='?' (DbType = Guid), @p145='?' (DbType = Guid), @p146='?' (Size = 4000), @p147='?' (Size = 4000), @p148='?' (DbType = Guid), @p149='?' (DbType = Guid), @p150='?' (Size = 4000), @p151='?' (Size = 4000), @p152='?' (DbType = Guid), @p153='?' (DbType = Guid), @p154='?' (Size = 4000), @p155='?' (Size = 4000), @p156='?' (DbType = Guid), @p157='?' (DbType = Guid), @p158='?' (Size = 4000), @p159='?' (Size = 4000), @p160='?' (DbType = Guid), @p161='?' (DbType = Guid), @p162='?' (Size = 4000), @p163='?' (Size = 4000), @p164='?' (DbType = Guid), @p165='?' (DbType = Guid), @p166='?' (Size = 4000), @p167='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Genres] ([Id], [AnimeId], [Name], [Russian])
+VALUES (@p0, @p1, @p2, @p3),
+(@p4, @p5, @p6, @p7),
+(@p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15),
+(@p16, @p17, @p18, @p19),
+(@p20, @p21, @p22, @p23),
+(@p24, @p25, @p26, @p27),
+(@p28, @p29, @p30, @p31),
+(@p32, @p33, @p34, @p35),
+(@p36, @p37, @p38, @p39),
+(@p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47),
+(@p48, @p49, @p50, @p51),
+(@p52, @p53, @p54, @p55),
+(@p56, @p57, @p58, @p59),
+(@p60, @p61, @p62, @p63),
+(@p64, @p65, @p66, @p67),
+(@p68, @p69, @p70, @p71),
+(@p72, @p73, @p74, @p75),
+(@p76, @p77, @p78, @p79),
+(@p80, @p81, @p82, @p83),
+(@p84, @p85, @p86, @p87),
+(@p88, @p89, @p90, @p91),
+(@p92, @p93, @p94, @p95),
+(@p96, @p97, @p98, @p99),
+(@p100, @p101, @p102, @p103),
+(@p104, @p105, @p106, @p107),
+(@p108, @p109, @p110, @p111),
+(@p112, @p113, @p114, @p115),
+(@p116, @p117, @p118, @p119),
+(@p120, @p121, @p122, @p123),
+(@p124, @p125, @p126, @p127),
+(@p128, @p129, @p130, @p131),
+(@p132, @p133, @p134, @p135),
+(@p136, @p137, @p138, @p139),
+(@p140, @p141, @p142, @p143),
+(@p144, @p145, @p146, @p147),
+(@p148, @p149, @p150, @p151),
+(@p152, @p153, @p154, @p155),
+(@p156, @p157, @p158, @p159),
+(@p160, @p161, @p162, @p163),
+(@p164, @p165, @p166, @p167);
+2022-05-18 20:10:15.691 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (DbType = Guid), @p17='?' (DbType = Guid), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (DbType = Guid), @p21='?' (DbType = Guid), @p22='?' (Size = 4000), @p23='?' (Size = 4000), @p24='?' (DbType = Guid), @p25='?' (DbType = Guid), @p26='?' (Size = 4000), @p27='?' (Size = 4000), @p28='?' (DbType = Guid), @p29='?' (DbType = Guid), @p30='?' (Size = 4000), @p31='?' (Size = 4000), @p32='?' (DbType = Guid), @p33='?' (DbType = Guid), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (DbType = Guid), @p37='?' (DbType = Guid), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (DbType = Guid), @p41='?' (DbType = Guid), @p42='?' (Size = 4000), @p43='?' (Size = 4000), @p44='?' (DbType = Guid), @p45='?' (DbType = Guid), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Guid), @p49='?' (DbType = Guid), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (DbType = Guid), @p53='?' (DbType = Guid), @p54='?' (Size = 4000), @p55='?' (Size = 4000), @p56='?' (DbType = Guid), @p57='?' (DbType = Guid), @p58='?' (Size = 4000), @p59='?' (Size = 4000), @p60='?' (DbType = Guid), @p61='?' (DbType = Guid), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (DbType = Guid), @p65='?' (DbType = Guid), @p66='?' (Size = 4000), @p67='?' (Size = 4000), @p68='?' (DbType = Guid), @p69='?' (DbType = Guid), @p70='?' (Size = 4000), @p71='?' (Size = 4000), @p72='?' (DbType = Guid), @p73='?' (DbType = Guid), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (DbType = Guid), @p77='?' (DbType = Guid), @p78='?' (Size = 4000), @p79='?' (Size = 4000), @p80='?' (DbType = Guid), @p81='?' (DbType = Guid), @p82='?' (Size = 4000), @p83='?' (Size = 4000), @p84='?' (DbType = Guid), @p85='?' (DbType = Guid), @p86='?' (Size = 4000), @p87='?' (Size = 4000), @p88='?' (DbType = Guid), @p89='?' (DbType = Guid), @p90='?' (Size = 4000), @p91='?' (Size = 4000), @p92='?' (DbType = Guid), @p93='?' (DbType = Guid), @p94='?' (Size = 4000), @p95='?' (Size = 4000), @p96='?' (DbType = Guid), @p97='?' (DbType = Guid), @p98='?' (Size = 4000), @p99='?' (Size = 4000), @p100='?' (DbType = Guid), @p101='?' (DbType = Guid), @p102='?' (Size = 4000), @p103='?' (Size = 4000), @p104='?' (DbType = Guid), @p105='?' (DbType = Guid), @p106='?' (Size = 4000), @p107='?' (Size = 4000), @p108='?' (DbType = Guid), @p109='?' (DbType = Guid), @p110='?' (Size = 4000), @p111='?' (Size = 4000), @p112='?' (DbType = Guid), @p113='?' (DbType = Guid), @p114='?' (Size = 4000), @p115='?' (Size = 4000), @p116='?' (DbType = Guid), @p117='?' (DbType = Guid), @p118='?' (Size = 4000), @p119='?' (Size = 4000), @p120='?' (DbType = Guid), @p121='?' (DbType = Guid), @p122='?' (Size = 4000), @p123='?' (Size = 4000), @p124='?' (DbType = Guid), @p125='?' (DbType = Guid), @p126='?' (Size = 4000), @p127='?' (Size = 4000), @p128='?' (DbType = Guid), @p129='?' (DbType = Guid), @p130='?' (Size = 4000), @p131='?' (Size = 4000), @p132='?' (DbType = Guid), @p133='?' (DbType = Guid), @p134='?' (Size = 4000), @p135='?' (Size = 4000), @p136='?' (DbType = Guid), @p137='?' (DbType = Guid), @p138='?' (Size = 4000), @p139='?' (Size = 4000), @p140='?' (DbType = Guid), @p141='?' (DbType = Guid), @p142='?' (Size = 4000), @p143='?' (Size = 4000), @p144='?' (DbType = Guid), @p145='?' (DbType = Guid), @p146='?' (Size = 4000), @p147='?' (Size = 4000), @p148='?' (DbType = Guid), @p149='?' (DbType = Guid), @p150='?' (Size = 4000), @p151='?' (Size = 4000), @p152='?' (DbType = Guid), @p153='?' (DbType = Guid), @p154='?' (Size = 4000), @p155='?' (Size = 4000), @p156='?' (DbType = Guid), @p157='?' (DbType = Guid), @p158='?' (Size = 4000), @p159='?' (Size = 4000), @p160='?' (DbType = Guid), @p161='?' (DbType = Guid), @p162='?' (Size = 4000), @p163='?' (Size = 4000), @p164='?' (DbType = Guid), @p165='?' (DbType = Guid), @p166='?' (Size = 4000), @p167='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Genres] ([Id], [AnimeId], [Name], [Russian])
+VALUES (@p0, @p1, @p2, @p3),
+(@p4, @p5, @p6, @p7),
+(@p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15),
+(@p16, @p17, @p18, @p19),
+(@p20, @p21, @p22, @p23),
+(@p24, @p25, @p26, @p27),
+(@p28, @p29, @p30, @p31),
+(@p32, @p33, @p34, @p35),
+(@p36, @p37, @p38, @p39),
+(@p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47),
+(@p48, @p49, @p50, @p51),
+(@p52, @p53, @p54, @p55),
+(@p56, @p57, @p58, @p59),
+(@p60, @p61, @p62, @p63),
+(@p64, @p65, @p66, @p67),
+(@p68, @p69, @p70, @p71),
+(@p72, @p73, @p74, @p75),
+(@p76, @p77, @p78, @p79),
+(@p80, @p81, @p82, @p83),
+(@p84, @p85, @p86, @p87),
+(@p88, @p89, @p90, @p91),
+(@p92, @p93, @p94, @p95),
+(@p96, @p97, @p98, @p99),
+(@p100, @p101, @p102, @p103),
+(@p104, @p105, @p106, @p107),
+(@p108, @p109, @p110, @p111),
+(@p112, @p113, @p114, @p115),
+(@p116, @p117, @p118, @p119),
+(@p120, @p121, @p122, @p123),
+(@p124, @p125, @p126, @p127),
+(@p128, @p129, @p130, @p131),
+(@p132, @p133, @p134, @p135),
+(@p136, @p137, @p138, @p139),
+(@p140, @p141, @p142, @p143),
+(@p144, @p145, @p146, @p147),
+(@p148, @p149, @p150, @p151),
+(@p152, @p153, @p154, @p155),
+(@p156, @p157, @p158, @p159),
+(@p160, @p161, @p162, @p163),
+(@p164, @p165, @p166, @p167);
+2022-05-18 20:10:15.695 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (DbType = Guid), @p17='?' (DbType = Guid), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (DbType = Guid), @p21='?' (DbType = Guid), @p22='?' (Size = 4000), @p23='?' (Size = 4000), @p24='?' (DbType = Guid), @p25='?' (DbType = Guid), @p26='?' (Size = 4000), @p27='?' (Size = 4000), @p28='?' (DbType = Guid), @p29='?' (DbType = Guid), @p30='?' (Size = 4000), @p31='?' (Size = 4000), @p32='?' (DbType = Guid), @p33='?' (DbType = Guid), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (DbType = Guid), @p37='?' (DbType = Guid), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (DbType = Guid), @p41='?' (DbType = Guid), @p42='?' (Size = 4000), @p43='?' (Size = 4000), @p44='?' (DbType = Guid), @p45='?' (DbType = Guid), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Guid), @p49='?' (DbType = Guid), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (DbType = Guid), @p53='?' (DbType = Guid), @p54='?' (Size = 4000), @p55='?' (Size = 4000), @p56='?' (DbType = Guid), @p57='?' (DbType = Guid), @p58='?' (Size = 4000), @p59='?' (Size = 4000), @p60='?' (DbType = Guid), @p61='?' (DbType = Guid), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (DbType = Guid), @p65='?' (DbType = Guid), @p66='?' (Size = 4000), @p67='?' (Size = 4000), @p68='?' (DbType = Guid), @p69='?' (DbType = Guid), @p70='?' (Size = 4000), @p71='?' (Size = 4000), @p72='?' (DbType = Guid), @p73='?' (DbType = Guid), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (DbType = Guid), @p77='?' (DbType = Guid), @p78='?' (Size = 4000), @p79='?' (Size = 4000), @p80='?' (DbType = Guid), @p81='?' (DbType = Guid), @p82='?' (Size = 4000), @p83='?' (Size = 4000), @p84='?' (DbType = Guid), @p85='?' (DbType = Guid), @p86='?' (Size = 4000), @p87='?' (Size = 4000), @p88='?' (DbType = Guid), @p89='?' (DbType = Guid), @p90='?' (Size = 4000), @p91='?' (Size = 4000), @p92='?' (DbType = Guid), @p93='?' (DbType = Guid), @p94='?' (Size = 4000), @p95='?' (Size = 4000), @p96='?' (DbType = Guid), @p97='?' (DbType = Guid), @p98='?' (Size = 4000), @p99='?' (Size = 4000), @p100='?' (DbType = Guid), @p101='?' (DbType = Guid), @p102='?' (Size = 4000), @p103='?' (Size = 4000), @p104='?' (DbType = Guid), @p105='?' (DbType = Guid), @p106='?' (Size = 4000), @p107='?' (Size = 4000), @p108='?' (DbType = Guid), @p109='?' (DbType = Guid), @p110='?' (Size = 4000), @p111='?' (Size = 4000), @p112='?' (DbType = Guid), @p113='?' (DbType = Guid), @p114='?' (Size = 4000), @p115='?' (Size = 4000), @p116='?' (DbType = Guid), @p117='?' (DbType = Guid), @p118='?' (Size = 4000), @p119='?' (Size = 4000), @p120='?' (DbType = Guid), @p121='?' (DbType = Guid), @p122='?' (Size = 4000), @p123='?' (Size = 4000), @p124='?' (DbType = Guid), @p125='?' (DbType = Guid), @p126='?' (Size = 4000), @p127='?' (Size = 4000), @p128='?' (DbType = Guid), @p129='?' (DbType = Guid), @p130='?' (Size = 4000), @p131='?' (Size = 4000), @p132='?' (DbType = Guid), @p133='?' (DbType = Guid), @p134='?' (Size = 4000), @p135='?' (Size = 4000), @p136='?' (DbType = Guid), @p137='?' (DbType = Guid), @p138='?' (Size = 4000), @p139='?' (Size = 4000), @p140='?' (DbType = Guid), @p141='?' (DbType = Guid), @p142='?' (Size = 4000), @p143='?' (Size = 4000), @p144='?' (DbType = Guid), @p145='?' (DbType = Guid), @p146='?' (Size = 4000), @p147='?' (Size = 4000), @p148='?' (DbType = Guid), @p149='?' (DbType = Guid), @p150='?' (Size = 4000), @p151='?' (Size = 4000), @p152='?' (DbType = Guid), @p153='?' (DbType = Guid), @p154='?' (Size = 4000), @p155='?' (Size = 4000), @p156='?' (DbType = Guid), @p157='?' (DbType = Guid), @p158='?' (Size = 4000), @p159='?' (Size = 4000), @p160='?' (DbType = Guid), @p161='?' (DbType = Guid), @p162='?' (Size = 4000), @p163='?' (Size = 4000), @p164='?' (DbType = Guid), @p165='?' (DbType = Guid), @p166='?' (Size = 4000), @p167='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Genres] ([Id], [AnimeId], [Name], [Russian])
+VALUES (@p0, @p1, @p2, @p3),
+(@p4, @p5, @p6, @p7),
+(@p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15),
+(@p16, @p17, @p18, @p19),
+(@p20, @p21, @p22, @p23),
+(@p24, @p25, @p26, @p27),
+(@p28, @p29, @p30, @p31),
+(@p32, @p33, @p34, @p35),
+(@p36, @p37, @p38, @p39),
+(@p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47),
+(@p48, @p49, @p50, @p51),
+(@p52, @p53, @p54, @p55),
+(@p56, @p57, @p58, @p59),
+(@p60, @p61, @p62, @p63),
+(@p64, @p65, @p66, @p67),
+(@p68, @p69, @p70, @p71),
+(@p72, @p73, @p74, @p75),
+(@p76, @p77, @p78, @p79),
+(@p80, @p81, @p82, @p83),
+(@p84, @p85, @p86, @p87),
+(@p88, @p89, @p90, @p91),
+(@p92, @p93, @p94, @p95),
+(@p96, @p97, @p98, @p99),
+(@p100, @p101, @p102, @p103),
+(@p104, @p105, @p106, @p107),
+(@p108, @p109, @p110, @p111),
+(@p112, @p113, @p114, @p115),
+(@p116, @p117, @p118, @p119),
+(@p120, @p121, @p122, @p123),
+(@p124, @p125, @p126, @p127),
+(@p128, @p129, @p130, @p131),
+(@p132, @p133, @p134, @p135),
+(@p136, @p137, @p138, @p139),
+(@p140, @p141, @p142, @p143),
+(@p144, @p145, @p146, @p147),
+(@p148, @p149, @p150, @p151),
+(@p152, @p153, @p154, @p155),
+(@p156, @p157, @p158, @p159),
+(@p160, @p161, @p162, @p163),
+(@p164, @p165, @p166, @p167);
+2022-05-18 20:10:15.699 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (DbType = Guid), @p17='?' (DbType = Guid), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (DbType = Guid), @p21='?' (DbType = Guid), @p22='?' (Size = 4000), @p23='?' (Size = 4000), @p24='?' (DbType = Guid), @p25='?' (DbType = Guid), @p26='?' (Size = 4000), @p27='?' (Size = 4000), @p28='?' (DbType = Guid), @p29='?' (DbType = Guid), @p30='?' (Size = 4000), @p31='?' (Size = 4000), @p32='?' (DbType = Guid), @p33='?' (DbType = Guid), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (DbType = Guid), @p37='?' (DbType = Guid), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (DbType = Guid), @p41='?' (DbType = Guid), @p42='?' (Size = 4000), @p43='?' (Size = 4000), @p44='?' (DbType = Guid), @p45='?' (DbType = Guid), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Guid), @p49='?' (DbType = Guid), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (DbType = Guid), @p53='?' (DbType = Guid), @p54='?' (Size = 4000), @p55='?' (Size = 4000), @p56='?' (DbType = Guid), @p57='?' (DbType = Guid), @p58='?' (Size = 4000), @p59='?' (Size = 4000), @p60='?' (DbType = Guid), @p61='?' (DbType = Guid), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (DbType = Guid), @p65='?' (DbType = Guid), @p66='?' (Size = 4000), @p67='?' (Size = 4000), @p68='?' (DbType = Guid), @p69='?' (DbType = Guid), @p70='?' (Size = 4000), @p71='?' (Size = 4000), @p72='?' (DbType = Guid), @p73='?' (DbType = Guid), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (DbType = Guid), @p77='?' (DbType = Guid), @p78='?' (Size = 4000), @p79='?' (Size = 4000), @p80='?' (DbType = Guid), @p81='?' (DbType = Guid), @p82='?' (Size = 4000), @p83='?' (Size = 4000), @p84='?' (DbType = Guid), @p85='?' (DbType = Guid), @p86='?' (Size = 4000), @p87='?' (Size = 4000), @p88='?' (DbType = Guid), @p89='?' (DbType = Guid), @p90='?' (Size = 4000), @p91='?' (Size = 4000), @p92='?' (DbType = Guid), @p93='?' (DbType = Guid), @p94='?' (Size = 4000), @p95='?' (Size = 4000), @p96='?' (DbType = Guid), @p97='?' (DbType = Guid), @p98='?' (Size = 4000), @p99='?' (Size = 4000), @p100='?' (DbType = Guid), @p101='?' (DbType = Guid), @p102='?' (Size = 4000), @p103='?' (Size = 4000), @p104='?' (DbType = Guid), @p105='?' (DbType = Guid), @p106='?' (Size = 4000), @p107='?' (Size = 4000), @p108='?' (DbType = Guid), @p109='?' (DbType = Guid), @p110='?' (Size = 4000), @p111='?' (Size = 4000), @p112='?' (DbType = Guid), @p113='?' (DbType = Guid), @p114='?' (Size = 4000), @p115='?' (Size = 4000), @p116='?' (DbType = Guid), @p117='?' (DbType = Guid), @p118='?' (Size = 4000), @p119='?' (Size = 4000), @p120='?' (DbType = Guid), @p121='?' (DbType = Guid), @p122='?' (Size = 4000), @p123='?' (Size = 4000), @p124='?' (DbType = Guid), @p125='?' (DbType = Guid), @p126='?' (Size = 4000), @p127='?' (Size = 4000), @p128='?' (DbType = Guid), @p129='?' (DbType = Guid), @p130='?' (Size = 4000), @p131='?' (Size = 4000), @p132='?' (DbType = Guid), @p133='?' (DbType = Guid), @p134='?' (Size = 4000), @p135='?' (Size = 4000), @p136='?' (DbType = Guid), @p137='?' (DbType = Guid), @p138='?' (Size = 4000), @p139='?' (Size = 4000), @p140='?' (DbType = Guid), @p141='?' (DbType = Guid), @p142='?' (Size = 4000), @p143='?' (Size = 4000), @p144='?' (DbType = Guid), @p145='?' (DbType = Guid), @p146='?' (Size = 4000), @p147='?' (Size = 4000), @p148='?' (DbType = Guid), @p149='?' (DbType = Guid), @p150='?' (Size = 4000), @p151='?' (Size = 4000), @p152='?' (DbType = Guid), @p153='?' (DbType = Guid), @p154='?' (Size = 4000), @p155='?' (Size = 4000), @p156='?' (DbType = Guid), @p157='?' (DbType = Guid), @p158='?' (Size = 4000), @p159='?' (Size = 4000), @p160='?' (DbType = Guid), @p161='?' (DbType = Guid), @p162='?' (Size = 4000), @p163='?' (Size = 4000), @p164='?' (DbType = Guid), @p165='?' (DbType = Guid), @p166='?' (Size = 4000), @p167='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Genres] ([Id], [AnimeId], [Name], [Russian])
+VALUES (@p0, @p1, @p2, @p3),
+(@p4, @p5, @p6, @p7),
+(@p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15),
+(@p16, @p17, @p18, @p19),
+(@p20, @p21, @p22, @p23),
+(@p24, @p25, @p26, @p27),
+(@p28, @p29, @p30, @p31),
+(@p32, @p33, @p34, @p35),
+(@p36, @p37, @p38, @p39),
+(@p40, @p41, @p42, @p43),
+(@p44, @p45, @p46, @p47),
+(@p48, @p49, @p50, @p51),
+(@p52, @p53, @p54, @p55),
+(@p56, @p57, @p58, @p59),
+(@p60, @p61, @p62, @p63),
+(@p64, @p65, @p66, @p67),
+(@p68, @p69, @p70, @p71),
+(@p72, @p73, @p74, @p75),
+(@p76, @p77, @p78, @p79),
+(@p80, @p81, @p82, @p83),
+(@p84, @p85, @p86, @p87),
+(@p88, @p89, @p90, @p91),
+(@p92, @p93, @p94, @p95),
+(@p96, @p97, @p98, @p99),
+(@p100, @p101, @p102, @p103),
+(@p104, @p105, @p106, @p107),
+(@p108, @p109, @p110, @p111),
+(@p112, @p113, @p114, @p115),
+(@p116, @p117, @p118, @p119),
+(@p120, @p121, @p122, @p123),
+(@p124, @p125, @p126, @p127),
+(@p128, @p129, @p130, @p131),
+(@p132, @p133, @p134, @p135),
+(@p136, @p137, @p138, @p139),
+(@p140, @p141, @p142, @p143),
+(@p144, @p145, @p146, @p147),
+(@p148, @p149, @p150, @p151),
+(@p152, @p153, @p154, @p155),
+(@p156, @p157, @p158, @p159),
+(@p160, @p161, @p162, @p163),
+(@p164, @p165, @p166, @p167);
+2022-05-18 20:10:15.714 +05:00 [INF] Executed DbCommand (14ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (Size = 4000), @p7='?' (Size = 4000), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (DbType = Guid), @p17='?' (DbType = Guid), @p18='?' (Size = 4000), @p19='?' (Size = 4000), @p20='?' (DbType = Guid), @p21='?' (DbType = Guid), @p22='?' (Size = 4000), @p23='?' (Size = 4000), @p24='?' (DbType = Guid), @p25='?' (DbType = Guid), @p26='?' (Size = 4000), @p27='?' (Size = 4000), @p28='?' (Size = 4000), @p29='?' (Size = 4000), @p30='?' (DbType = Guid), @p31='?' (DbType = Guid), @p32='?' (Size = 4000), @p33='?' (Size = 4000), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (DbType = Guid), @p37='?' (DbType = Guid), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (Size = 4000), @p41='?' (Size = 4000), @p42='?' (DbType = Guid), @p43='?' (DbType = Guid), @p44='?' (Size = 4000), @p45='?' (Size = 4000), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Guid), @p49='?' (DbType = Guid), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (Size = 4000), @p53='?' (Size = 4000), @p54='?' (DbType = Guid), @p55='?' (DbType = Guid), @p56='?' (Size = 4000), @p57='?' (Size = 4000), @p58='?' (Size = 4000), @p59='?' (Size = 4000), @p60='?' (DbType = Guid), @p61='?' (DbType = Guid), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (Size = 4000), @p65='?' (Size = 4000), @p66='?' (DbType = Guid), @p67='?' (DbType = Guid), @p68='?' (Size = 4000), @p69='?' (Size = 4000), @p70='?' (Size = 4000), @p71='?' (Size = 4000), @p72='?' (DbType = Guid), @p73='?' (DbType = Guid), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (Size = 4000), @p77='?' (Size = 4000), @p78='?' (DbType = Guid), @p79='?' (DbType = Guid), @p80='?' (Size = 4000), @p81='?' (Size = 4000), @p82='?' (Size = 4000), @p83='?' (Size = 4000), @p84='?' (DbType = Guid), @p85='?' (DbType = Guid), @p86='?' (Size = 4000), @p87='?' (Size = 4000), @p88='?' (Size = 4000), @p89='?' (Size = 4000), @p90='?' (DbType = Guid), @p91='?' (DbType = Guid), @p92='?' (Size = 4000), @p93='?' (Size = 4000), @p94='?' (Size = 4000), @p95='?' (Size = 4000), @p96='?' (DbType = Guid), @p97='?' (DbType = Guid), @p98='?' (Size = 4000), @p99='?' (Size = 4000), @p100='?' (Size = 4000), @p101='?' (Size = 4000), @p102='?' (DbType = Guid), @p103='?' (DbType = Guid), @p104='?' (Size = 4000), @p105='?' (Size = 4000), @p106='?' (Size = 4000), @p107='?' (Size = 4000), @p108='?' (DbType = Guid), @p109='?' (DbType = Guid), @p110='?' (Size = 4000), @p111='?' (Size = 4000), @p112='?' (Size = 4000), @p113='?' (Size = 4000), @p114='?' (DbType = Guid), @p115='?' (DbType = Guid), @p116='?' (Size = 4000), @p117='?' (Size = 4000), @p118='?' (Size = 4000), @p119='?' (Size = 4000), @p120='?' (DbType = Guid), @p121='?' (DbType = Guid), @p122='?' (Size = 4000), @p123='?' (Size = 4000), @p124='?' (Size = 4000), @p125='?' (Size = 4000), @p126='?' (DbType = Guid), @p127='?' (DbType = Guid), @p128='?' (Size = 4000), @p129='?' (Size = 4000), @p130='?' (Size = 4000), @p131='?' (Size = 4000), @p132='?' (DbType = Guid), @p133='?' (DbType = Guid), @p134='?' (Size = 4000), @p135='?' (Size = 4000), @p136='?' (Size = 4000), @p137='?' (Size = 4000), @p138='?' (DbType = Guid), @p139='?' (DbType = Guid), @p140='?' (Size = 4000), @p141='?' (Size = 4000), @p142='?' (Size = 4000), @p143='?' (Size = 4000), @p144='?' (DbType = Guid), @p145='?' (DbType = Guid), @p146='?' (Size = 4000), @p147='?' (Size = 4000), @p148='?' (Size = 4000), @p149='?' (Size = 4000), @p150='?' (DbType = Guid), @p151='?' (DbType = Guid), @p152='?' (Size = 4000), @p153='?' (Size = 4000), @p154='?' (Size = 4000), @p155='?' (Size = 4000), @p156='?' (DbType = Guid), @p157='?' (DbType = Guid), @p158='?' (Size = 4000), @p159='?' (Size = 4000), @p160='?' (Size = 4000), @p161='?' (Size = 4000), @p162='?' (DbType = Guid), @p163='?' (DbType = Guid), @p164='?' (Size = 4000), @p165='?' (Size = 4000), @p166='?' (Size = 4000), @p167='?' (Size = 4000), @p168='?' (DbType = Guid), @p169='?' (DbType = Guid), @p170='?' (Size = 4000), @p171='?' (Size = 4000), @p172='?' (Size = 4000), @p173='?' (Size = 4000), @p174='?' (DbType = Guid), @p175='?' (DbType = Guid), @p176='?' (Size = 4000), @p177='?' (Size = 4000), @p178='?' (Size = 4000), @p179='?' (Size = 4000), @p180='?' (DbType = Guid), @p181='?' (DbType = Guid), @p182='?' (Size = 4000), @p183='?' (Size = 4000), @p184='?' (Size = 4000), @p185='?' (Size = 4000), @p186='?' (DbType = Guid), @p187='?' (DbType = Guid), @p188='?' (Size = 4000), @p189='?' (Size = 4000), @p190='?' (Size = 4000), @p191='?' (Size = 4000), @p192='?' (DbType = Guid), @p193='?' (DbType = Guid), @p194='?' (Size = 4000), @p195='?' (Size = 4000), @p196='?' (Size = 4000), @p197='?' (Size = 4000), @p198='?' (DbType = Guid), @p199='?' (DbType = Guid), @p200='?' (Size = 4000), @p201='?' (Size = 4000), @p202='?' (Size = 4000), @p203='?' (Size = 4000), @p204='?' (DbType = Guid), @p205='?' (DbType = Guid), @p206='?' (Size = 4000), @p207='?' (Size = 4000), @p208='?' (Size = 4000), @p209='?' (Size = 4000), @p210='?' (DbType = Guid), @p211='?' (DbType = Guid), @p212='?' (Size = 4000), @p213='?' (Size = 4000), @p214='?' (Size = 4000), @p215='?' (Size = 4000), @p216='?' (DbType = Guid), @p217='?' (DbType = Guid), @p218='?' (Size = 4000), @p219='?' (Size = 4000), @p220='?' (Size = 4000), @p221='?' (Size = 4000), @p222='?' (DbType = Guid), @p223='?' (DbType = Guid), @p224='?' (Size = 4000), @p225='?' (Size = 4000), @p226='?' (Size = 4000), @p227='?' (Size = 4000), @p228='?' (DbType = Guid), @p229='?' (DbType = Guid), @p230='?' (Size = 4000), @p231='?' (Size = 4000), @p232='?' (Size = 4000), @p233='?' (Size = 4000), @p234='?' (DbType = Guid), @p235='?' (DbType = Guid), @p236='?' (Size = 4000), @p237='?' (Size = 4000), @p238='?' (Size = 4000), @p239='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Genres] ([Id], [AnimeId], [Name], [Russian])
+VALUES (@p0, @p1, @p2, @p3),
+(@p4, @p5, @p6, @p7),
+(@p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15),
+(@p16, @p17, @p18, @p19),
+(@p20, @p21, @p22, @p23);
+INSERT INTO [Images] ([Id], [AnimeId], [Original], [Preview], [X48], [X96])
+VALUES (@p24, @p25, @p26, @p27, @p28, @p29),
+(@p30, @p31, @p32, @p33, @p34, @p35),
+(@p36, @p37, @p38, @p39, @p40, @p41),
+(@p42, @p43, @p44, @p45, @p46, @p47),
+(@p48, @p49, @p50, @p51, @p52, @p53),
+(@p54, @p55, @p56, @p57, @p58, @p59),
+(@p60, @p61, @p62, @p63, @p64, @p65),
+(@p66, @p67, @p68, @p69, @p70, @p71),
+(@p72, @p73, @p74, @p75, @p76, @p77),
+(@p78, @p79, @p80, @p81, @p82, @p83),
+(@p84, @p85, @p86, @p87, @p88, @p89),
+(@p90, @p91, @p92, @p93, @p94, @p95),
+(@p96, @p97, @p98, @p99, @p100, @p101),
+(@p102, @p103, @p104, @p105, @p106, @p107),
+(@p108, @p109, @p110, @p111, @p112, @p113),
+(@p114, @p115, @p116, @p117, @p118, @p119),
+(@p120, @p121, @p122, @p123, @p124, @p125),
+(@p126, @p127, @p128, @p129, @p130, @p131),
+(@p132, @p133, @p134, @p135, @p136, @p137),
+(@p138, @p139, @p140, @p141, @p142, @p143),
+(@p144, @p145, @p146, @p147, @p148, @p149),
+(@p150, @p151, @p152, @p153, @p154, @p155),
+(@p156, @p157, @p158, @p159, @p160, @p161),
+(@p162, @p163, @p164, @p165, @p166, @p167),
+(@p168, @p169, @p170, @p171, @p172, @p173),
+(@p174, @p175, @p176, @p177, @p178, @p179),
+(@p180, @p181, @p182, @p183, @p184, @p185),
+(@p186, @p187, @p188, @p189, @p190, @p191),
+(@p192, @p193, @p194, @p195, @p196, @p197),
+(@p198, @p199, @p200, @p201, @p202, @p203),
+(@p204, @p205, @p206, @p207, @p208, @p209),
+(@p210, @p211, @p212, @p213, @p214, @p215),
+(@p216, @p217, @p218, @p219, @p220, @p221),
+(@p222, @p223, @p224, @p225, @p226, @p227),
+(@p228, @p229, @p230, @p231, @p232, @p233),
+(@p234, @p235, @p236, @p237, @p238, @p239);
+2022-05-18 20:10:15.720 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 4000), @p3='?' (Size = 4000), @p4='?' (Size = 4000), @p5='?' (Size = 4000), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (Size = 4000), @p9='?' (Size = 4000), @p10='?' (Size = 4000), @p11='?' (Size = 4000), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (Size = 4000), @p15='?' (Size = 4000), @p16='?' (Size = 4000), @p17='?' (Size = 4000), @p18='?' (DbType = Guid), @p19='?' (DbType = Guid), @p20='?' (Size = 4000), @p21='?' (Size = 4000), @p22='?' (Size = 4000), @p23='?' (Size = 4000), @p24='?' (DbType = Guid), @p25='?' (DbType = Guid), @p26='?' (Size = 4000), @p27='?' (Size = 4000), @p28='?' (Size = 4000), @p29='?' (Size = 4000), @p30='?' (DbType = Guid), @p31='?' (DbType = Guid), @p32='?' (Size = 4000), @p33='?' (Size = 4000), @p34='?' (Size = 4000), @p35='?' (Size = 4000), @p36='?' (DbType = Guid), @p37='?' (DbType = Guid), @p38='?' (Size = 4000), @p39='?' (Size = 4000), @p40='?' (Size = 4000), @p41='?' (Size = 4000), @p42='?' (DbType = Guid), @p43='?' (DbType = Guid), @p44='?' (Size = 4000), @p45='?' (Size = 4000), @p46='?' (Size = 4000), @p47='?' (Size = 4000), @p48='?' (DbType = Guid), @p49='?' (DbType = Guid), @p50='?' (Size = 4000), @p51='?' (Size = 4000), @p52='?' (Size = 4000), @p53='?' (Size = 4000), @p54='?' (DbType = Guid), @p55='?' (DbType = Guid), @p56='?' (Size = 4000), @p57='?' (Size = 4000), @p58='?' (Size = 4000), @p59='?' (Size = 4000), @p60='?' (DbType = Guid), @p61='?' (DbType = Guid), @p62='?' (Size = 4000), @p63='?' (Size = 4000), @p64='?' (Size = 4000), @p65='?' (Size = 4000), @p66='?' (DbType = Guid), @p67='?' (DbType = Guid), @p68='?' (Size = 4000), @p69='?' (Size = 4000), @p70='?' (Size = 4000), @p71='?' (Size = 4000), @p72='?' (DbType = Guid), @p73='?' (DbType = Guid), @p74='?' (Size = 4000), @p75='?' (Size = 4000), @p76='?' (Size = 4000), @p77='?' (Size = 4000), @p78='?' (DbType = Guid), @p79='?' (DbType = Guid), @p80='?' (Size = 4000), @p81='?' (Size = 4000), @p82='?' (Size = 4000), @p83='?' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Images] ([Id], [AnimeId], [Original], [Preview], [X48], [X96])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5),
+(@p6, @p7, @p8, @p9, @p10, @p11),
+(@p12, @p13, @p14, @p15, @p16, @p17),
+(@p18, @p19, @p20, @p21, @p22, @p23),
+(@p24, @p25, @p26, @p27, @p28, @p29),
+(@p30, @p31, @p32, @p33, @p34, @p35),
+(@p36, @p37, @p38, @p39, @p40, @p41),
+(@p42, @p43, @p44, @p45, @p46, @p47),
+(@p48, @p49, @p50, @p51, @p52, @p53),
+(@p54, @p55, @p56, @p57, @p58, @p59),
+(@p60, @p61, @p62, @p63, @p64, @p65),
+(@p66, @p67, @p68, @p69, @p70, @p71),
+(@p72, @p73, @p74, @p75, @p76, @p77),
+(@p78, @p79, @p80, @p81, @p82, @p83);
+2022-05-18 20:10:15.731 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-18 20:10:15.731 +05:00 [INF] Аниме после: 50
+2022-05-18 20:10:15.732 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [Genres] AS [g]
+2022-05-18 20:10:15.732 +05:00 [INF] Жанров после: 258
+2022-05-18 20:10:15.760 +05:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-05-18 20:10:15.795 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(@__p_0) [a].[Id], [a].[AiredOn], [a].[Description], [a].[DescriptionHtml], [a].[Episodes], [a].[Name], [a].[ReleasedOn], [a].[Russian], [a].[Score], [a].[UserComment], [a].[UserRating]
+FROM [AnimeTitles] AS [a]
+2022-05-18 20:10:15.799 +05:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-05-18 20:10:15.799 +05:00 [WRN] The query uses a row limiting operator ('Skip'/'Take') without an 'OrderBy' operator. This may lead to unpredictable results. If the 'Distinct' operator is used after 'OrderBy', then make sure to use the 'OrderBy' operator after 'Distinct' as the ordering would otherwise get erased.
+2022-05-18 20:10:15.804 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[AiredOn], [a].[Description], [a].[DescriptionHtml], [a].[Episodes], [a].[Name], [a].[ReleasedOn], [a].[Russian], [a].[Score], [a].[UserComment], [a].[UserRating]
+FROM [AnimeTitles] AS [a]
+ORDER BY (SELECT 1)
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+2022-05-18 20:10:15.883 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 200), @p2='?' (Size = 200)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Accounts] ([Id], [Password], [UserName])
+VALUES (@p0, @p1, @p2);
+2022-05-18 20:10:15.885 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 200), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AnimeCollections] ([Id], [ImageId], [Name], [UserComment], [UserId], [UserRating])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2022-05-18 20:10:15.886 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 200), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AnimeCollections] ([Id], [ImageId], [Name], [UserComment], [UserId], [UserRating])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2022-05-18 20:10:15.890 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (DbType = Guid), @p11='?' (DbType = Guid), @p12='?' (DbType = Guid), @p13='?' (DbType = Guid), @p14='?' (DbType = Guid), @p15='?' (DbType = Guid), @p16='?' (DbType = Guid), @p17='?' (DbType = Guid), @p18='?' (DbType = Guid), @p19='?' (DbType = Guid), @p20='?' (DbType = Guid), @p21='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AnimeCollectionAnimeTitle] ([AnimeCollectionsId], [AnimeTitlesId])
+VALUES (@p6, @p7),
+(@p8, @p9),
+(@p10, @p11),
+(@p12, @p13),
+(@p14, @p15),
+(@p16, @p17),
+(@p18, @p19),
+(@p20, @p21);
+2022-05-18 20:10:15.956 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-18 20:10:16.363 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-18 20:10:16.363 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-18 20:10:16.368 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-18 20:10:16.368 +05:00 [INF] Hosting environment: Development
+2022-05-18 20:10:16.368 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\_AniRate\AniRate.Api\AniRate.WebApi
+2022-05-18 20:10:16.761 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/index.html - -
+2022-05-18 20:10:17.162 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2022-05-18 20:10:17.163 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/index.html - - - 200 - text/html;charset=utf-8 405.8835ms
+2022-05-18 20:10:17.168 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 5.5320ms
+2022-05-18 20:10:17.593 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-18 20:10:17.819 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 225.2648ms
+2022-05-18 20:10:36.518 +05:00 [INF] Request starting HTTP/1.1 POST https://localhost:5001/api/auth/login application/json 63
+2022-05-18 20:10:36.680 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AuthController.Login (AniRate.WebApi)'
+2022-05-18 20:10:36.708 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(AniRate.WebApi.Models.AuthModels.LoginViewModel) on controller AniRate.WebApi.Controllers.AuthController (AniRate.WebApi).
+2022-05-18 20:10:36.760 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-18 20:10:36.819 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__loginViewModel_Username_0='?' (Size = 200), @__passworsHash_1='?' (Size = 200)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[Password], [a].[UserName]
+FROM [Accounts] AS [a]
+WHERE ([a].[UserName] = @__loginViewModel_Username_0) AND ([a].[Password] = @__passworsHash_1)
+2022-05-18 20:10:37.051 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2022-05-18 20:10:37.062 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AuthController.Login (AniRate.WebApi) in 346.4882ms
+2022-05-18 20:10:37.063 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AuthController.Login (AniRate.WebApi)'
+2022-05-18 20:10:37.071 +05:00 [INF] Request finished HTTP/1.1 POST https://localhost:5001/api/auth/login application/json 63 - 200 - text/plain;+charset=utf-8 553.3167ms
+2022-05-18 20:10:41.279 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/AnimeTitles?PageSize=10&PageNumber=2 - -
+2022-05-18 20:10:41.351 +05:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2022-05-18 20:10:41.414 +05:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'.
+2022-05-18 20:10:41.414 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-18 20:10:41.421 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-18 20:10:41.669 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":2,"PageSize":10,"$type":"GetTitlesQuery"}
+2022-05-18 20:10:41.726 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-18 20:10:41.787 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-18 20:10:41.879 +05:00 [INF] Executed DbCommand (6ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_0 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-18 20:10:41.887 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-18 20:10:41.896 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 474.7798ms
+2022-05-18 20:10:41.896 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-18 20:10:41.896 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:5001/api/AnimeTitles?PageSize=10&PageNumber=2 - - - 200 - application/json;+charset=utf-8 617.3951ms
+2022-05-18 20:10:51.890 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/AnimeCollections?page=1&size=15 - -
+2022-05-18 20:10:51.920 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi)'
+2022-05-18 20:10:51.923 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeCollections"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeCollections.Queries.BriefCollectionVM]]] GetAll(Int32, Int32) on controller AniRate.WebApi.Controllers.AnimeCollectionsController (AniRate.WebApi).
+2022-05-18 20:10:51.954 +05:00 [INF] AniRate Request: GetCollectionsQuery "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","PageNumber":1,"PageSize":15,"$type":"GetCollectionsQuery"}
+2022-05-18 20:10:51.956 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-18 20:10:52.005 +05:00 [INF] Executed DbCommand (6ms) [Parameters=[@__request_UserId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeCollections] AS [a]
+WHERE [a].[UserId] = @__request_UserId_0
+2022-05-18 20:10:52.040 +05:00 [INF] Executed DbCommand (13ms) [Parameters=[@__request_UserId_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[ImageId], [a].[Name], (
+        SELECT COUNT(*)
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+        WHERE [a].[Id] = [a0].[AnimeCollectionsId]) AS [c]
+    FROM [AnimeCollections] AS [a]
+    WHERE [a].[UserId] = @__request_UserId_0
+    ORDER BY (
+        SELECT COUNT(*)
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+        WHERE [a].[Id] = [a0].[AnimeCollectionsId]) DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[ImageId] = [i].[Id]
+ORDER BY [t].[c] DESC
+2022-05-18 20:10:52.042 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeCollections.Queries.BriefCollectionVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-18 20:10:52.045 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi) in 121.2757ms
+2022-05-18 20:10:52.045 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi)'
+2022-05-18 20:10:52.045 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:5001/api/AnimeCollections?page=1&size=15 - - - 200 - application/json;+charset=utf-8 155.1080ms
+2022-05-18 20:11:16.390 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-18 20:11:16.905 +05:00 [INF] Executed DbCommand (37ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-05-18 20:11:17.027 +05:00 [INF] Executed DbCommand (103ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2022-05-18 20:11:17.394 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AnimeCollections] AS [a]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-05-18 20:11:17.416 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-18 20:11:17.631 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-18 20:11:17.631 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-18 20:11:17.635 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-18 20:11:17.635 +05:00 [INF] Hosting environment: Development
+2022-05-18 20:11:17.635 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\_AniRate\AniRate.Api\AniRate.WebApi
+2022-05-18 20:11:18.257 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/index.html - -
+2022-05-18 20:11:18.492 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/index.html - - - 200 - text/html;charset=utf-8 247.6275ms
+2022-05-18 20:11:18.507 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2022-05-18 20:11:18.511 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 3.5750ms
+2022-05-18 20:11:18.934 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-18 20:11:19.164 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 228.5760ms

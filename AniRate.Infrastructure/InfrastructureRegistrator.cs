@@ -1,5 +1,6 @@
 ﻿using AniRate.Application.Interfaces;
 using AniRate.Infrastructure.Persistence;
+using AniRate.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,7 @@ namespace AniRate.Infrastructure
                     configuration["DbConnection"], b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
             services.AddScoped<IApplicationDbContext>(provider =>
                 provider.GetService<ApplicationDbContext>());
+            services.AddSingleton<HashService>();
 
             return services;
         }

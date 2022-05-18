@@ -1,21 +1,16 @@
 ﻿using AniRate.Application.Interfaces;
 using AniRate.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AniRate.Infrastructure.Services;
 
 namespace AniRate.Infrastructure.Persistence
 {
     public class ApplicationDbContextSeed
     {
-        public static async Task SeedSampleDataAsync(ApplicationDbContext context)
+        public static async Task SeedSampleDataAsync(ApplicationDbContext context, HashService hashService)
         {
             if (!context.AnimeCollections.Any())
             {
                 await ShikimoriApiService.ParseAnimeTitles(context);
-
 
                 var mainCollection = new AnimeCollection
                 {
@@ -35,11 +30,12 @@ namespace AniRate.Infrastructure.Persistence
                     UserRating = 5,
                 };
 
+                var userPassword = hashService.CalculateMD5Hash("user");
                 var user = new Account()
                 {
                     Id = Guid.Parse("A9168C5E-CEB2-4faa-B6BF-329BF39FA1E4"),
                     UserName = "user@email.com",
-                    Password = "user",
+                    Password = userPassword,
                 };
 
                 var titles1 = context.AnimeTitles.Take(5).ToArray();

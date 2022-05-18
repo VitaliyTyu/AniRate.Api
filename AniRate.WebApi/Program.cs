@@ -1,5 +1,6 @@
 using AniRate.Application.Interfaces;
 using AniRate.Infrastructure.Persistence;
+using AniRate.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Events;
@@ -24,9 +25,10 @@ namespace AniRate.WebApi
                 try
                 {
                     var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
+                    var hashService = serviceProvider.GetRequiredService<HashService>();
                     //await dbContext.Database.EnsureDeletedAsync();
                     await dbContext.Database.EnsureCreatedAsync();
-                    await ApplicationDbContextSeed.SeedSampleDataAsync(dbContext);
+                    await ApplicationDbContextSeed.SeedSampleDataAsync(dbContext, hashService);
                 }
                 catch (Exception exception)
                 {
