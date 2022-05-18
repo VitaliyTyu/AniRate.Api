@@ -25,8 +25,8 @@ namespace AniRate.WebApi
                 {
                     var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
                     //await dbContext.Database.EnsureDeletedAsync();
-                    //await dbContext.Database.EnsureCreatedAsync();
-                    //await ApplicationDbContextSeed.SeedSampleDataAsync(dbContext);
+                    await dbContext.Database.EnsureCreatedAsync();
+                    await ApplicationDbContextSeed.SeedSampleDataAsync(dbContext);
                 }
                 catch (Exception exception)
                 {

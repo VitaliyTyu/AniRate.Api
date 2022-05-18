@@ -91,7 +91,9 @@ namespace AniRate.WebApi
             });
             app.UseRouting();
             app.UseHttpsRedirection();
+
             app.UseCors("AllowAll");
+
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

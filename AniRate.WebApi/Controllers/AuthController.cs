@@ -15,6 +15,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -44,7 +45,9 @@ namespace AniRate.WebApi.Controllers
                 return BadRequest(loginViewModel);
             }
 
-            var user = await _dbContext.Accounts.SingleOrDefaultAsync(u => u.UserName == loginViewModel.Username && u.Password == loginViewModel.Password);
+            var passworsHash = CalculateMD5Hash(loginViewModel.Password);
+
+            var user = await _dbContext.Accounts.SingleOrDefaultAsync(u => u.UserName == loginViewModel.Username && u.Password == passworsHash);
 
             if (user == null)
             {
@@ -71,9 +74,11 @@ namespace AniRate.WebApi.Controllers
                 return BadRequest(registerViewModel);
             }
 
+            var passworsHash = CalculateMD5Hash(registerViewModel.Password);
+
             var user = new Account
             {
-                Password = registerViewModel.Password,
+                Password = passworsHash,
                 UserName = registerViewModel.Username,
                 Id = Guid.NewGuid(),
             };
@@ -116,5 +121,17 @@ namespace AniRate.WebApi.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        private string CalculateMD5Hash(string input)
+        {
+            MD5 md5 = MD5.Create();
+            byte[] inputBytes = Encoding.ASCII.GetBytes(input);
+            byte[] hash = md5.ComputeHash(inputBytes);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hash.Length; i++)
+            {
+                sb.Append(hash[i].ToString("X2"));
+            }
+            return sb.ToString();
+        }
     }
 }

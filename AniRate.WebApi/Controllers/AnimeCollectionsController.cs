@@ -12,6 +12,7 @@ using AniRate.Application.Interfaces;
 using AniRate.WebApi.Models.AnimeCollectionsDtos;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AniRate.WebApi.Controllers
@@ -94,6 +95,7 @@ namespace AniRate.WebApi.Controllers
         /// </summary>
         /// <returns>NoContent</returns>
         /// <response code="204">Success</response>
+        //[DisableCors]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpPut("Titles")]
         [Authorize]
