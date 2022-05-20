@@ -30,15 +30,22 @@ namespace AniRate.Application.AnimeCollections.Queries.GetCollectionDetails
 
         public async Task<CollectionDetailsVM> Handle(GetCollectionDetailsQuery request, CancellationToken cancellationToken)
         {
-            var handler = new GetTitlesFromCollectionQueryHandler(_dbContext, _mapper);
+            //var handler = new GetTitlesFromCollectionQueryHandler(_dbContext, _mapper);
+            //var titles = await handler.Handle(
+            //    new GetTitlesFromCollectionQuery
+            //    {
+            //        CollectionId = request.Id,
+            //        UserId = request.UserId,
+            //    },
+            //    CancellationToken.None);
 
-            var titles = await handler.Handle(
-                new GetTitlesFromCollectionQuery
-                {
-                    CollectionId = request.Id,
-                    UserId = request.UserId,
-                },
-                CancellationToken.None);
+            var titles = await _dbContext.AnimeCollections
+                .Where(c => c.Id == request.Id && c.UserId == request.UserId)
+                .SelectMany(c => c.AnimeTitles)
+                .ProjectTo<BriefTitleVM>(_mapper.ConfigurationProvider)
+                .OrderByDescending(a => a.Score)
+                .PaginatedListAsync(request.AnimeTitlesPageNumber, request.AnimeTitlesPageSize);
+
 
             var collections = await _dbContext.AnimeCollections
                 .Where(c => c.Id == request.Id && c.UserId == request.UserId)
@@ -52,6 +59,7 @@ namespace AniRate.Application.AnimeCollections.Queries.GetCollectionDetails
                     AnimeTitles = titles
                 })
                 .ToListAsync();
+
 
             if (collections.Count == 0 || collections[0] == null)
             {

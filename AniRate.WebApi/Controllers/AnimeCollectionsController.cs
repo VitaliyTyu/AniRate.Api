@@ -58,16 +58,16 @@ namespace AniRate.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("CollectionDetails")]
         [Authorize]
-        public async Task<ActionResult<CollectionDetailsVM>> Get(Guid id, int animePage, int animeSize)
+        public async Task<ActionResult<CollectionDetailsVM>> Get(Guid id, int page, int size)
         {
             var query = new GetCollectionDetailsQuery()
             {
                 UserId = UserId,
                 Id = id,
-                AnimeTitlesPageNumber = animePage,
-                AnimeTitlesPageSize = animeSize,
+                AnimeTitlesPageNumber = page,
+                AnimeTitlesPageSize = size,
             };
-            query.UserId = UserId;
+
             var collectionDetailsVM = await Mediator.Send(query);
             return Ok(collectionDetailsVM);
         }

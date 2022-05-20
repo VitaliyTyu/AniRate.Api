@@ -57,16 +57,16 @@ namespace AniRate.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("TitlesFromCollection")]
         [Authorize]
-        public async Task<ActionResult<TitlesListVM>> GetTitlesFromCollection(/*Guid collectionId, int page, int size*/ [FromQuery] GetTitlesFromCollectionQuery query)
+        public async Task<ActionResult<PaginatedList<BriefTitleVM>>> GetTitlesFromCollection(Guid collectionId, int page, int size)
         {
-            //var query = new GetTitlesFromCollectionQuery()
-            //{
-            //    CollectionId = collectionId,
-            //    PageNumber = page,
-            //    PageSize = size,
-            //    UserId = UserId,
-            //};
-            query.UserId = UserId;
+            var query = new GetTitlesFromCollectionQuery()
+            {
+                CollectionId = collectionId,
+                PageNumber = page,
+                PageSize = size,
+                UserId = UserId,
+            };
+
             var titles = await Mediator.Send(query);
             return Ok(titles);
         }

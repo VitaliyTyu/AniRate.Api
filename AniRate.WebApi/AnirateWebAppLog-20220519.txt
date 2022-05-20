@@ -1,0 +1,1745 @@
+2022-05-19 09:52:39.704 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 09:52:41.502 +05:00 [INF] Executed DbCommand (35ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-05-19 09:52:41.588 +05:00 [INF] Executed DbCommand (68ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2022-05-19 09:52:41.927 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AnimeCollections] AS [a]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-05-19 09:52:41.949 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-19 09:52:42.212 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-19 09:52:42.212 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-19 09:52:42.215 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-19 09:52:42.215 +05:00 [INF] Hosting environment: Development
+2022-05-19 09:52:42.215 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\_AniRate\AniRate.Api\AniRate.WebApi
+2022-05-19 09:52:42.862 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/index.html - -
+2022-05-19 09:52:44.125 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/index.html - - - 200 - text/html;charset=utf-8 1267.6597ms
+2022-05-19 09:52:44.163 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2022-05-19 09:52:44.171 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 8.1411ms
+2022-05-19 09:52:44.613 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-19 09:52:44.789 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 176.3391ms
+2022-05-19 09:53:09.751 +05:00 [INF] Request starting HTTP/1.1 POST https://localhost:5001/api/auth/login application/json 63
+2022-05-19 09:53:09.815 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AuthController.Login (AniRate.WebApi)'
+2022-05-19 09:53:09.841 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(AniRate.WebApi.Models.AuthModels.LoginViewModel) on controller AniRate.WebApi.Controllers.AuthController (AniRate.WebApi).
+2022-05-19 09:53:09.868 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 09:53:09.996 +05:00 [INF] Executed DbCommand (32ms) [Parameters=[@__loginViewModel_Username_0='?' (Size = 200), @__passworsHash_1='?' (Size = 200)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[Password], [a].[UserName]
+FROM [Accounts] AS [a]
+WHERE ([a].[UserName] = @__loginViewModel_Username_0) AND ([a].[Password] = @__passworsHash_1)
+2022-05-19 09:53:10.166 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2022-05-19 09:53:10.175 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AuthController.Login (AniRate.WebApi) in 328.9242ms
+2022-05-19 09:53:10.176 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AuthController.Login (AniRate.WebApi)'
+2022-05-19 09:53:10.179 +05:00 [INF] Request finished HTTP/1.1 POST https://localhost:5001/api/auth/login application/json 63 - 200 - text/plain;+charset=utf-8 427.6945ms
+2022-05-19 09:53:18.438 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/AnimeCollections?page=1&size=15 - -
+2022-05-19 09:53:18.519 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi)'
+2022-05-19 09:53:18.524 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeCollections"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeCollections.Queries.BriefCollectionVM]]] GetAll(Int32, Int32) on controller AniRate.WebApi.Controllers.AnimeCollectionsController (AniRate.WebApi).
+2022-05-19 09:53:18.738 +05:00 [INF] AniRate Request: GetCollectionsQuery "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","PageNumber":1,"PageSize":15,"$type":"GetCollectionsQuery"}
+2022-05-19 09:53:18.797 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 09:53:18.917 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__request_UserId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeCollections] AS [a]
+WHERE [a].[UserId] = @__request_UserId_0
+2022-05-19 09:53:18.991 +05:00 [INF] Executed DbCommand (12ms) [Parameters=[@__request_UserId_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[ImageId], [a].[Name], (
+        SELECT COUNT(*)
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+        WHERE [a].[Id] = [a0].[AnimeCollectionsId]) AS [c]
+    FROM [AnimeCollections] AS [a]
+    WHERE [a].[UserId] = @__request_UserId_0
+    ORDER BY (
+        SELECT COUNT(*)
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+        WHERE [a].[Id] = [a0].[AnimeCollectionsId]) DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[ImageId] = [i].[Id]
+ORDER BY [t].[c] DESC
+2022-05-19 09:53:19.022 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeCollections.Queries.BriefCollectionVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 09:53:19.030 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi) in 506.0908ms
+2022-05-19 09:53:19.030 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi)'
+2022-05-19 09:53:19.031 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:5001/api/AnimeCollections?page=1&size=15 - - - 200 - application/json;+charset=utf-8 592.8505ms
+2022-05-19 09:53:38.984 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=db815483-9aa0-4af2-b1a5-56712a164b25&PageNumber=1&PageSize=10 - -
+2022-05-19 09:53:38.988 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi)'
+2022-05-19 09:53:38.993 +05:00 [INF] Route matched with {action = "GetTitlesFromCollection", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetTitlesFromCollection(AniRate.Application.AnimeTitles.Queries.GetTitlesFromCollection.GetTitlesFromCollectionQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 09:53:39.003 +05:00 [INF] AniRate Request: GetTitlesFromCollectionQuery "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"CollectionId":"db815483-9aa0-4af2-b1a5-56712a164b25","UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","PageNumber":1,"PageSize":10,"$type":"GetTitlesFromCollectionQuery"}
+2022-05-19 09:53:39.007 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 09:53:39.015 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ImageId], [a].[Name], [a].[UserComment], [a].[UserId], [a].[UserRating]
+FROM [AnimeCollections] AS [a]
+WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 09:53:39.062 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeCollections] AS [a]
+INNER JOIN (
+    SELECT [a0].[AnimeCollectionsId]
+    FROM [AnimeCollectionAnimeTitle] AS [a0]
+    INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+) AS [t] ON [a].[Id] = [t].[AnimeCollectionsId]
+WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 09:53:39.081 +05:00 [INF] Executed DbCommand (7ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid), @__p_2='?' (DbType = Int32), @__p_3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t0].[Id0] AS [Id], [t0].[Name0] AS [Name], [t0].[Russian], [t0].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [t].[Id] AS [Id0], [t].[Name] AS [Name0], [t].[Russian], [t].[Score]
+    FROM [AnimeCollections] AS [a]
+    INNER JOIN (
+        SELECT [a1].[Id], [a1].[Name], [a1].[Russian], [a1].[Score], [a0].[AnimeCollectionsId]
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+    ) AS [t] ON [a].[Id] = [t].[AnimeCollectionsId]
+    WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+    ORDER BY [t].[Score] DESC
+    OFFSET @__p_2 ROWS FETCH NEXT @__p_3 ROWS ONLY
+) AS [t0]
+LEFT JOIN [Images] AS [i] ON [t0].[Id0] = [i].[AnimeId]
+ORDER BY [t0].[Score] DESC
+2022-05-19 09:53:39.094 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 09:53:39.096 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi) in 103.5505ms
+2022-05-19 09:53:39.097 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi)'
+2022-05-19 09:53:39.097 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=db815483-9aa0-4af2-b1a5-56712a164b25&PageNumber=1&PageSize=10 - - - 200 - application/json;+charset=utf-8 113.0444ms
+2022-05-19 09:54:07.348 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 09:54:07.942 +05:00 [INF] Executed DbCommand (41ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-05-19 09:54:08.409 +05:00 [INF] Executed DbCommand (449ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2022-05-19 09:54:09.056 +05:00 [INF] Executed DbCommand (300ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AnimeCollections] AS [a]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-05-19 09:54:09.081 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-19 09:54:09.312 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-19 09:54:09.312 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-19 09:54:09.316 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-19 09:54:09.316 +05:00 [INF] Hosting environment: Development
+2022-05-19 09:54:09.316 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\_AniRate\AniRate.Api\AniRate.WebApi
+2022-05-19 09:54:09.461 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/index.html - -
+2022-05-19 09:54:09.698 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/index.html - - - 200 - text/html;charset=utf-8 241.4466ms
+2022-05-19 09:54:09.711 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2022-05-19 09:54:09.715 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 4.6185ms
+2022-05-19 09:54:10.087 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-19 09:54:10.105 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/favicon-32x32.png - -
+2022-05-19 09:54:10.122 +05:00 [INF] Sending file. Request path: '/favicon-32x32.png'. Physical path: 'N/A'
+2022-05-19 09:54:10.123 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/favicon-32x32.png - - - 200 628 image/png 17.6490ms
+2022-05-19 09:54:10.259 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 171.8529ms
+2022-05-19 09:54:18.900 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=db815483-9aa0-4af2-b1a5-56712a164b25&PageNumber=1&PageSize=10 - -
+2022-05-19 09:54:19.154 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi)'
+2022-05-19 09:54:19.178 +05:00 [INF] Route matched with {action = "GetTitlesFromCollection", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetTitlesFromCollection(System.Guid, Int32, Int32) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 09:54:19.405 +05:00 [INF] AniRate Request: GetTitlesFromCollectionQuery "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"CollectionId":"db815483-9aa0-4af2-b1a5-56712a164b25","UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","PageNumber":0,"PageSize":0,"$type":"GetTitlesFromCollectionQuery"}
+2022-05-19 09:54:19.410 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 09:54:19.560 +05:00 [INF] Executed DbCommand (50ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ImageId], [a].[Name], [a].[UserComment], [a].[UserId], [a].[UserRating]
+FROM [AnimeCollections] AS [a]
+WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 09:54:19.827 +05:00 [INF] Executed DbCommand (50ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeCollections] AS [a]
+INNER JOIN (
+    SELECT [a0].[AnimeCollectionsId]
+    FROM [AnimeCollectionAnimeTitle] AS [a0]
+    INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+) AS [t] ON [a].[Id] = [t].[AnimeCollectionsId]
+WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 09:54:19.888 +05:00 [INF] Executed DbCommand (29ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [t0].[Id0] AS [Id], [t0].[Name0] AS [Name], [t0].[Russian], [t0].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [t].[Id] AS [Id0], [t].[Name] AS [Name0], [t].[Russian], [t].[Score]
+    FROM [AnimeCollections] AS [a]
+    INNER JOIN (
+        SELECT [a1].[Id], [a1].[Name], [a1].[Russian], [a1].[Score], [a0].[AnimeCollectionsId]
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+    ) AS [t] ON [a].[Id] = [t].[AnimeCollectionsId]
+    WHERE 0 = 1
+) AS [t0]
+LEFT JOIN [Images] AS [i] ON [t0].[Id0] = [i].[AnimeId]
+ORDER BY [t0].[Score] DESC
+2022-05-19 09:54:19.894 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 09:54:19.906 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi) in 721.3853ms
+2022-05-19 09:54:19.907 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi)'
+2022-05-19 09:54:19.910 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=db815483-9aa0-4af2-b1a5-56712a164b25&PageNumber=1&PageSize=10 - - - 200 - application/json;+charset=utf-8 1009.7786ms
+2022-05-19 09:54:34.087 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 09:54:34.598 +05:00 [INF] Executed DbCommand (39ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-05-19 09:54:36.609 +05:00 [INF] Executed DbCommand (1,988ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2022-05-19 09:54:37.295 +05:00 [INF] Executed DbCommand (374ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AnimeCollections] AS [a]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-05-19 09:54:37.317 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-19 09:54:37.511 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-19 09:54:37.511 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-19 09:54:37.515 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-19 09:54:37.515 +05:00 [INF] Hosting environment: Development
+2022-05-19 09:54:37.516 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\_AniRate\AniRate.Api\AniRate.WebApi
+2022-05-19 09:54:37.806 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/index.html - -
+2022-05-19 09:54:38.005 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/index.html - - - 200 - text/html;charset=utf-8 202.5716ms
+2022-05-19 09:54:38.007 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2022-05-19 09:54:38.010 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 3.4698ms
+2022-05-19 09:54:38.335 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-19 09:54:38.499 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 163.7412ms
+2022-05-19 09:54:43.080 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=db815483-9aa0-4af2-b1a5-56712a164b25&PageNumber=1&PageSize=10 - -
+2022-05-19 09:54:43.300 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi)'
+2022-05-19 09:54:43.328 +05:00 [INF] Route matched with {action = "GetTitlesFromCollection", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetTitlesFromCollection(AniRate.Application.AnimeTitles.Queries.GetTitlesFromCollection.GetTitlesFromCollectionQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 09:54:43.553 +05:00 [INF] AniRate Request: GetTitlesFromCollectionQuery "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"CollectionId":"db815483-9aa0-4af2-b1a5-56712a164b25","UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","PageNumber":1,"PageSize":10,"$type":"GetTitlesFromCollectionQuery"}
+2022-05-19 09:54:43.560 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 09:54:43.696 +05:00 [INF] Executed DbCommand (40ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ImageId], [a].[Name], [a].[UserComment], [a].[UserId], [a].[UserRating]
+FROM [AnimeCollections] AS [a]
+WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 09:54:43.998 +05:00 [INF] Executed DbCommand (86ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeCollections] AS [a]
+INNER JOIN (
+    SELECT [a0].[AnimeCollectionsId]
+    FROM [AnimeCollectionAnimeTitle] AS [a0]
+    INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+) AS [t] ON [a].[Id] = [t].[AnimeCollectionsId]
+WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 09:54:44.125 +05:00 [INF] Executed DbCommand (101ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid), @__p_2='?' (DbType = Int32), @__p_3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t0].[Id0] AS [Id], [t0].[Name0] AS [Name], [t0].[Russian], [t0].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [t].[Id] AS [Id0], [t].[Name] AS [Name0], [t].[Russian], [t].[Score]
+    FROM [AnimeCollections] AS [a]
+    INNER JOIN (
+        SELECT [a1].[Id], [a1].[Name], [a1].[Russian], [a1].[Score], [a0].[AnimeCollectionsId]
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+    ) AS [t] ON [a].[Id] = [t].[AnimeCollectionsId]
+    WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+    ORDER BY [t].[Score] DESC
+    OFFSET @__p_2 ROWS FETCH NEXT @__p_3 ROWS ONLY
+) AS [t0]
+LEFT JOIN [Images] AS [i] ON [t0].[Id0] = [i].[AnimeId]
+ORDER BY [t0].[Score] DESC
+2022-05-19 09:54:44.164 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 09:54:44.181 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi) in 846.5516ms
+2022-05-19 09:54:44.181 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi)'
+2022-05-19 09:54:44.184 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=db815483-9aa0-4af2-b1a5-56712a164b25&PageNumber=1&PageSize=10 - - - 200 - application/json;+charset=utf-8 1103.6984ms
+2022-05-19 09:55:25.245 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 09:55:26.313 +05:00 [INF] Executed DbCommand (38ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-05-19 09:55:27.553 +05:00 [INF] Executed DbCommand (1,222ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2022-05-19 09:55:28.264 +05:00 [INF] Executed DbCommand (397ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AnimeCollections] AS [a]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-05-19 09:55:28.286 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-19 09:55:28.480 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-19 09:55:28.481 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-19 09:55:28.485 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-19 09:55:28.485 +05:00 [INF] Hosting environment: Development
+2022-05-19 09:55:28.485 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\_AniRate\AniRate.Api\AniRate.WebApi
+2022-05-19 09:55:31.939 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-19 09:55:32.145 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 210.3239ms
+2022-05-19 09:55:32.187 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-19 09:55:32.208 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 20.2089ms
+2022-05-19 09:55:32.734 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/favicon.ico - -
+2022-05-19 09:55:32.796 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/favicon.ico - - - 404 0 - 61.7001ms
+2022-05-19 09:55:40.889 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-19 09:55:40.904 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 14.9957ms
+2022-05-19 19:18:38.234 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 19:18:39.421 +05:00 [INF] Executed DbCommand (43ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-05-19 19:18:40.014 +05:00 [INF] Executed DbCommand (573ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2022-05-19 19:18:40.476 +05:00 [INF] Executed DbCommand (116ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AnimeCollections] AS [a]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-05-19 19:18:40.511 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-19 19:18:40.843 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-19 19:18:40.843 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-19 19:18:40.847 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-19 19:18:40.848 +05:00 [INF] Hosting environment: Development
+2022-05-19 19:18:40.848 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\_AniRate\AniRate.Api\AniRate.WebApi
+2022-05-19 19:18:41.620 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/index.html - -
+2022-05-19 19:18:42.603 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2022-05-19 19:18:42.611 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 7.3074ms
+2022-05-19 19:18:42.633 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/index.html - - - 200 - text/html;charset=utf-8 1018.0526ms
+2022-05-19 19:18:43.269 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-19 19:18:43.544 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 274.3122ms
+2022-05-19 19:19:09.627 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/AnimeTitles?PageSize=10&PageNumber=2 - -
+2022-05-19 19:19:09.852 +05:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2022-05-19 19:19:09.996 +05:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'.
+2022-05-19 19:19:10.002 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 19:19:10.037 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 19:19:10.257 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":2,"PageSize":10,"$type":"GetTitlesQuery"}
+2022-05-19 19:19:10.262 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 19:19:10.367 +05:00 [INF] Executed DbCommand (28ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 19:19:10.686 +05:00 [INF] Executed DbCommand (172ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_0 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 19:19:10.768 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 19:19:10.787 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 743.2321ms
+2022-05-19 19:19:10.788 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 19:19:10.791 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:5001/api/AnimeTitles?PageSize=10&PageNumber=2 - - - 200 - application/json;+charset=utf-8 1163.8291ms
+2022-05-19 19:19:15.973 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/AnimeTitles?PageSize=10&PageNumber=1 - -
+2022-05-19 19:19:15.975 +05:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2022-05-19 19:19:15.975 +05:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'.
+2022-05-19 19:19:15.975 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 19:19:15.976 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 19:19:15.977 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":1,"PageSize":10,"$type":"GetTitlesQuery"}
+2022-05-19 19:19:16.042 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 19:19:16.050 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 19:19:16.060 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 19:19:16.061 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 19:19:16.062 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 86.0106ms
+2022-05-19 19:19:16.062 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 19:19:16.062 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:5001/api/AnimeTitles?PageSize=10&PageNumber=1 - - - 200 - application/json;+charset=utf-8 89.4151ms
+2022-05-19 19:19:19.170 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/AnimeTitles?PageSize=10&PageNumber=3 - -
+2022-05-19 19:19:19.173 +05:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2022-05-19 19:19:19.174 +05:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'.
+2022-05-19 19:19:19.174 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 19:19:19.174 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 19:19:19.175 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":3,"PageSize":10,"$type":"GetTitlesQuery"}
+2022-05-19 19:19:19.176 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 19:19:19.178 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 19:19:19.183 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 19:19:19.184 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 19:19:19.184 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 10.3745ms
+2022-05-19 19:19:19.184 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 19:19:19.185 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:5001/api/AnimeTitles?PageSize=10&PageNumber=3 - - - 200 - application/json;+charset=utf-8 14.2251ms
+2022-05-19 19:19:22.187 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/AnimeTitles?PageSize=10&PageNumber=4 - -
+2022-05-19 19:19:22.188 +05:00 [INF] Failed to validate the token.
+Microsoft.IdentityModel.Tokens.SecurityTokenExpiredException: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'.
+   at Microsoft.IdentityModel.Tokens.Validators.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, SecurityToken securityToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateLifetime(Nullable`1 notBefore, Nullable`1 expires, JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateTokenPayload(JwtSecurityToken jwtToken, TokenValidationParameters validationParameters)
+   at System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler.ValidateToken(String token, TokenValidationParameters validationParameters, SecurityToken& validatedToken)
+   at Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler.HandleAuthenticateAsync()
+2022-05-19 19:19:22.188 +05:00 [INF] Bearer was not authenticated. Failure message: IDX10223: Lifetime validation failed. The token is expired. ValidTo: 'System.DateTime', Current time: 'System.DateTime'.
+2022-05-19 19:19:22.188 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 19:19:22.188 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 19:19:22.188 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":4,"PageSize":10,"$type":"GetTitlesQuery"}
+2022-05-19 19:19:22.189 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 19:19:22.192 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 19:19:22.198 +05:00 [INF] Executed DbCommand (6ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 19:19:22.199 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 19:19:22.200 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 11.409ms
+2022-05-19 19:19:22.200 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 19:19:22.200 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:5001/api/AnimeTitles?PageSize=10&PageNumber=4 - - - 200 - application/json;+charset=utf-8 12.8089ms
+2022-05-19 19:19:26.253 +05:00 [INF] Request starting HTTP/1.1 POST https://localhost:5001/api/auth/login application/json 63
+2022-05-19 19:19:26.253 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AuthController.Login (AniRate.WebApi)'
+2022-05-19 19:19:26.257 +05:00 [INF] Route matched with {action = "Login", controller = "Auth"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Login(AniRate.WebApi.Models.AuthModels.LoginViewModel) on controller AniRate.WebApi.Controllers.AuthController (AniRate.WebApi).
+2022-05-19 19:19:26.270 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 19:19:26.321 +05:00 [INF] Executed DbCommand (36ms) [Parameters=[@__loginViewModel_Username_0='?' (Size = 200), @__passworsHash_1='?' (Size = 200)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(2) [a].[Id], [a].[Password], [a].[UserName]
+FROM [Accounts] AS [a]
+WHERE ([a].[UserName] = @__loginViewModel_Username_0) AND ([a].[Password] = @__passworsHash_1)
+2022-05-19 19:19:26.366 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.String'.
+2022-05-19 19:19:26.366 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AuthController.Login (AniRate.WebApi) in 108.5144ms
+2022-05-19 19:19:26.366 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AuthController.Login (AniRate.WebApi)'
+2022-05-19 19:19:26.366 +05:00 [INF] Request finished HTTP/1.1 POST https://localhost:5001/api/auth/login application/json 63 - 200 - text/plain;+charset=utf-8 113.1903ms
+2022-05-19 19:19:39.341 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/AnimeCollections?page=1&size=15 - -
+2022-05-19 19:19:39.364 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi)'
+2022-05-19 19:19:39.367 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeCollections"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeCollections.Queries.BriefCollectionVM]]] GetAll(Int32, Int32) on controller AniRate.WebApi.Controllers.AnimeCollectionsController (AniRate.WebApi).
+2022-05-19 19:19:39.395 +05:00 [INF] AniRate Request: GetCollectionsQuery "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","PageNumber":1,"PageSize":15,"$type":"GetCollectionsQuery"}
+2022-05-19 19:19:39.397 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 19:19:39.460 +05:00 [INF] Executed DbCommand (23ms) [Parameters=[@__request_UserId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeCollections] AS [a]
+WHERE [a].[UserId] = @__request_UserId_0
+2022-05-19 19:19:39.538 +05:00 [INF] Executed DbCommand (62ms) [Parameters=[@__request_UserId_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[ImageId], [a].[Name], (
+        SELECT COUNT(*)
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+        WHERE [a].[Id] = [a0].[AnimeCollectionsId]) AS [c]
+    FROM [AnimeCollections] AS [a]
+    WHERE [a].[UserId] = @__request_UserId_0
+    ORDER BY (
+        SELECT COUNT(*)
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+        WHERE [a].[Id] = [a0].[AnimeCollectionsId]) DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[ImageId] = [i].[Id]
+ORDER BY [t].[c] DESC
+2022-05-19 19:19:39.542 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeCollections.Queries.BriefCollectionVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 19:19:39.544 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi) in 177.1144ms
+2022-05-19 19:19:39.545 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi)'
+2022-05-19 19:19:39.545 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:5001/api/AnimeCollections?page=1&size=15 - - - 200 - application/json;+charset=utf-8 204.5116ms
+2022-05-19 19:19:43.908 +05:00 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/AnimeCollections?page=2&size=15 - -
+2022-05-19 19:19:43.909 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi)'
+2022-05-19 19:19:43.909 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeCollections"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeCollections.Queries.BriefCollectionVM]]] GetAll(Int32, Int32) on controller AniRate.WebApi.Controllers.AnimeCollectionsController (AniRate.WebApi).
+2022-05-19 19:19:43.910 +05:00 [INF] AniRate Request: GetCollectionsQuery "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","PageNumber":2,"PageSize":15,"$type":"GetCollectionsQuery"}
+2022-05-19 19:19:43.911 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 19:19:43.914 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_UserId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeCollections] AS [a]
+WHERE [a].[UserId] = @__request_UserId_0
+2022-05-19 19:19:43.934 +05:00 [INF] Executed DbCommand (10ms) [Parameters=[@__request_UserId_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[ImageId], [a].[Name], (
+        SELECT COUNT(*)
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+        WHERE [a].[Id] = [a0].[AnimeCollectionsId]) AS [c]
+    FROM [AnimeCollections] AS [a]
+    WHERE [a].[UserId] = @__request_UserId_0
+    ORDER BY (
+        SELECT COUNT(*)
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+        WHERE [a].[Id] = [a0].[AnimeCollectionsId]) DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[ImageId] = [i].[Id]
+ORDER BY [t].[c] DESC
+2022-05-19 19:19:43.934 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeCollections.Queries.BriefCollectionVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 19:19:43.934 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi) in 25.0062ms
+2022-05-19 19:19:43.934 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi)'
+2022-05-19 19:19:43.935 +05:00 [INF] Request finished HTTP/1.1 GET https://localhost:5001/api/AnimeCollections?page=2&size=15 - - - 200 - application/json;+charset=utf-8 26.7999ms
+2022-05-19 21:52:02.927 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:52:03.420 +05:00 [INF] Executed DbCommand (35ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2022-05-19 21:52:03.488 +05:00 [INF] Executed DbCommand (50ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND NOT EXISTS (SELECT *
+         FROM [sys].[extended_properties] AS [ep]
+         WHERE [ep].[major_id] = [o].[object_id]
+             AND [ep].[minor_id] = 0
+             AND [ep].[class] = 1
+             AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2022-05-19 21:52:03.818 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [AnimeCollections] AS [a]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2022-05-19 21:52:03.839 +05:00 [INF] User profile is available. Using 'C:\Users\gexop\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2022-05-19 21:52:04.048 +05:00 [INF] Now listening on: https://localhost:5001
+2022-05-19 21:52:04.048 +05:00 [INF] Now listening on: http://localhost:5000
+2022-05-19 21:52:04.052 +05:00 [INF] Application started. Press Ctrl+C to shut down.
+2022-05-19 21:52:04.052 +05:00 [INF] Hosting environment: Development
+2022-05-19 21:52:04.052 +05:00 [INF] Content root path: C:\Users\gexop\source\repos\_AniRate\AniRate.Api\AniRate.WebApi
+2022-05-19 21:52:04.757 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/index.html - -
+2022-05-19 21:52:05.566 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/index.html - - - 200 - text/html;charset=utf-8 813.7897ms
+2022-05-19 21:52:05.567 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - -
+2022-05-19 21:52:05.574 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/_framework/aspnetcore-browser-refresh.js - - - 200 11986 application/javascript;+charset=utf-8 6.8926ms
+2022-05-19 21:52:05.989 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - -
+2022-05-19 21:52:06.210 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 222.0850ms
+2022-05-19 21:52:15.382 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=20 - -
+2022-05-19 21:52:15.416 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:52:15.454 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:15.479 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:52:15.684 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":1,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:52:15.689 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:52:15.767 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:52:15.937 +05:00 [INF] Executed DbCommand (32ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:52:16.015 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:52:16.030 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 544.3757ms
+2022-05-19 21:52:16.031 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:16.035 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=20 - - - 200 - application/json;+charset=utf-8 652.6893ms
+2022-05-19 21:52:28.612 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - -
+2022-05-19 21:52:28.613 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:52:28.614 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:28.614 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:52:28.616 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":2,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:52:28.681 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:52:28.689 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:52:28.702 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_0 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:52:28.703 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:52:28.704 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 89.6446ms
+2022-05-19 21:52:28.704 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:28.704 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - - - 200 - application/json;+charset=utf-8 92.5591ms
+2022-05-19 21:52:29.706 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=20 - -
+2022-05-19 21:52:29.706 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:52:29.708 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:29.708 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:52:29.710 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":1,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:52:29.712 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:52:29.714 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:52:29.718 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:52:29.719 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:52:29.719 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 10.5038ms
+2022-05-19 21:52:29.719 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:29.719 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=20 - - - 200 - application/json;+charset=utf-8 13.6284ms
+2022-05-19 21:52:30.124 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - -
+2022-05-19 21:52:30.125 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:52:30.125 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:30.125 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:52:30.125 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":2,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:52:30.126 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:52:30.128 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:52:30.133 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_0 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:52:30.134 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:52:30.134 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 9.3538ms
+2022-05-19 21:52:30.134 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:30.134 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - - - 200 - application/json;+charset=utf-8 10.0231ms
+2022-05-19 21:52:30.518 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=3&PageSize=20 - -
+2022-05-19 21:52:30.518 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:52:30.519 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:30.519 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:52:30.519 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":3,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:52:30.520 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:52:30.528 +05:00 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:52:30.532 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:52:30.533 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:52:30.533 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 14.3051ms
+2022-05-19 21:52:30.533 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:30.533 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=3&PageSize=20 - - - 200 - application/json;+charset=utf-8 15.0305ms
+2022-05-19 21:52:30.828 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - -
+2022-05-19 21:52:30.829 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:52:30.829 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:30.829 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:52:30.830 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":2,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:52:30.830 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:52:30.833 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:52:30.836 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_0 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:52:30.837 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:52:30.837 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 8.1466ms
+2022-05-19 21:52:30.837 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:30.838 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - - - 200 - application/json;+charset=utf-8 9.1362ms
+2022-05-19 21:52:31.097 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=20 - -
+2022-05-19 21:52:31.097 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:52:31.098 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:31.098 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:52:31.098 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":1,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:52:31.099 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:52:31.100 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:52:31.104 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:52:31.106 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:52:31.106 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 8.2797ms
+2022-05-19 21:52:31.106 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:31.106 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=20 - - - 200 - application/json;+charset=utf-8 9.1844ms
+2022-05-19 21:52:31.465 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - -
+2022-05-19 21:52:31.466 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:52:31.466 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:31.466 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:52:31.466 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":2,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:52:31.467 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:52:31.470 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:52:31.474 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_0 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:52:31.476 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:52:31.477 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 10.6644ms
+2022-05-19 21:52:31.477 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:31.477 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - - - 200 - application/json;+charset=utf-8 12.1854ms
+2022-05-19 21:52:31.665 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=3&PageSize=20 - -
+2022-05-19 21:52:31.665 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:52:31.665 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:31.666 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:52:31.666 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":3,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:52:31.667 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:52:31.670 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:52:31.674 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:52:31.675 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:52:31.675 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 9.237ms
+2022-05-19 21:52:31.675 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:31.675 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=3&PageSize=20 - - - 200 - application/json;+charset=utf-8 9.9879ms
+2022-05-19 21:52:31.914 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - -
+2022-05-19 21:52:31.914 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:52:31.915 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:31.915 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:52:31.915 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":2,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:52:31.916 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:52:31.918 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:52:31.922 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_0 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:52:31.923 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:52:31.923 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 8.2154ms
+2022-05-19 21:52:31.923 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:31.923 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - - - 200 - application/json;+charset=utf-8 8.8588ms
+2022-05-19 21:52:32.201 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=20 - -
+2022-05-19 21:52:32.202 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:52:32.202 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:32.202 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:52:32.202 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":1,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:52:32.203 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:52:32.205 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:52:32.212 +05:00 [INF] Executed DbCommand (6ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:52:32.213 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:52:32.213 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 11.0596ms
+2022-05-19 21:52:32.213 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:52:32.213 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=20 - - - 200 - application/json;+charset=utf-8 12.5224ms
+2022-05-19 21:54:35.885 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - -
+2022-05-19 21:54:35.886 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:35.886 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:35.886 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:35.887 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":2,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:54:35.887 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:35.890 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:54:35.894 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_0 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:54:35.895 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:54:35.896 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 9.2947ms
+2022-05-19 21:54:35.896 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:35.896 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - - - 200 - application/json;+charset=utf-8 10.5845ms
+2022-05-19 21:54:36.517 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=3&PageSize=20 - -
+2022-05-19 21:54:36.517 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:36.517 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:36.517 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:36.518 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":3,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:54:36.518 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:36.521 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:54:36.528 +05:00 [INF] Executed DbCommand (6ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:54:36.528 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:54:36.529 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 11.2774ms
+2022-05-19 21:54:36.529 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:36.529 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=3&PageSize=20 - - - 200 - application/json;+charset=utf-8 12.0852ms
+2022-05-19 21:54:36.855 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - -
+2022-05-19 21:54:36.855 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:36.855 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:36.856 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:36.856 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":2,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:54:36.857 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:36.860 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:54:36.865 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_0 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:54:36.866 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:54:36.866 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 10.6594ms
+2022-05-19 21:54:36.867 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:36.867 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - - - 200 - application/json;+charset=utf-8 12.1139ms
+2022-05-19 21:54:38.084 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=20 - -
+2022-05-19 21:54:38.084 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:38.084 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:38.085 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:38.085 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":1,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:54:38.086 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:38.091 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:54:38.095 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:54:38.096 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:54:38.097 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 11.8651ms
+2022-05-19 21:54:38.097 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:38.098 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=20 - - - 200 - application/json;+charset=utf-8 13.4301ms
+2022-05-19 21:54:38.352 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - -
+2022-05-19 21:54:38.352 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:38.353 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:38.353 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:38.353 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":2,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:54:38.355 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:38.358 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:54:38.363 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_0 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:54:38.364 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:54:38.364 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 11.4828ms
+2022-05-19 21:54:38.364 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:38.365 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - - - 200 - application/json;+charset=utf-8 12.9331ms
+2022-05-19 21:54:38.617 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=3&PageSize=20 - -
+2022-05-19 21:54:38.617 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:38.617 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:38.617 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:38.617 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":3,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:54:38.618 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:38.622 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:54:38.626 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:54:38.627 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:54:38.627 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 10.1325ms
+2022-05-19 21:54:38.627 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:38.628 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=3&PageSize=20 - - - 200 - application/json;+charset=utf-8 11.0305ms
+2022-05-19 21:54:38.873 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - -
+2022-05-19 21:54:38.873 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:38.874 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:38.874 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:38.874 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":2,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:54:38.875 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:38.878 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:54:38.881 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_0 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:54:38.882 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:54:38.882 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 8.6385ms
+2022-05-19 21:54:38.882 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:38.883 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - - - 200 - application/json;+charset=utf-8 9.7193ms
+2022-05-19 21:54:39.125 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=20 - -
+2022-05-19 21:54:39.126 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:39.126 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:39.126 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:39.126 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":1,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:54:39.127 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:39.129 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:54:39.133 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:54:39.134 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:54:39.134 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 8.103ms
+2022-05-19 21:54:39.134 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:39.134 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=20 - - - 200 - application/json;+charset=utf-8 8.8561ms
+2022-05-19 21:54:39.430 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - -
+2022-05-19 21:54:39.430 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:39.431 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:39.431 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:39.431 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":2,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:54:39.432 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:39.433 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:54:39.437 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_0 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:54:39.438 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:54:39.438 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 7.0783ms
+2022-05-19 21:54:39.438 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:39.438 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - - - 200 - application/json;+charset=utf-8 7.6565ms
+2022-05-19 21:54:39.688 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=3&PageSize=20 - -
+2022-05-19 21:54:39.688 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:39.688 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:39.688 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:39.688 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":3,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:54:39.690 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:39.693 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:54:39.697 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:54:39.698 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:54:39.698 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 9.944ms
+2022-05-19 21:54:39.698 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:39.698 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=3&PageSize=20 - - - 200 - application/json;+charset=utf-8 10.6567ms
+2022-05-19 21:54:40.259 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=20 - -
+2022-05-19 21:54:40.259 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:40.260 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:40.260 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:40.260 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":1,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:54:40.261 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:40.263 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:54:40.267 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:54:40.268 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:54:40.268 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 8.4037ms
+2022-05-19 21:54:40.268 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:40.268 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=20 - - - 200 - application/json;+charset=utf-8 9.1584ms
+2022-05-19 21:54:40.554 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - -
+2022-05-19 21:54:40.554 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:40.554 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:40.554 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:40.554 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":2,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:54:40.555 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:40.558 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:54:40.562 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_0 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:54:40.563 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:54:40.563 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 8.9307ms
+2022-05-19 21:54:40.563 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:40.563 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - - - 200 - application/json;+charset=utf-8 9.7646ms
+2022-05-19 21:54:40.858 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=3&PageSize=20 - -
+2022-05-19 21:54:40.858 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:40.858 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:40.858 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:40.859 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":3,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:54:40.859 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:40.863 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:54:40.867 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:54:40.868 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:54:40.868 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 9.7192ms
+2022-05-19 21:54:40.868 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:40.868 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=3&PageSize=20 - - - 200 - application/json;+charset=utf-8 10.3845ms
+2022-05-19 21:54:41.184 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - -
+2022-05-19 21:54:41.184 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:41.184 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:41.184 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:41.184 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":2,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:54:41.185 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:41.187 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:54:41.192 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_0 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:54:41.193 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:54:41.193 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 8.8296ms
+2022-05-19 21:54:41.193 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:41.193 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=2&PageSize=20 - - - 200 - application/json;+charset=utf-8 9.6427ms
+2022-05-19 21:54:41.499 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=20 - -
+2022-05-19 21:54:41.499 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:41.499 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:41.499 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:41.499 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":1,"PageSize":20,"$type":"GetTitlesQuery"}
+2022-05-19 21:54:41.500 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:41.503 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:54:41.507 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:54:41.508 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:54:41.508 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 8.8409ms
+2022-05-19 21:54:41.508 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:41.508 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=20 - - - 200 - application/json;+charset=utf-8 9.5130ms
+2022-05-19 21:54:50.321 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles/c9cdc911-60cc-4f38-a0db-65ccd321a34c - -
+2022-05-19 21:54:50.322 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:50.322 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetDetails (AniRate.WebApi)'
+2022-05-19 21:54:50.328 +05:00 [INF] Route matched with {action = "GetDetails", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.AnimeTitles.Queries.TitleDetailsVM]] GetDetails(System.Guid) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:50.357 +05:00 [INF] AniRate Request: GetTitleDetailsQuery "00000000-0000-0000-0000-000000000000" {"Id":"c9cdc911-60cc-4f38-a0db-65ccd321a34c","$type":"GetTitleDetailsQuery"}
+2022-05-19 21:54:50.360 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:50.447 +05:00 [WRN] Compiling a query which loads related collections for more than one collection navigation, either via 'Include' or through projection, but no 'QuerySplittingBehavior' has been configured. By default, Entity Framework will use 'QuerySplittingBehavior.SingleQuery', which can potentially result in slow query performance. See https://go.microsoft.com/fwlink/?linkid=2134277 for more information. To identify the query that's triggering this warning call 'ConfigureWarnings(w => w.Throw(RelationalEventId.MultipleCollectionIncludeWarning))'.
+2022-05-19 21:54:50.471 +05:00 [INF] Executed DbCommand (12ms) [Parameters=[@__request_Id_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score], [a].[Episodes], [a].[AiredOn], [a].[ReleasedOn], [a].[Description], [a].[DescriptionHtml], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96], [g].[Id], [g].[AnimeId], [g].[Name], [g].[Russian], [a].[UserComment], [a].[UserRating], [t].[Id], [t].[ImageId], [t].[Name], [t].[UserComment], [t].[UserId], [t].[UserRating], [t].[AnimeCollectionsId], [t].[AnimeTitlesId]
+FROM [AnimeTitles] AS [a]
+LEFT JOIN [Images] AS [i] ON [a].[Id] = [i].[AnimeId]
+LEFT JOIN [Genres] AS [g] ON [a].[Id] = [g].[AnimeId]
+LEFT JOIN (
+    SELECT [a1].[Id], [a1].[ImageId], [a1].[Name], [a1].[UserComment], [a1].[UserId], [a1].[UserRating], [a0].[AnimeCollectionsId], [a0].[AnimeTitlesId]
+    FROM [AnimeCollectionAnimeTitle] AS [a0]
+    INNER JOIN [AnimeCollections] AS [a1] ON [a0].[AnimeCollectionsId] = [a1].[Id]
+) AS [t] ON [a].[Id] = [t].[AnimeTitlesId]
+WHERE [a].[Id] = @__request_Id_0
+ORDER BY [a].[Id], [i].[Id], [g].[Id], [t].[AnimeCollectionsId], [t].[AnimeTitlesId]
+2022-05-19 21:54:50.516 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.AnimeTitles.Queries.TitleDetailsVM'.
+2022-05-19 21:54:50.527 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetDetails (AniRate.WebApi) in 198.8983ms
+2022-05-19 21:54:50.527 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetDetails (AniRate.WebApi)'
+2022-05-19 21:54:50.527 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles/c9cdc911-60cc-4f38-a0db-65ccd321a34c - - - 200 - application/json;+charset=utf-8 205.9876ms
+2022-05-19 21:54:56.253 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=50 - -
+2022-05-19 21:54:56.253 +05:00 [INF] CORS policy execution successful.
+2022-05-19 21:54:56.253 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:56.253 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 21:54:56.253 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":1,"PageSize":50,"$type":"GetTitlesQuery"}
+2022-05-19 21:54:56.254 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 21:54:56.256 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 21:54:56.260 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 21:54:56.276 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 21:54:56.277 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 23.4695ms
+2022-05-19 21:54:56.277 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 21:54:56.277 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=50 - - - 200 - application/json;+charset=utf-8 24.1567ms
+2022-05-19 22:00:32.794 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:5001/api/AnimeCollections?page=1&size=10 - -
+2022-05-19 22:00:32.794 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:00:32.796 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:5001/api/AnimeCollections?page=1&size=10 - - - 204 - - 1.9925ms
+2022-05-19 22:00:32.801 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeCollections?page=1&size=10 - -
+2022-05-19 22:00:32.801 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:00:33.015 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi)'
+2022-05-19 22:00:33.019 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeCollections"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeCollections.Queries.BriefCollectionVM]]] GetAll(Int32, Int32) on controller AniRate.WebApi.Controllers.AnimeCollectionsController (AniRate.WebApi).
+2022-05-19 22:00:33.024 +05:00 [INF] AniRate Request: GetCollectionsQuery "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","PageNumber":1,"PageSize":10,"$type":"GetCollectionsQuery"}
+2022-05-19 22:00:33.026 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 22:00:33.122 +05:00 [INF] Executed DbCommand (7ms) [Parameters=[@__request_UserId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeCollections] AS [a]
+WHERE [a].[UserId] = @__request_UserId_0
+2022-05-19 22:00:33.148 +05:00 [INF] Executed DbCommand (11ms) [Parameters=[@__request_UserId_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[ImageId], [a].[Name], (
+        SELECT COUNT(*)
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+        WHERE [a].[Id] = [a0].[AnimeCollectionsId]) AS [c]
+    FROM [AnimeCollections] AS [a]
+    WHERE [a].[UserId] = @__request_UserId_0
+    ORDER BY (
+        SELECT COUNT(*)
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+        WHERE [a].[Id] = [a0].[AnimeCollectionsId]) DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[ImageId] = [i].[Id]
+ORDER BY [t].[c] DESC
+2022-05-19 22:00:33.152 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeCollections.Queries.BriefCollectionVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 22:00:33.154 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi) in 134.9508ms
+2022-05-19 22:00:33.154 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi)'
+2022-05-19 22:00:33.155 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeCollections?page=1&size=10 - - - 200 - application/json;+charset=utf-8 353.8215ms
+2022-05-19 22:00:42.500 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:5001/api/AnimeCollections/CollectionDetails?id=79ee6599-242d-4b22-af37-5acba6f2e3f9&animePage=1&animeSize=10 - -
+2022-05-19 22:00:42.502 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:00:42.502 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=79ee6599-242d-4b22-af37-5acba6f2e3f9&PageNumber=1&PageSize=20 - -
+2022-05-19 22:00:42.502 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=79ee6599-242d-4b22-af37-5acba6f2e3f9&PageNumber=1&PageSize=20 - -
+2022-05-19 22:00:42.502 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:00:42.502 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:5001/api/AnimeCollections/CollectionDetails?id=79ee6599-242d-4b22-af37-5acba6f2e3f9&animePage=1&animeSize=10 - - - 204 - - 2.1500ms
+2022-05-19 22:00:42.502 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:00:42.502 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=79ee6599-242d-4b22-af37-5acba6f2e3f9&PageNumber=1&PageSize=20 - - - 204 - - 0.3959ms
+2022-05-19 22:00:42.503 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=79ee6599-242d-4b22-af37-5acba6f2e3f9&PageNumber=1&PageSize=20 - - - 204 - - 0.4926ms
+2022-05-19 22:00:42.507 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=79ee6599-242d-4b22-af37-5acba6f2e3f9&PageNumber=1&PageSize=20 - -
+2022-05-19 22:00:42.507 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=79ee6599-242d-4b22-af37-5acba6f2e3f9&PageNumber=1&PageSize=20 - -
+2022-05-19 22:00:42.508 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:00:42.508 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:00:42.508 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeCollections/CollectionDetails?id=79ee6599-242d-4b22-af37-5acba6f2e3f9&animePage=1&animeSize=10 - -
+2022-05-19 22:00:42.510 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi)'
+2022-05-19 22:00:42.510 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi)'
+2022-05-19 22:00:42.515 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:00:42.516 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.Get (AniRate.WebApi)'
+2022-05-19 22:00:42.516 +05:00 [INF] Route matched with {action = "GetTitlesFromCollection", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetTitlesFromCollection(AniRate.Application.AnimeTitles.Queries.GetTitlesFromCollection.GetTitlesFromCollectionQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 22:00:42.517 +05:00 [INF] Route matched with {action = "GetTitlesFromCollection", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetTitlesFromCollection(AniRate.Application.AnimeTitles.Queries.GetTitlesFromCollection.GetTitlesFromCollectionQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 22:00:42.519 +05:00 [INF] Route matched with {action = "Get", controller = "AnimeCollections"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.AnimeCollections.Queries.CollectionDetailsVM]] Get(System.Guid, Int32, Int32) on controller AniRate.WebApi.Controllers.AnimeCollectionsController (AniRate.WebApi).
+2022-05-19 22:00:42.522 +05:00 [INF] AniRate Request: GetTitlesFromCollectionQuery "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"CollectionId":"79ee6599-242d-4b22-af37-5acba6f2e3f9","UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","PageNumber":1,"PageSize":20,"$type":"GetTitlesFromCollectionQuery"}
+2022-05-19 22:00:42.522 +05:00 [INF] AniRate Request: GetTitlesFromCollectionQuery "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"CollectionId":"79ee6599-242d-4b22-af37-5acba6f2e3f9","UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","PageNumber":1,"PageSize":20,"$type":"GetTitlesFromCollectionQuery"}
+2022-05-19 22:00:42.526 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 22:00:42.526 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 22:00:42.527 +05:00 [INF] AniRate Request: GetCollectionDetailsQuery "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","Id":"79ee6599-242d-4b22-af37-5acba6f2e3f9","AnimeTitlesPageNumber":1,"AnimeTitlesPageSize":10,"$type":"GetCollectionDetailsQuery"}
+2022-05-19 22:00:42.531 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 22:00:42.534 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ImageId], [a].[Name], [a].[UserComment], [a].[UserId], [a].[UserRating]
+FROM [AnimeCollections] AS [a]
+WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 22:00:42.537 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ImageId], [a].[Name], [a].[UserComment], [a].[UserId], [a].[UserRating]
+FROM [AnimeCollections] AS [a]
+WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 22:00:42.537 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ImageId], [a].[Name], [a].[UserComment], [a].[UserId], [a].[UserRating]
+FROM [AnimeCollections] AS [a]
+WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 22:00:42.548 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeCollections] AS [a]
+INNER JOIN (
+    SELECT [a0].[AnimeCollectionsId]
+    FROM [AnimeCollectionAnimeTitle] AS [a0]
+    INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+) AS [t] ON [a].[Id] = [t].[AnimeCollectionsId]
+WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 22:00:42.548 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeCollections] AS [a]
+INNER JOIN (
+    SELECT [a0].[AnimeCollectionsId]
+    FROM [AnimeCollectionAnimeTitle] AS [a0]
+    INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+) AS [t] ON [a].[Id] = [t].[AnimeCollectionsId]
+WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 22:00:42.550 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeCollections] AS [a]
+INNER JOIN (
+    SELECT [a0].[AnimeCollectionsId]
+    FROM [AnimeCollectionAnimeTitle] AS [a0]
+    INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+) AS [t] ON [a].[Id] = [t].[AnimeCollectionsId]
+WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 22:00:42.566 +05:00 [INF] Executed DbCommand (8ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid), @__p_2='?' (DbType = Int32), @__p_3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t0].[Id0] AS [Id], [t0].[Name0] AS [Name], [t0].[Russian], [t0].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [t].[Id] AS [Id0], [t].[Name] AS [Name0], [t].[Russian], [t].[Score]
+    FROM [AnimeCollections] AS [a]
+    INNER JOIN (
+        SELECT [a1].[Id], [a1].[Name], [a1].[Russian], [a1].[Score], [a0].[AnimeCollectionsId]
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+    ) AS [t] ON [a].[Id] = [t].[AnimeCollectionsId]
+    WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+    ORDER BY [t].[Score] DESC
+    OFFSET @__p_2 ROWS FETCH NEXT @__p_3 ROWS ONLY
+) AS [t0]
+LEFT JOIN [Images] AS [i] ON [t0].[Id0] = [i].[AnimeId]
+ORDER BY [t0].[Score] DESC
+2022-05-19 22:00:42.571 +05:00 [INF] Executed DbCommand (13ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid), @__p_2='?' (DbType = Int32), @__p_3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t0].[Id0] AS [Id], [t0].[Name0] AS [Name], [t0].[Russian], [t0].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [t].[Id] AS [Id0], [t].[Name] AS [Name0], [t].[Russian], [t].[Score]
+    FROM [AnimeCollections] AS [a]
+    INNER JOIN (
+        SELECT [a1].[Id], [a1].[Name], [a1].[Russian], [a1].[Score], [a0].[AnimeCollectionsId]
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+    ) AS [t] ON [a].[Id] = [t].[AnimeCollectionsId]
+    WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+    ORDER BY [t].[Score] DESC
+    OFFSET @__p_2 ROWS FETCH NEXT @__p_3 ROWS ONLY
+) AS [t0]
+LEFT JOIN [Images] AS [i] ON [t0].[Id0] = [i].[AnimeId]
+ORDER BY [t0].[Score] DESC
+2022-05-19 22:00:42.574 +05:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid), @__p_2='?' (DbType = Int32), @__p_3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t0].[Id0] AS [Id], [t0].[Name0] AS [Name], [t0].[Russian], [t0].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [t].[Id] AS [Id0], [t].[Name] AS [Name0], [t].[Russian], [t].[Score]
+    FROM [AnimeCollections] AS [a]
+    INNER JOIN (
+        SELECT [a1].[Id], [a1].[Name], [a1].[Russian], [a1].[Score], [a0].[AnimeCollectionsId]
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+    ) AS [t] ON [a].[Id] = [t].[AnimeCollectionsId]
+    WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+    ORDER BY [t].[Score] DESC
+    OFFSET @__p_2 ROWS FETCH NEXT @__p_3 ROWS ONLY
+) AS [t0]
+LEFT JOIN [Images] AS [i] ON [t0].[Id0] = [i].[AnimeId]
+ORDER BY [t0].[Score] DESC
+2022-05-19 22:00:42.579 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 22:00:42.579 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 22:00:42.579 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi) in 62.7893ms
+2022-05-19 22:00:42.579 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi) in 61.362ms
+2022-05-19 22:00:42.579 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi)'
+2022-05-19 22:00:42.579 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi)'
+2022-05-19 22:00:42.579 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=79ee6599-242d-4b22-af37-5acba6f2e3f9&PageNumber=1&PageSize=20 - - - 200 - application/json;+charset=utf-8 71.7200ms
+2022-05-19 22:00:42.579 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=79ee6599-242d-4b22-af37-5acba6f2e3f9&PageNumber=1&PageSize=20 - - - 200 - application/json;+charset=utf-8 71.7544ms
+2022-05-19 22:00:42.590 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_Id_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96], [a].[Name], [a].[UserComment], [a].[UserRating]
+FROM [AnimeCollections] AS [a]
+LEFT JOIN [Images] AS [i] ON [a].[ImageId] = [i].[Id]
+WHERE ([a].[Id] = @__request_Id_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 22:00:42.591 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.AnimeCollections.Queries.CollectionDetailsVM'.
+2022-05-19 22:00:42.593 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeCollectionsController.Get (AniRate.WebApi) in 73.6744ms
+2022-05-19 22:00:42.593 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.Get (AniRate.WebApi)'
+2022-05-19 22:00:42.593 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeCollections/CollectionDetails?id=79ee6599-242d-4b22-af37-5acba6f2e3f9&animePage=1&animeSize=10 - - - 200 - application/json;+charset=utf-8 85.9750ms
+2022-05-19 22:01:06.266 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:5001/api/AnimeCollections/Titles - -
+2022-05-19 22:01:06.266 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:01:06.266 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:5001/api/AnimeCollections/Titles - - - 204 - - 0.3381ms
+2022-05-19 22:01:06.268 +05:00 [INF] Request starting HTTP/2 PUT https://localhost:5001/api/AnimeCollections/Titles application/json 312
+2022-05-19 22:01:06.268 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:01:06.269 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.Add (AniRate.WebApi)'
+2022-05-19 22:01:06.273 +05:00 [INF] Route matched with {action = "Add", controller = "AnimeCollections"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult] Add(AniRate.WebApi.Models.AnimeCollectionsDtos.AddTitlesInCollectionsDto) on controller AniRate.WebApi.Controllers.AnimeCollectionsController (AniRate.WebApi).
+2022-05-19 22:01:06.352 +05:00 [INF] AniRate Request: AddTitlesInCollectionsCommand "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","CollectionsIds":["79ee6599-242d-4b22-af37-5acba6f2e3f9"],"AnimeTitlesIds":["a7cfce10-a8b3-4438-af40-2f07dd4ecc40","1b98e706-9325-4443-8b7b-c0584065a3dd","59663abc-9472-46ed-9c3b-d1fa0486695d","35d8db34-7cb5-4a30-bcd4-6894604ddb14","2c0f7c99-8c15-492d-bc57-21e993de0332","b7e98fd6-3b85-4e0b-85ff-eba22d2a2bfd"],"$type":"AddTitlesInCollectionsCommand"}
+2022-05-19 22:01:06.356 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 22:01:06.383 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@__animeId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AiredOn], [a].[Description], [a].[DescriptionHtml], [a].[Episodes], [a].[Name], [a].[ReleasedOn], [a].[Russian], [a].[Score], [a].[UserComment], [a].[UserRating], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM [AnimeTitles] AS [a]
+LEFT JOIN [Images] AS [i] ON [a].[Id] = [i].[AnimeId]
+WHERE [a].[Id] = @__animeId_0
+2022-05-19 22:01:06.422 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__animeId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AiredOn], [a].[Description], [a].[DescriptionHtml], [a].[Episodes], [a].[Name], [a].[ReleasedOn], [a].[Russian], [a].[Score], [a].[UserComment], [a].[UserRating], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM [AnimeTitles] AS [a]
+LEFT JOIN [Images] AS [i] ON [a].[Id] = [i].[AnimeId]
+WHERE [a].[Id] = @__animeId_0
+2022-05-19 22:01:06.423 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__animeId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AiredOn], [a].[Description], [a].[DescriptionHtml], [a].[Episodes], [a].[Name], [a].[ReleasedOn], [a].[Russian], [a].[Score], [a].[UserComment], [a].[UserRating], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM [AnimeTitles] AS [a]
+LEFT JOIN [Images] AS [i] ON [a].[Id] = [i].[AnimeId]
+WHERE [a].[Id] = @__animeId_0
+2022-05-19 22:01:06.424 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__animeId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AiredOn], [a].[Description], [a].[DescriptionHtml], [a].[Episodes], [a].[Name], [a].[ReleasedOn], [a].[Russian], [a].[Score], [a].[UserComment], [a].[UserRating], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM [AnimeTitles] AS [a]
+LEFT JOIN [Images] AS [i] ON [a].[Id] = [i].[AnimeId]
+WHERE [a].[Id] = @__animeId_0
+2022-05-19 22:01:06.425 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[@__animeId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AiredOn], [a].[Description], [a].[DescriptionHtml], [a].[Episodes], [a].[Name], [a].[ReleasedOn], [a].[Russian], [a].[Score], [a].[UserComment], [a].[UserRating], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM [AnimeTitles] AS [a]
+LEFT JOIN [Images] AS [i] ON [a].[Id] = [i].[AnimeId]
+WHERE [a].[Id] = @__animeId_0
+2022-05-19 22:01:06.426 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__animeId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [a].[Id], [a].[AiredOn], [a].[Description], [a].[DescriptionHtml], [a].[Episodes], [a].[Name], [a].[ReleasedOn], [a].[Russian], [a].[Score], [a].[UserComment], [a].[UserRating], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM [AnimeTitles] AS [a]
+LEFT JOIN [Images] AS [i] ON [a].[Id] = [i].[AnimeId]
+WHERE [a].[Id] = @__animeId_0
+2022-05-19 22:01:06.472 +05:00 [INF] Executed DbCommand (6ms) [Parameters=[@__collectioId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[ImageId], [t].[Name], [t].[UserComment], [t].[UserId], [t].[UserRating], [t].[Id0], [t].[AnimeId], [t].[Original], [t].[Preview], [t].[X48], [t].[X96], [t0].[AnimeCollectionsId], [t0].[AnimeTitlesId], [t0].[Id], [t0].[AiredOn], [t0].[Description], [t0].[DescriptionHtml], [t0].[Episodes], [t0].[Name], [t0].[ReleasedOn], [t0].[Russian], [t0].[Score], [t0].[UserComment], [t0].[UserRating]
+FROM (
+    SELECT TOP(1) [a].[Id], [a].[ImageId], [a].[Name], [a].[UserComment], [a].[UserId], [a].[UserRating], [i].[Id] AS [Id0], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+    FROM [AnimeCollections] AS [a]
+    LEFT JOIN [Images] AS [i] ON [a].[ImageId] = [i].[Id]
+    WHERE [a].[Id] = @__collectioId_0
+) AS [t]
+LEFT JOIN (
+    SELECT [a0].[AnimeCollectionsId], [a0].[AnimeTitlesId], [a1].[Id], [a1].[AiredOn], [a1].[Description], [a1].[DescriptionHtml], [a1].[Episodes], [a1].[Name], [a1].[ReleasedOn], [a1].[Russian], [a1].[Score], [a1].[UserComment], [a1].[UserRating]
+    FROM [AnimeCollectionAnimeTitle] AS [a0]
+    INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+) AS [t0] ON [t].[Id] = [t0].[AnimeCollectionsId]
+ORDER BY [t].[Id], [t].[Id0], [t0].[AnimeCollectionsId], [t0].[AnimeTitlesId]
+2022-05-19 22:01:06.661 +05:00 [INF] Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p3='?' (DbType = Guid), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?' (DbType = Guid), @p9='?' (DbType = Guid), @p10='?' (DbType = Guid), @p11='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AnimeCollectionAnimeTitle] ([AnimeCollectionsId], [AnimeTitlesId])
+VALUES (@p0, @p1),
+(@p2, @p3),
+(@p4, @p5),
+(@p6, @p7),
+(@p8, @p9),
+(@p10, @p11);
+2022-05-19 22:01:06.697 +05:00 [INF] Executing StatusCodeResult, setting HTTP status code 204
+2022-05-19 22:01:06.697 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeCollectionsController.Add (AniRate.WebApi) in 424.2124ms
+2022-05-19 22:01:06.697 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.Add (AniRate.WebApi)'
+2022-05-19 22:01:06.697 +05:00 [INF] Request finished HTTP/2 PUT https://localhost:5001/api/AnimeCollections/Titles application/json 312 - 204 - - 428.9092ms
+2022-05-19 22:01:06.708 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=79ee6599-242d-4b22-af37-5acba6f2e3f9&PageNumber=1&PageSize=20 - -
+2022-05-19 22:01:06.708 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:01:06.709 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:5001/api/AnimeCollections/CollectionDetails?id=79ee6599-242d-4b22-af37-5acba6f2e3f9&animePage=1&animeSize=10 - -
+2022-05-19 22:01:06.709 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:01:06.710 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:5001/api/AnimeCollections/CollectionDetails?id=79ee6599-242d-4b22-af37-5acba6f2e3f9&animePage=1&animeSize=10 - - - 204 - - 0.7602ms
+2022-05-19 22:01:06.710 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=79ee6599-242d-4b22-af37-5acba6f2e3f9&PageNumber=1&PageSize=20 - - - 204 - - 1.9739ms
+2022-05-19 22:01:06.712 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=79ee6599-242d-4b22-af37-5acba6f2e3f9&PageNumber=1&PageSize=20 - -
+2022-05-19 22:01:06.713 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeCollections/CollectionDetails?id=79ee6599-242d-4b22-af37-5acba6f2e3f9&animePage=1&animeSize=10 - -
+2022-05-19 22:01:06.713 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:01:06.713 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:01:06.713 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi)'
+2022-05-19 22:01:06.713 +05:00 [INF] Route matched with {action = "GetTitlesFromCollection", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetTitlesFromCollection(AniRate.Application.AnimeTitles.Queries.GetTitlesFromCollection.GetTitlesFromCollectionQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 22:01:06.714 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.Get (AniRate.WebApi)'
+2022-05-19 22:01:06.714 +05:00 [INF] Route matched with {action = "Get", controller = "AnimeCollections"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.AnimeCollections.Queries.CollectionDetailsVM]] Get(System.Guid, Int32, Int32) on controller AniRate.WebApi.Controllers.AnimeCollectionsController (AniRate.WebApi).
+2022-05-19 22:01:06.715 +05:00 [INF] AniRate Request: GetCollectionDetailsQuery "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","Id":"79ee6599-242d-4b22-af37-5acba6f2e3f9","AnimeTitlesPageNumber":1,"AnimeTitlesPageSize":10,"$type":"GetCollectionDetailsQuery"}
+2022-05-19 22:01:06.716 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 22:01:06.718 +05:00 [INF] AniRate Request: GetTitlesFromCollectionQuery "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"CollectionId":"79ee6599-242d-4b22-af37-5acba6f2e3f9","UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","PageNumber":1,"PageSize":20,"$type":"GetTitlesFromCollectionQuery"}
+2022-05-19 22:01:06.717 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ImageId], [a].[Name], [a].[UserComment], [a].[UserId], [a].[UserRating]
+FROM [AnimeCollections] AS [a]
+WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 22:01:06.719 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 22:01:06.719 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeCollections] AS [a]
+INNER JOIN (
+    SELECT [a0].[AnimeCollectionsId]
+    FROM [AnimeCollectionAnimeTitle] AS [a0]
+    INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+) AS [t] ON [a].[Id] = [t].[AnimeCollectionsId]
+WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 22:01:06.719 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [a].[ImageId], [a].[Name], [a].[UserComment], [a].[UserId], [a].[UserRating]
+FROM [AnimeCollections] AS [a]
+WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 22:01:06.720 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid), @__p_2='?' (DbType = Int32), @__p_3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t0].[Id0] AS [Id], [t0].[Name0] AS [Name], [t0].[Russian], [t0].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [t].[Id] AS [Id0], [t].[Name] AS [Name0], [t].[Russian], [t].[Score]
+    FROM [AnimeCollections] AS [a]
+    INNER JOIN (
+        SELECT [a1].[Id], [a1].[Name], [a1].[Russian], [a1].[Score], [a0].[AnimeCollectionsId]
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+    ) AS [t] ON [a].[Id] = [t].[AnimeCollectionsId]
+    WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+    ORDER BY [t].[Score] DESC
+    OFFSET @__p_2 ROWS FETCH NEXT @__p_3 ROWS ONLY
+) AS [t0]
+LEFT JOIN [Images] AS [i] ON [t0].[Id0] = [i].[AnimeId]
+ORDER BY [t0].[Score] DESC
+2022-05-19 22:01:06.720 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeCollections] AS [a]
+INNER JOIN (
+    SELECT [a0].[AnimeCollectionsId]
+    FROM [AnimeCollectionAnimeTitle] AS [a0]
+    INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+) AS [t] ON [a].[Id] = [t].[AnimeCollectionsId]
+WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 22:01:06.721 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[@__request_CollectionId_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid), @__p_2='?' (DbType = Int32), @__p_3='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t0].[Id0] AS [Id], [t0].[Name0] AS [Name], [t0].[Russian], [t0].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [t].[Id] AS [Id0], [t].[Name] AS [Name0], [t].[Russian], [t].[Score]
+    FROM [AnimeCollections] AS [a]
+    INNER JOIN (
+        SELECT [a1].[Id], [a1].[Name], [a1].[Russian], [a1].[Score], [a0].[AnimeCollectionsId]
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+    ) AS [t] ON [a].[Id] = [t].[AnimeCollectionsId]
+    WHERE ([a].[Id] = @__request_CollectionId_0) AND ([a].[UserId] = @__request_UserId_1)
+    ORDER BY [t].[Score] DESC
+    OFFSET @__p_2 ROWS FETCH NEXT @__p_3 ROWS ONLY
+) AS [t0]
+LEFT JOIN [Images] AS [i] ON [t0].[Id0] = [i].[AnimeId]
+ORDER BY [t0].[Score] DESC
+2022-05-19 22:01:06.721 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 22:01:06.721 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi) in 7.6589ms
+2022-05-19 22:01:06.721 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetTitlesFromCollection (AniRate.WebApi)'
+2022-05-19 22:01:06.721 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles/TitlesFromCollection?CollectionId=79ee6599-242d-4b22-af37-5acba6f2e3f9&PageNumber=1&PageSize=20 - - - 200 - application/json;+charset=utf-8 9.2158ms
+2022-05-19 22:01:06.722 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[@__request_Id_0='?' (DbType = Guid), @__request_UserId_1='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [a].[Id], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96], [a].[Name], [a].[UserComment], [a].[UserRating]
+FROM [AnimeCollections] AS [a]
+LEFT JOIN [Images] AS [i] ON [a].[ImageId] = [i].[Id]
+WHERE ([a].[Id] = @__request_Id_0) AND ([a].[UserId] = @__request_UserId_1)
+2022-05-19 22:01:06.722 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.AnimeCollections.Queries.CollectionDetailsVM'.
+2022-05-19 22:01:06.722 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeCollectionsController.Get (AniRate.WebApi) in 7.8781ms
+2022-05-19 22:01:06.722 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.Get (AniRate.WebApi)'
+2022-05-19 22:01:06.722 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeCollections/CollectionDetails?id=79ee6599-242d-4b22-af37-5acba6f2e3f9&animePage=1&animeSize=10 - - - 200 - application/json;+charset=utf-8 9.8013ms
+2022-05-19 22:01:37.448 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=50 - -
+2022-05-19 22:01:37.449 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:01:37.449 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 22:01:37.449 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 22:01:37.449 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":1,"PageSize":50,"$type":"GetTitlesQuery"}
+2022-05-19 22:01:37.450 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 22:01:37.464 +05:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 22:01:37.530 +05:00 [INF] Executed DbCommand (65ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 22:01:37.543 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 22:01:37.544 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 95.1663ms
+2022-05-19 22:01:37.545 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 22:01:37.546 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=50 - - - 200 - application/json;+charset=utf-8 98.2730ms
+2022-05-19 22:05:18.766 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:5001/api/AnimeCollections?page=1&size=10 - -
+2022-05-19 22:05:18.766 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:05:18.766 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:5001/api/AnimeCollections?page=1&size=10 - - - 204 - - 0.3768ms
+2022-05-19 22:05:18.770 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeCollections?page=1&size=10 - -
+2022-05-19 22:05:18.770 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:05:18.770 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi)'
+2022-05-19 22:05:18.770 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeCollections"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeCollections.Queries.BriefCollectionVM]]] GetAll(Int32, Int32) on controller AniRate.WebApi.Controllers.AnimeCollectionsController (AniRate.WebApi).
+2022-05-19 22:05:18.772 +05:00 [INF] AniRate Request: GetCollectionsQuery "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","PageNumber":1,"PageSize":10,"$type":"GetCollectionsQuery"}
+2022-05-19 22:05:18.773 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 22:05:18.775 +05:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_UserId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeCollections] AS [a]
+WHERE [a].[UserId] = @__request_UserId_0
+2022-05-19 22:05:18.792 +05:00 [INF] Executed DbCommand (15ms) [Parameters=[@__request_UserId_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[ImageId], [a].[Name], (
+        SELECT COUNT(*)
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+        WHERE [a].[Id] = [a0].[AnimeCollectionsId]) AS [c]
+    FROM [AnimeCollections] AS [a]
+    WHERE [a].[UserId] = @__request_UserId_0
+    ORDER BY (
+        SELECT COUNT(*)
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+        WHERE [a].[Id] = [a0].[AnimeCollectionsId]) DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[ImageId] = [i].[Id]
+ORDER BY [t].[c] DESC
+2022-05-19 22:05:18.793 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeCollections.Queries.BriefCollectionVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 22:05:18.793 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi) in 22.8199ms
+2022-05-19 22:05:18.793 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi)'
+2022-05-19 22:05:18.794 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeCollections?page=1&size=10 - - - 200 - application/json;+charset=utf-8 24.0024ms
+2022-05-19 22:05:28.294 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:5001/api/AnimeCollections/Collection - -
+2022-05-19 22:05:28.294 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:05:28.295 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:5001/api/AnimeCollections/Collection - - - 204 - - 0.6435ms
+2022-05-19 22:05:28.297 +05:00 [INF] Request starting HTTP/2 POST https://localhost:5001/api/AnimeCollections/Collection application/json 48
+2022-05-19 22:05:28.297 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:05:28.298 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.Create (AniRate.WebApi)'
+2022-05-19 22:05:28.301 +05:00 [INF] Route matched with {action = "Create", controller = "AnimeCollections"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[System.Guid]] Create(AniRate.WebApi.Models.AnimeCollectionsDtos.CreateCollectionDto) on controller AniRate.WebApi.Controllers.AnimeCollectionsController (AniRate.WebApi).
+2022-05-19 22:05:28.315 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:5001/api/AnimeCollections?page=1&size=10 - -
+2022-05-19 22:05:28.315 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:05:28.316 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:5001/api/AnimeCollections?page=1&size=10 - - - 204 - - 0.7333ms
+2022-05-19 22:05:28.319 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeCollections?page=1&size=10 - -
+2022-05-19 22:05:28.319 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:05:28.320 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi)'
+2022-05-19 22:05:28.320 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeCollections"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeCollections.Queries.BriefCollectionVM]]] GetAll(Int32, Int32) on controller AniRate.WebApi.Controllers.AnimeCollectionsController (AniRate.WebApi).
+2022-05-19 22:05:28.324 +05:00 [INF] AniRate Request: GetCollectionsQuery "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","PageNumber":1,"PageSize":10,"$type":"GetCollectionsQuery"}
+2022-05-19 22:05:28.325 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 22:05:28.326 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[@__request_UserId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeCollections] AS [a]
+WHERE [a].[UserId] = @__request_UserId_0
+2022-05-19 22:05:28.327 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__request_UserId_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[ImageId], [a].[Name], (
+        SELECT COUNT(*)
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+        WHERE [a].[Id] = [a0].[AnimeCollectionsId]) AS [c]
+    FROM [AnimeCollections] AS [a]
+    WHERE [a].[UserId] = @__request_UserId_0
+    ORDER BY (
+        SELECT COUNT(*)
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+        WHERE [a].[Id] = [a0].[AnimeCollectionsId]) DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[ImageId] = [i].[Id]
+ORDER BY [t].[c] DESC
+2022-05-19 22:05:28.328 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeCollections.Queries.BriefCollectionVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 22:05:28.328 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi) in 7.6065ms
+2022-05-19 22:05:28.328 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi)'
+2022-05-19 22:05:28.328 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeCollections?page=1&size=10 - - - 200 - application/json;+charset=utf-8 9.5495ms
+2022-05-19 22:05:28.345 +05:00 [INF] AniRate Request: CreateCollectionCommand "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","Name":"Тестовая коллекция 2","AnimeTitlesIds":[],"$type":"CreateCollectionCommand"}
+2022-05-19 22:05:28.348 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 22:05:28.374 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (Size = 200), @p3='?' (Size = 4000), @p4='?' (DbType = Guid), @p5='?' (DbType = Double)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [AnimeCollections] ([Id], [ImageId], [Name], [UserComment], [UserId], [UserRating])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+2022-05-19 22:05:28.379 +05:00 [INF] Executing OkObjectResult, writing value of type 'System.Guid'.
+2022-05-19 22:05:28.379 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeCollectionsController.Create (AniRate.WebApi) in 78.8677ms
+2022-05-19 22:05:28.380 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.Create (AniRate.WebApi)'
+2022-05-19 22:05:28.380 +05:00 [INF] Request finished HTTP/2 POST https://localhost:5001/api/AnimeCollections/Collection application/json 48 - 200 - application/json;+charset=utf-8 83.0104ms
+2022-05-19 22:06:25.375 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=50 - -
+2022-05-19 22:06:25.375 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:06:25.375 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 22:06:25.375 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 22:06:25.375 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":1,"PageSize":50,"$type":"GetTitlesQuery"}
+2022-05-19 22:06:25.376 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 22:06:25.379 +05:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 22:06:25.384 +05:00 [INF] Executed DbCommand (4ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 22:06:25.386 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 22:06:25.386 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 11.0637ms
+2022-05-19 22:06:25.386 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 22:06:25.387 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=50 - - - 200 - application/json;+charset=utf-8 11.9694ms
+2022-05-19 22:06:34.492 +05:00 [INF] Request starting HTTP/2 OPTIONS https://localhost:5001/api/AnimeCollections?page=1&size=10 - -
+2022-05-19 22:06:34.492 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:06:34.493 +05:00 [INF] Request finished HTTP/2 OPTIONS https://localhost:5001/api/AnimeCollections?page=1&size=10 - - - 204 - - 0.3808ms
+2022-05-19 22:06:34.500 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeCollections?page=1&size=10 - -
+2022-05-19 22:06:34.500 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:06:34.501 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi)'
+2022-05-19 22:06:34.501 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeCollections"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeCollections.Queries.BriefCollectionVM]]] GetAll(Int32, Int32) on controller AniRate.WebApi.Controllers.AnimeCollectionsController (AniRate.WebApi).
+2022-05-19 22:06:34.502 +05:00 [INF] AniRate Request: GetCollectionsQuery "a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4" {"UserId":"a9168c5e-ceb2-4faa-b6bf-329bf39fa1e4","PageNumber":1,"PageSize":10,"$type":"GetCollectionsQuery"}
+2022-05-19 22:06:34.502 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 22:06:34.504 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[@__request_UserId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeCollections] AS [a]
+WHERE [a].[UserId] = @__request_UserId_0
+2022-05-19 22:06:34.505 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__request_UserId_0='?' (DbType = Guid), @__p_1='?' (DbType = Int32), @__p_2='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[ImageId], [a].[Name], (
+        SELECT COUNT(*)
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+        WHERE [a].[Id] = [a0].[AnimeCollectionsId]) AS [c]
+    FROM [AnimeCollections] AS [a]
+    WHERE [a].[UserId] = @__request_UserId_0
+    ORDER BY (
+        SELECT COUNT(*)
+        FROM [AnimeCollectionAnimeTitle] AS [a0]
+        INNER JOIN [AnimeTitles] AS [a1] ON [a0].[AnimeTitlesId] = [a1].[Id]
+        WHERE [a].[Id] = [a0].[AnimeCollectionsId]) DESC
+    OFFSET @__p_1 ROWS FETCH NEXT @__p_2 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[ImageId] = [i].[Id]
+ORDER BY [t].[c] DESC
+2022-05-19 22:06:34.507 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeCollections.Queries.BriefCollectionVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 22:06:34.508 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi) in 6.602ms
+2022-05-19 22:06:34.508 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeCollectionsController.GetAll (AniRate.WebApi)'
+2022-05-19 22:06:34.508 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeCollections?page=1&size=10 - - - 200 - application/json;+charset=utf-8 8.1043ms
+2022-05-19 22:06:36.103 +05:00 [INF] Request starting HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=50 - -
+2022-05-19 22:06:36.103 +05:00 [INF] CORS policy execution successful.
+2022-05-19 22:06:36.103 +05:00 [INF] Executing endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 22:06:36.103 +05:00 [INF] Route matched with {action = "GetAll", controller = "AnimeTitles"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[AniRate.Application.Common.Models.PaginatedList`1[AniRate.Application.AnimeTitles.Queries.BriefTitleVM]]] GetAll(AniRate.Application.AnimeTitles.Queries.GetTitles.GetTitlesQuery) on controller AniRate.WebApi.Controllers.AnimeTitlesController (AniRate.WebApi).
+2022-05-19 22:06:36.103 +05:00 [INF] AniRate Request: GetTitlesQuery "00000000-0000-0000-0000-000000000000" {"PageNumber":1,"PageSize":50,"$type":"GetTitlesQuery"}
+2022-05-19 22:06:36.104 +05:00 [INF] Entity Framework Core 6.0.3 initialized 'ApplicationDbContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.3' with options: MigrationsAssembly=AniRate.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null 
+2022-05-19 22:06:36.104 +05:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT COUNT(*)
+FROM [AnimeTitles] AS [a]
+2022-05-19 22:06:36.106 +05:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32), @__p_1='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[Russian], [t].[Score], [i].[Id], [i].[AnimeId], [i].[Original], [i].[Preview], [i].[X48], [i].[X96]
+FROM (
+    SELECT [a].[Id], [a].[Name], [a].[Russian], [a].[Score]
+    FROM [AnimeTitles] AS [a]
+    ORDER BY [a].[Score] DESC
+    OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY
+) AS [t]
+LEFT JOIN [Images] AS [i] ON [t].[Id] = [i].[AnimeId]
+ORDER BY [t].[Score] DESC
+2022-05-19 22:06:36.107 +05:00 [INF] Executing OkObjectResult, writing value of type 'AniRate.Application.Common.Models.PaginatedList`1[[AniRate.Application.AnimeTitles.Queries.BriefTitleVM, AniRate.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2022-05-19 22:06:36.108 +05:00 [INF] Executed action AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi) in 4.5673ms
+2022-05-19 22:06:36.108 +05:00 [INF] Executed endpoint 'AniRate.WebApi.Controllers.AnimeTitlesController.GetAll (AniRate.WebApi)'
+2022-05-19 22:06:36.108 +05:00 [INF] Request finished HTTP/2 GET https://localhost:5001/api/AnimeTitles?PageNumber=1&PageSize=50 - - - 200 - application/json;+charset=utf-8 5.2981ms
