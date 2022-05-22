@@ -18,7 +18,6 @@ namespace AniRate.Infrastructure.Persistence
                     UserId = Guid.Parse("A9168C5E-CEB2-4faa-B6BF-329BF39FA1E4"),
                     Name = "Main collection",
                     UserComment = "Main collection comment",
-                    UserRating = 10,
                 };
 
                 var secondCollection = new AnimeCollection
@@ -27,7 +26,6 @@ namespace AniRate.Infrastructure.Persistence
                     UserId = Guid.Parse("A9168C5E-CEB2-4faa-B6BF-329BF39FA1E4"),
                     Name = "Second collection",
                     UserComment = "Second collection comment",
-                    UserRating = 5,
                 };
 
 
@@ -46,7 +44,6 @@ namespace AniRate.Infrastructure.Persistence
                 {
                     mainCollection.AnimeTitles.Add(title);
                 }
-                mainCollection.Image = mainCollection.AnimeTitles[0].Image;
 
 
                 var titles2 = context.AnimeTitles.Skip(10).Take(3).ToArray();
@@ -54,7 +51,6 @@ namespace AniRate.Infrastructure.Persistence
                 {
                     secondCollection.AnimeTitles.Add(title);
                 }
-                secondCollection.Image = secondCollection.AnimeTitles[0].Image;
 
 
                 await context.Accounts.AddAsync(user);

@@ -27,7 +27,6 @@ namespace AniRate.Tests.AnimeCollectionsTest.CommandsTests
                 {
                     Id = ContextFactory.FirstCollectionId,
                     Name = "changed collection 1",
-                    UserRating = 3,
                     UserId = ContextFactory.UserAId,
                 },
                 CancellationToken.None);
@@ -37,8 +36,7 @@ namespace AniRate.Tests.AnimeCollectionsTest.CommandsTests
                 Assert.NotNull(
                     await Context.AnimeCollections.SingleOrDefaultAsync(collection =>
                         collection.Id == ContextFactory.FirstCollectionId &&
-                        collection.Name == "changed collection 1" &&
-                        collection.UserRating == 3));
+                        collection.Name == "changed collection 1"));
         }
 
         [Fact]
@@ -58,7 +56,6 @@ namespace AniRate.Tests.AnimeCollectionsTest.CommandsTests
                     {
                         Id = Guid.NewGuid(),
                         Name = "changed collection 1",
-                        UserRating = 3,
                         UserId = ContextFactory.UserAId,
                     },
                     CancellationToken.None));
@@ -81,7 +78,6 @@ namespace AniRate.Tests.AnimeCollectionsTest.CommandsTests
                     {
                         Id = ContextFactory.FirstCollectionId,
                         Name = "changed collection 1",
-                        UserRating = 3,
                         UserId = ContextFactory.UserBId,
                     },
                     CancellationToken.None));
@@ -104,7 +100,6 @@ namespace AniRate.Tests.AnimeCollectionsTest.CommandsTests
                     {
                         Id = ContextFactory.FirstCollectionId,
                         Name = "",
-                        UserRating = 3,
                         UserId = ContextFactory.UserAId,
                     },
                     CancellationToken.None));

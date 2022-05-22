@@ -13,6 +13,5 @@ namespace AniRate.Application.AnimeCollections.Commands.UpdateCollectionDetails
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string? UserComment { get; set; }
-        public double? UserRating { get; set; }
     }
 }

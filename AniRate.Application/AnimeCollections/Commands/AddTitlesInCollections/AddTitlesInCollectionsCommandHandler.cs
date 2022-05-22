@@ -52,7 +52,6 @@ namespace AniRate.Application.AnimeCollections.Commands.AddTitlesInCollections
             foreach (var collectioId in request.CollectionsIds)
             {
                 var collection = await _dbContext.AnimeCollections
-                    .Include(c => c.Image)
                     .Include(c => c.AnimeTitles)
                     .FirstOrDefaultAsync(c => c.Id == collectioId, cancellationToken);
 
@@ -66,9 +65,6 @@ namespace AniRate.Application.AnimeCollections.Commands.AddTitlesInCollections
                 {
                     if (collection.AnimeTitles.FirstOrDefault(a => a.Id == anime.Id) == default(AnimeTitle))
                     {
-                        if (collection.Image == null)
-                            collection.Image = anime.Image;
-
                         collection.AnimeTitles.Add(anime);
                     }
                 }

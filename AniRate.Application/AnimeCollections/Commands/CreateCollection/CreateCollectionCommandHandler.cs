@@ -43,8 +43,8 @@ namespace AniRate.Application.AnimeCollections.Commands.CreateCollection
                 Id = Guid.NewGuid(),
                 UserId = request.UserId,
                 Name = request.Name,
+                UserComment = request.UserComment,
                 AnimeTitles = animeTitles,
-                Image = animeTitles.Count() == 0 ? null : animeTitles[0].Image,
             };
 
             await _dbContext.AnimeCollections.AddAsync(animeCollection, cancellationToken);

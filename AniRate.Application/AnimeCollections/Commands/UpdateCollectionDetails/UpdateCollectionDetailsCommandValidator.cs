@@ -14,8 +14,6 @@ namespace AniRate.Application.AnimeCollections.Commands.UpdateCollectionDetails
                 updateCollectionDetailsCommand.Name).NotEmpty().MaximumLength(100);
             RuleFor(updateCollectionDetailsCommand =>
                 updateCollectionDetailsCommand.UserComment).MaximumLength(2000);
-            RuleFor(updateCollectionDetailsCommand =>
-                updateCollectionDetailsCommand.UserRating).Must(r => r <= 10 && r >= 0);
         }
     }
 }

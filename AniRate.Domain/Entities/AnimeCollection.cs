@@ -16,9 +16,7 @@ namespace AniRate.Domain.Entities
 
         public string? UserComment { get; set; }
 
-        public double? UserRating { get; set; }
-
-        public Image? Image { get; set; } = null!;
+        public int AnimesCount => AnimeTitles.Count();
 
         public IList<AnimeTitle> AnimeTitles { get; set; } = new List<AnimeTitle>();
     }

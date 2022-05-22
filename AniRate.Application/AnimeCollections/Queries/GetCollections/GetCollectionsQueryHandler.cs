@@ -5,11 +5,6 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AniRate.Application.AnimeCollections.Queries.GetCollections
 {
@@ -27,6 +22,7 @@ namespace AniRate.Application.AnimeCollections.Queries.GetCollections
         public async Task<PaginatedList<BriefCollectionVM>> Handle(GetCollectionsQuery request, CancellationToken cancellationToken)
         {
             var collections = await _dbContext.AnimeCollections
+                .Include(c => c.AnimeTitles)
                 .Where(c => c.UserId == request.UserId)
                 .OrderByDescending(c => c.AnimeTitles.Count())
                 .ProjectTo<BriefCollectionVM>(_mapper.ConfigurationProvider)

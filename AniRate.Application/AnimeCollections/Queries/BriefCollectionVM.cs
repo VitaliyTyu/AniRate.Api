@@ -15,7 +15,9 @@ namespace AniRate.Application.AnimeCollections.Queries
 
         public string Name { get; set; }
 
-        public Image? Image { get; set; } = null!;
+        public string? UserComment { get; set; }
+
+        public int AnimesCount { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -24,9 +26,10 @@ namespace AniRate.Application.AnimeCollections.Queries
                     opt.MapFrom(collection => collection.Id))
                 .ForMember(collectionDto => collectionDto.Name, opt =>
                     opt.MapFrom(collection => collection.Name))
-                .ForMember(collectionDto => collectionDto.Image, opt =>
-                    opt.MapFrom(collection => collection.Image));
-
+                .ForMember(collectionDto => collectionDto.UserComment, opt =>
+                    opt.MapFrom(collection => collection.UserComment))
+                .ForMember(collectionDto => collectionDto.AnimesCount, opt =>
+                    opt.MapFrom(collection => collection.AnimesCount));
         }
     }
 }

@@ -41,8 +41,7 @@ namespace AniRate.Tests.AnimeCollectionsTest.CommandsTests
             Assert.NotNull(
                 await Context.AnimeCollections.SingleOrDefaultAsync(collection =>
                     collection.Id == collectionId &&
-                    collection.Name == collectionName &&
-                    collection.Image == null));
+                    collection.Name == collectionName));
         }
 
 
@@ -73,8 +72,7 @@ namespace AniRate.Tests.AnimeCollectionsTest.CommandsTests
                 await Context.AnimeCollections.SingleOrDefaultAsync(collection =>
                     collection.Id == collectionId &&
                     collection.Name == collectionName &&
-                    collection.AnimeTitles.Any(a => a.Id == ContextFactory.FirstAnimeId) &&
-                    collection.Image == anime.Image));
+                    collection.AnimeTitles.Any(a => a.Id == ContextFactory.FirstAnimeId)));
         }
 
 
@@ -109,8 +107,7 @@ namespace AniRate.Tests.AnimeCollectionsTest.CommandsTests
                     collection.Name == collectionName &&
                     collection.AnimeTitles.Any(a => a.Id == ContextFactory.FirstAnimeId) &&
                     collection.AnimeTitles.Any(a => a.Id == ContextFactory.SecondAnimeId) &&
-                    collection.AnimeTitles.Any(a => a.Id == ContextFactory.ThirdAnimeId) &&
-                    collection.Image == anime.Image));
+                    collection.AnimeTitles.Any(a => a.Id == ContextFactory.ThirdAnimeId)));
         }
 
 

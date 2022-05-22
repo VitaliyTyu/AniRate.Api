@@ -167,8 +167,7 @@ namespace AniRate.Tests.AnimeCollectionsTest.CommandsTests
                     Assert.NotNull(
                         await Context.AnimeCollections.SingleOrDefaultAsync(collection =>
                             collection.Id == collectionId &&
-                            collection.AnimeTitles.Any(a => a.Id == animeId) &&
-                            collection.Image == firstAnime.Image));
+                            collection.AnimeTitles.Any(a => a.Id == animeId)));
                 }
             }
         }

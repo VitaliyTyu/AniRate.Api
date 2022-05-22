@@ -45,7 +45,6 @@ namespace AniRate.Tests.AnimeCollectionsTest.QueriesTests
             // Assert
             result.ShouldBeOfType<CollectionDetailsVM>();
             result.Name.ShouldBe("3 collection");
-            result.UserRating.ShouldBe(10);
             result.AnimeTitles.Items.Count.ShouldBe(2);
         }
 

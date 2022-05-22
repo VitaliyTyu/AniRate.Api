@@ -43,10 +43,8 @@ namespace AniRate.Application.AnimeCollections.Queries.GetCollectionDetails
                 .Select(c => new CollectionDetailsVM()
                 {
                     Id = c.Id,
-                    Image = c.Image,
                     Name = c.Name,
                     UserComment = c.UserComment,
-                    UserRating = c.UserRating,
                     AnimeTitles = titles
                 })
                 .ToListAsync();

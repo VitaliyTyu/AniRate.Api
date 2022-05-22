@@ -200,10 +200,8 @@ namespace AniRate.Tests.Common
             var collection1 = new AnimeCollection
             {
                 Id = Guid.Parse("109B3614-47B8-41BD-92B6-62669EB2174B"),
-                Image = Anime1.Image,
                 Name = "1 collection",
                 UserComment = "1",
-                UserRating = 10,
                 UserId = UserAId,
             };
             collection1.AnimeTitles.Add(Anime1);
@@ -218,7 +216,6 @@ namespace AniRate.Tests.Common
                 Id = Guid.Parse("90D5F70A-9CF1-46B7-98D3-9F4347F8971B"),
                 Name = "2 collection",
                 UserComment = "2",
-                UserRating = 5,
                 UserId = UserAId,
             };
             SecondCollectionId = collection2.Id;
@@ -227,10 +224,8 @@ namespace AniRate.Tests.Common
             var collection3 = new AnimeCollection
             {
                 Id = Guid.Parse("31430E0C-ACBB-416D-A2F2-3585E9A26B71"),
-                Image = Anime3.Image,
                 Name = "3 collection",
                 UserComment = "1",
-                UserRating = 10,
                 UserId = UserBId,
             };
             collection3.AnimeTitles.Add(Anime3);
@@ -241,10 +236,8 @@ namespace AniRate.Tests.Common
             var collection4 = new AnimeCollection
             {
                 Id = Guid.Parse("33161C70-A14A-4F95-AD7A-69F0AA09AC41"),
-                Image = Anime4.Image,
                 Name = "4 collection",
                 UserComment = "2",
-                UserRating = 5,
                 UserId = UserBId,
             };
             collection4.AnimeTitles.Add(Anime4);

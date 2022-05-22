@@ -19,10 +19,6 @@ namespace AniRate.Application.AnimeCollections.Queries
 
         public string? UserComment { get; set; }
 
-        public double? UserRating { get; set; }
-
-        public Image? Image { get; set; } = null!;
-
         public PaginatedList<BriefTitleVM> AnimeTitles { get; internal set; }
 
         public void Mapping(Profile profile)
@@ -34,10 +30,6 @@ namespace AniRate.Application.AnimeCollections.Queries
                     opt.MapFrom(collection => collection.Name))
                 .ForMember(collectionDto => collectionDto.UserComment, opt =>
                     opt.MapFrom(collection => collection.UserComment))
-                .ForMember(collectionDto => collectionDto.UserRating, opt =>
-                    opt.MapFrom(collection => collection.UserRating))
-                .ForMember(collectionDto => collectionDto.Image, opt =>
-                    opt.MapFrom(collection => collection.Image))
                 .ForMember(collectionDto => collectionDto.AnimeTitles, opt =>
                     opt.MapFrom(collection => collection.AnimeTitles));
         }

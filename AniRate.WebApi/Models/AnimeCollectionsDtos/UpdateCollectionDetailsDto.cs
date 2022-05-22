@@ -16,7 +16,6 @@ namespace AniRate.WebApi.Models.AnimeCollectionsDtos
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string? UserComment { get; set; }
-        public double? UserRating { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -24,9 +23,7 @@ namespace AniRate.WebApi.Models.AnimeCollectionsDtos
                 .ForMember(animeCommand => animeCommand.Name,
                     opt => opt.MapFrom(animeDto => animeDto.Name))
                 .ForMember(animeCommand => animeCommand.UserComment,
-                    opt => opt.MapFrom(animeDto => animeDto.UserComment))
-                .ForMember(animeCommand => animeCommand.UserRating,
-                    opt => opt.MapFrom(animeDto => animeDto.UserRating));
+                    opt => opt.MapFrom(animeDto => animeDto.UserComment));
         }
     }
 }

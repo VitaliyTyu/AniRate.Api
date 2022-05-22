@@ -21,7 +21,7 @@ namespace AniRate.Application.AnimeCollections.Commands.UpdateCollectionDetails
 
         public async Task<Unit> Handle(UpdateCollectionDetailsCommand request, CancellationToken cancellationToken)
         {
-            if (request.Name == String.Empty)
+            if (request.Name == string.Empty)
             {
                 throw new EmptyStateException(nameof(request.Name));
             }
@@ -35,7 +35,6 @@ namespace AniRate.Application.AnimeCollections.Commands.UpdateCollectionDetails
 
             collection.Name = request.Name;
             collection.UserComment = request.UserComment;
-            collection.UserRating = request.UserRating;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 
