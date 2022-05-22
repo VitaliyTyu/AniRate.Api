@@ -10,13 +10,11 @@ namespace AniRate.WebApi.Models.AuthModels
     public class LoginViewModel
     {
         [Required]
-        public string Username { get; set; }
+        [DataType(DataType.EmailAddress)]
+        public string EmailAddress { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
-        //[Required]
-        //public string ReturnUrl { get; set; }
     }
 }

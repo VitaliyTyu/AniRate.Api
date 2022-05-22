@@ -30,12 +30,15 @@ namespace AniRate.Infrastructure.Persistence
                     UserRating = 5,
                 };
 
-                var userPassword = hashService.CalculateMD5Hash("user");
+
+                var emailHash = hashService.CalculateMD5Hash("user@email.com");
+                var passwordHash = hashService.CalculateMD5Hash("user");
                 var user = new Account()
                 {
                     Id = Guid.Parse("A9168C5E-CEB2-4faa-B6BF-329BF39FA1E4"),
-                    UserName = "user@email.com",
-                    Password = userPassword,
+                    Name = "user",
+                    EmailAddress = emailHash,
+                    Password = passwordHash,
                 };
 
                 var titles1 = context.AnimeTitles.Take(5).ToArray();

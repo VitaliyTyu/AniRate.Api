@@ -10,7 +10,11 @@ namespace AniRate.WebApi.Models.AuthModels
     public class RegisterViewModel
     {
         [Required]
-        public string Username { get; set; }
+        public string Name { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        public string EmailAddress { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -20,8 +24,5 @@ namespace AniRate.WebApi.Models.AuthModels
         [DataType(DataType.Password)]
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
-
-        //[Required]
-        //public string ReturnUrl { get; set; }
     }
 }

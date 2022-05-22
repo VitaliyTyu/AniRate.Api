@@ -30,15 +30,6 @@ namespace AniRate.Application.AnimeCollections.Queries.GetCollectionDetails
 
         public async Task<CollectionDetailsVM> Handle(GetCollectionDetailsQuery request, CancellationToken cancellationToken)
         {
-            //var handler = new GetTitlesFromCollectionQueryHandler(_dbContext, _mapper);
-            //var titles = await handler.Handle(
-            //    new GetTitlesFromCollectionQuery
-            //    {
-            //        CollectionId = request.Id,
-            //        UserId = request.UserId,
-            //    },
-            //    CancellationToken.None);
-
             var titles = await _dbContext.AnimeCollections
                 .Where(c => c.Id == request.Id && c.UserId == request.UserId)
                 .SelectMany(c => c.AnimeTitles)

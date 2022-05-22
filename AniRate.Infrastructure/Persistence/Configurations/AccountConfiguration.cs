@@ -15,7 +15,8 @@ namespace AniRate.Infrastructure.Persistence.Configurations
         {
             builder.HasKey(account => account.Id);
             builder.HasIndex(account => account.Id).IsUnique();
-            builder.Property(account => account.UserName).HasMaxLength(200).IsRequired();
+            builder.Property(account => account.Name).HasMaxLength(200).IsRequired();
+            builder.Property(account => account.EmailAddress).HasMaxLength(200).IsRequired();
             builder.Property(account => account.Password).HasMaxLength(200).IsRequired();
         }
     }
