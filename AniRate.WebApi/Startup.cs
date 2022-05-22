@@ -46,7 +46,7 @@ namespace AniRate.WebApi
                        ValidateLifetime = true,
 
                        // Обнуление минимамального времени жизни токена
-                       ClockSkew = TimeSpan.Zero,
+                       //ClockSkew = TimeSpan.Zero,
 
                        IssuerSigningKey =
                            authOptions.GetSymmetricSecurityKey(),
