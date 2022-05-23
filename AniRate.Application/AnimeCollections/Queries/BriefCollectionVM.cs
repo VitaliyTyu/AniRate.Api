@@ -15,7 +15,7 @@ namespace AniRate.Application.AnimeCollections.Queries
 
         public string Name { get; set; }
 
-        public string? UserComment { get; set; }
+        public string UserComment { get; set; }
 
         public int AnimesCount { get; set; }
 

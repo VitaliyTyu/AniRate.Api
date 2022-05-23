@@ -17,7 +17,7 @@ namespace AniRate.Application.AnimeCollections.Queries
 
         public string Name { get; set; }
 
-        public string? UserComment { get; set; }
+        public string UserComment { get; set; }
 
         public PaginatedList<BriefTitleVM> AnimeTitles { get; internal set; }
 
