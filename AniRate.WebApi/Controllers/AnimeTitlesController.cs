@@ -2,6 +2,7 @@
 using AniRate.Application.AnimeTitles.Queries.GetTitleDetails;
 using AniRate.Application.AnimeTitles.Queries.GetTitles;
 using AniRate.Application.AnimeTitles.Queries.GetTitlesFromCollection;
+using AniRate.Application.AnimeTitles.Queries.SerchAnimes;
 using AniRate.Application.Common.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -65,6 +66,26 @@ namespace AniRate.WebApi.Controllers
                 PageNumber = page,
                 PageSize = size,
                 UserId = UserId,
+            };
+
+            var titles = await Mediator.Send(query);
+            return Ok(titles);
+        }
+
+        /// <summary>
+        /// Поиск всех аниме
+        /// </summary>
+        /// <returns>Returns TitleDetailsVM</returns>
+        /// <response code="200">Success</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpGet("SearchTitles")]
+        public async Task<ActionResult<PaginatedList<BriefTitleVM>>> SerchAnimes(string searchString, int page, int size)
+        {
+            var query = new SerchAnimesQuery()
+            {
+                SearchString = searchString,
+                PageNumber = page,
+                PageSize = size,
             };
 
             var titles = await Mediator.Send(query);

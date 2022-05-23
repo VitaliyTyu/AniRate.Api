@@ -7,6 +7,7 @@ using AniRate.Application.AnimeCollections.Commands.UpdateCollectionDetails;
 using AniRate.Application.AnimeCollections.Queries;
 using AniRate.Application.AnimeCollections.Queries.GetCollectionDetails;
 using AniRate.Application.AnimeCollections.Queries.GetCollections;
+using AniRate.Application.AnimeCollections.Queries.SearchCollections;
 using AniRate.Application.Common.Models;
 using AniRate.Application.Interfaces;
 using AniRate.WebApi.Models.AnimeCollectionsDtos;
@@ -174,6 +175,27 @@ namespace AniRate.WebApi.Controllers
             command.UserId = UserId;
             await Mediator.Send(command);
             return NoContent();
+        }
+
+        /// <summary>
+        /// Поиск коллекций
+        /// </summary>
+        /// <response code="200">Success</response>
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpGet("SearchCollections")]
+        [Authorize]
+        public async Task<ActionResult<PaginatedList<BriefCollectionVM>>> SearchCollections(string searchString, int page, int size)
+        {
+            var query = new SearchCollectionsQuery()
+            {
+                UserId = UserId,
+                PageNumber = page,
+                PageSize = size,
+                SearchString = searchString,
+            };
+
+            var collectionsVM = await Mediator.Send(query);
+            return Ok(collectionsVM);
         }
     }
 }
