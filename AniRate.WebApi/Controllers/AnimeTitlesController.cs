@@ -1,9 +1,11 @@
-﻿using AniRate.Application.AnimeTitles.Queries;
+﻿using AniRate.Application.AnimeTitles.Comammands.AddAnimes;
+using AniRate.Application.AnimeTitles.Queries;
 using AniRate.Application.AnimeTitles.Queries.GetTitleDetails;
 using AniRate.Application.AnimeTitles.Queries.GetTitles;
 using AniRate.Application.AnimeTitles.Queries.GetTitlesFromCollection;
 using AniRate.Application.AnimeTitles.Queries.SerchAnimes;
 using AniRate.Application.Common.Models;
+using AniRate.WebApi.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -90,6 +92,17 @@ namespace AniRate.WebApi.Controllers
 
             var titles = await Mediator.Send(query);
             return Ok(titles);
+        }
+
+
+        /// <summary>
+        /// AddAnimes
+        /// </summary>
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [HttpPost("AddAnimes")]
+        public async Task Create([FromBody] AddAnimesDto addAnimesDto)
+        {
+            await Mediator.Send(_mapper.Map<AddAnimesCommand>(addAnimesDto));
         }
     }
 }

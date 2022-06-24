@@ -7,15 +7,15 @@ using Serilog.Events;
 
 namespace AniRate.WebApi
 {
-    public class Program 
+    public class Program
     {
         public async static Task Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-               .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-               .WriteTo.File("AnirateWebAppLog-.txt", rollingInterval:
-                   RollingInterval.Day)
-               .CreateLogger();
+            //Log.Logger = new LoggerConfiguration()
+            //   .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+            //   .WriteTo.File("AnirateWebAppLog-.txt", rollingInterval:
+            //       RollingInterval.Day)
+            //   .CreateLogger();
 
             var host = CreateHostBuilder(args).Build();
 
@@ -41,7 +41,7 @@ namespace AniRate.WebApi
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseSerilog()
+                //.UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
                     webBuilder.UseStartup<Startup>());
     }

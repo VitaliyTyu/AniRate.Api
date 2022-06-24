@@ -20,14 +20,14 @@ namespace AniRate.Infrastructure.Persistence
     {
         public static async Task ParseAnimeTitles(ApplicationDbContext context)
         {
-            
+
             using (HttpClient client = new HttpClient())
             {
                 Log.Information("Аниме до: " + context.AnimeTitles.Count());
                 Log.Information("Жанров до: " + context.Genres.Count());
 
                 var page = context.AnimeTitles.Count() / 50;
-                for (int i = page + 1; i < page + 2; i++)
+                for (int i = page + 1; i < page + 20; i++)
                 {
                     try
                     {
