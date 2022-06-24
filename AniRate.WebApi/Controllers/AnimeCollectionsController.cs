@@ -82,11 +82,17 @@ namespace AniRate.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost("Collection")]
         [Authorize]
+        // Конечная точка контроллера - то, куда приходит запрос
         public async Task<ActionResult<Guid>> Create([FromBody] CreateCollectionDto createCollectionDto)
         {
+            // Формирование команды для слоя работы с сущностями, получив которую
+            // слой сделает необходимые действия
             var command = _mapper.Map<CreateCollectionCommand>(createCollectionDto);
             command.UserId = UserId;
+            // Отправка команды в слой работы с сущностями
+            // И получение Id созданной коллекции по звершении работы слоя
             var collectionId = await Mediator.Send(command);
+            // Отпрвка Id обратно клиентскому приложению
             return Ok(collectionId);
         }
 
