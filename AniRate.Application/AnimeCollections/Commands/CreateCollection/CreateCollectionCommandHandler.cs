@@ -22,8 +22,8 @@ namespace AniRate.Application.AnimeCollections.Commands.CreateCollection
 
         public async Task<Guid> Handle(CreateCollectionCommand request, CancellationToken cancellationToken)
         {
+            // создание списка аниме, с которым создастся коллекция
             var animeTitles = new List<AnimeTitle>();
-
             foreach (var animeId in request.AnimeTitlesIds)
             {
                 var entity = await _dbContext.AnimeTitles
@@ -38,6 +38,7 @@ namespace AniRate.Application.AnimeCollections.Commands.CreateCollection
                 animeTitles.Add(entity);
             }
 
+            // создание объекта, который является коллекцией
             var animeCollection = new AnimeCollection
             {
                 Id = Guid.NewGuid(),
@@ -47,9 +48,11 @@ namespace AniRate.Application.AnimeCollections.Commands.CreateCollection
                 AnimeTitles = animeTitles,
             };
 
+            // добавление объекта в базу данных
             await _dbContext.AnimeCollections.AddAsync(animeCollection, cancellationToken);
+            // сохранение изменений базы данных
             await _dbContext.SaveChangesAsync(cancellationToken);
-
+            // возвращение индекса созданной коллекции
             return animeCollection.Id;
         }
     }
